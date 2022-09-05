@@ -81,7 +81,7 @@ analytics:
 # Site Author
 author:
   name             : "Muhammad Owais"
-  avatar           : "dp.jpg"
+  avatar           : "owais.png"
   bio              : "Research Assistant @ Center for Language Engineering | UET Lahore "
   location         : "Lahore, Pakistan"
   employer         :
@@ -103,7 +103,7 @@ author:
   impactstory      : #"https://profiles.impactstory.org/u/xxxx-xxxx-xxxx-xxxx"
   lastfm           :
   linkedin         : "muhammad-owais635"
-  orcid            : ""
+  orcid            : # ""
   pinterest        :
   soundcloud       :
   stackoverflow    : # http://stackoverflow.com/users/123456/username
