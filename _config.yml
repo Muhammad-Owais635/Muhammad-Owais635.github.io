@@ -7,13 +7,13 @@
 
 # Site Settings
 locale                   : "en-US"
-title                    : "Qaiser Abbas"
+title                    : "Muhammad Owais"
 title_separator          : "-"
-name                     : &name "Qaiser Abbas"
+name                     : &name "Muhammad Owais"
 description              : &description "personal description"
 url                      : https://qaixerabbas.github.io # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
-repository               : "qaixerabbas/qaixerabbas.github.io"
+repository               : "Muhammad-Owais635/Muhammad-Owais635.github.io"
 teaser                   :  # filename of teaser fallback teaser image placed in /images/, .e.g. "500x300.png"
 breadcrumbs              : false # true, false (default)
 words_per_minute         : 160
@@ -80,14 +80,14 @@ analytics:
 
 # Site Author
 author:
-  name             : "Qaiser Abbas"
-  avatar           : "dp3.png"
-  bio              : "Teaching Fellow @ UET Lahore | Applied A.I Researcher"
+  name             : "Muhammad Owais"
+  avatar           : "dp.png"
+  bio              : "Research Assistant @ Center for Language Engineering | UET Lahore "
   location         : "Lahore, Pakistan"
   employer         :
   pubmed           : 
-  googlescholar    : "https://scholar.google.com/citations?user=oAWfLsoAAAAJ&hl=en&oi=sra"
-  email            : "abbas.qaixer@gmail.com"
+  googlescholar    : ""
+  email            : "muhammad.owais@kics.edu.pk"
   researchgate     :  # example: "https://www.researchgate.net/profile/yourprofile"
   uri              :
   bitbucket        :
@@ -96,20 +96,20 @@ author:
   flickr           :
   facebook         :
   foursquare       :
-  github           : "qaixerabbas"
+  github           : "Muhammad-Owais635"
   google_plus      :
   keybase          :
   instagram        :
   impactstory      : #"https://profiles.impactstory.org/u/xxxx-xxxx-xxxx-xxxx"
   lastfm           :
-  linkedin         : "qaixerabbas"
-  orcid            : "https://orcid.org/0000-0001-9246-5208"
+  linkedin         : "muhammad-owais635"
+  orcid            : ""
   pinterest        :
   soundcloud       :
   stackoverflow    : # http://stackoverflow.com/users/123456/username
   steam            :
   tumblr           :
-  twitter          : "qaiserabbas0" #https://twitter.com/
+  twitter          : "Owais_Khan_635" #https://twitter.com/
   vine             :
   weibo            :
   xing             :
