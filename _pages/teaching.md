@@ -10,8 +10,6 @@ author_profile: true
   font-size: 12pt;
 }
 </style>
-
-You can also find my official profile on my [UET Homepage](https://www.uet.edu.pk/faculties/facultiesinfo/facultyinfo?fac_id=1368).
   
 Spring 2022
 ------
