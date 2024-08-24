@@ -7,7 +7,7 @@
 
 # Site Settings
 locale                   : "en-US"
-title                    : "Muhammad Owais"
+title                    : "About"
 title_separator          : "-"
 name                     : &name "Muhammad Owais"
 description              : &description "personal description"
