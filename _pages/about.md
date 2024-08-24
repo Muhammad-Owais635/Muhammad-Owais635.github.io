@@ -14,21 +14,8 @@ I'm Muhammad Owais, a passionate Computer Science Lecturer at [Superior Universi
 
 
 
-For more info
+Publications
 ------
-For more information you can contact me at:
----
-layout: archive
-title: "Publications"
-permalink: /publications/
-author_profile: true
----
-
-<style type="text/css">
-  body{
-  font-size: 12pt;
-}
-</style>
 
 
 2022
