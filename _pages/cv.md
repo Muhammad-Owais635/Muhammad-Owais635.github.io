@@ -67,10 +67,10 @@ CERTIFICATIONS
 🐍 **Python Core**  &nbsp;  &nbsp;  _[ 08/2022 ]_  <br>
 ##### _**Sololearn**_ <br>
 
-🌐 **WordPress**  &nbsp;  &nbsp;  _[ 08/2018 ]_  <br>
+🌐 **WordPress**  &nbsp;  &nbsp;  _[ 08/2020 ]_  <br>
 ##### _**DigiSkills**_ <br>
 
-💼 **Freelancing**  &nbsp;  &nbsp;  _[ 08/2018 ]_ <br>
+💼 **Freelancing**  &nbsp;  &nbsp;  _[ 08/2020 ]_ <br>
 ##### _**DigiSkills**_ <br>
 
 
