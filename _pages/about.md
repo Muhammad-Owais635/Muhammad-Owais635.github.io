@@ -1,20 +1,11 @@
 ---
 permalink: /
-title: "Academic Pages is a ready-to-fork GitHub Pages template for academic personal websites"
+title: "About Me"
 author_profile: true
 redirect_from: 
   - /about/
   - /about.html
 ---
-
----
-title: "About Me"
-layout: page
-permalink: /about/
-author_profile: true
----
-
-## About Me
 
 I am **Muhammad Owais**, a dedicated researcher and Computer Science Ph.D. student at **Tokyo Metropolitan University (TMU)**, Tokyo, Japan, currently working on **social network analysis and security** within the context of **Natural Language Processing (NLP)** and **Machine Learning (ML)**.
 
