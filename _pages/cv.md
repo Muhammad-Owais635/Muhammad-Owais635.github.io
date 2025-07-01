@@ -34,7 +34,7 @@ EDUCATION
     * Plantobook, a React Native mobile application inspired by Instagram but designed specifically for plants.
     * **Courses**: Artificial Intelligence, Operation Research, Numerical Computing, Technical and Report Writing, Cloud Computing, Compiler Construction and more
 
-Publications
+PUBLICATIONS
 ------
   <ul>{% for post in site.publications reversed %}
     {% include archive-single-cv.html %}
