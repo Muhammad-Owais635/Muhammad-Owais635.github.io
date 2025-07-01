@@ -3,12 +3,12 @@ title: "Superior University Lahore"
 collection: teaching
 type: "Lecturer"
 permalink: /teaching/superior-university-cs-lecturer
-venue: "Superior University Lahore, Department of Computer Science"
+venue: "Gold Campus, Superior University Lahore, Department of Computer Science"
 date: 2023-08-16
 location: "Lahore, Pakistan"
 ---
 
-As a **Computer Science Lecturer** at Superior University Lahore (Aug 2023 – Feb 2025), I taught foundational courses to undergraduate students, focusing on cultivating programming skills and logical reasoning.
+As a **Computer Science Lecturer** at Gold Campus, Superior University Lahore (Aug 2023 – Feb 2025), I taught foundational courses to undergraduate students, focusing on cultivating programming skills and logical reasoning.
 
 ## Courses Taught
 
