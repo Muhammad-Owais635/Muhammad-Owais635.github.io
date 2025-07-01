@@ -4,7 +4,7 @@ collection: talks
 type: "Conference Talk"
 permalink: /talks/2024-xx-xx-machine-learning-presentation
 venue: "ITEC Punjab, Lahore"
-date: 2024-xx-xx
+date: 2024-09-19
 location: "Lahore, Pakistan"
 ---
 
