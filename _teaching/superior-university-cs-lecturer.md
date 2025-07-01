@@ -1,7 +1,7 @@
 ---
-title: "Teaching Experience - Superior University Lahore"
+title: "Superior University Lahore"
 collection: teaching
-type: "Undergraduate Courses"
+type: "Lecturer"
 permalink: /teaching/superior-university-cs-lecturer
 venue: "Superior University Lahore, Department of Computer Science"
 date: 2023-08-16
