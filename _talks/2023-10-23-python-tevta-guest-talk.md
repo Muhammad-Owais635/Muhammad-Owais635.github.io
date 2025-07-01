@@ -28,10 +28,10 @@ Visit [TEVTA Official Website](https://tevta.gop.pk)
 
 <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;">
 
-  <img src="/images/tevta-python-1.jpg" alt="Python Talk at TEVTA - Image 1" style="width: 30%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
+  <img src="/images/tevta-python-1.jpeg" alt="Python Talk at TEVTA - Image 1" style="width: 30%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
 
-  <img src="/images/tevta-python-2.jpg" alt="Python Talk at TEVTA - Image 2" style="width: 30%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
+  <img src="/images/tevta-python-2.jpeg" alt="Python Talk at TEVTA - Image 2" style="width: 30%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
 
-  <img src="/images/tevta-python-3.jpg" alt="Python Talk at TEVTA - Image 3" style="width: 30%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
+  <img src="/images/tevta-python-3.jpeg" alt="Python Talk at TEVTA - Image 3" style="width: 30%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
 
 </div>
