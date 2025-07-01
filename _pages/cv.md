@@ -35,7 +35,7 @@ EDUCATION
     * **Courses**: Artificial Intelligence, Operation Research, Numerical Computing, Technical and Report Writing, Cloud Computing, Compiler Construction and more
 
 Publications
-======
+------
   <ul>{% for post in site.publications reversed %}
     {% include archive-single-cv.html %}
   {% endfor %}</ul>
