@@ -34,13 +34,13 @@ We were honored with:
 
 <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;">
 
-  <img src="/images/codeex-2024-1.jpg" alt="CodeEx 2024 Event Image 1" style="width: 45%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
+  <img src="/images/codeex-2024-1.jpeg" alt="CodeEx 2024 Event Image 1" style="width: 45%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
 
-  <img src="/images/codeex-2024-2.jpg" alt="CodeEx 2024 Event Image 2" style="width: 45%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
+  <img src="/images/codeex-2024-2.jpeg" alt="CodeEx 2024 Event Image 2" style="width: 45%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
 
-  <img src="/images/codeex-2024-3.jpg" alt="CodeEx 2024 Event Image 3" style="width: 45%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
+  <img src="/images/codeex-2024-3.jpeg" alt="CodeEx 2024 Event Image 3" style="width: 45%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
 
-  <img src="/images/codeex-2024-4.jpg" alt="CodeEx 2024 Event Image 4" style="width: 45%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
+  <img src="/images/codeex-2024-4.jpeg" alt="CodeEx 2024 Event Image 4" style="width: 45%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
 
 </div>
 
