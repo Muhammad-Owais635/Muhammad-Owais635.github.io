@@ -34,7 +34,11 @@ EDUCATION
     * Plantobook, a React Native mobile application inspired by Instagram but designed specifically for plants.
     * **Courses**: Artificial Intelligence, Operation Research, Numerical Computing, Technical and Report Writing, Cloud Computing, Compiler Construction and more
 
-
+Publications
+======
+  <ul>{% for post in site.publications reversed %}
+    {% include archive-single-cv.html %}
+  {% endfor %}</ul>
 
 PUBLICATIONS
 ------
@@ -106,3 +110,20 @@ SKILLS
 
 **Miscellaneous** <br>
   Git / Microsoft Oﬃce / Kaldi toolkit / Firebase / Shell (Bash) / LATEX(Overleaf/R Markdown) / Ubuntu <br>
+
+  
+Talks
+======
+  <ul>{% for post in site.talks reversed %}
+    {% include archive-single-talk-cv.html  %}
+  {% endfor %}</ul>
+  
+Teaching
+======
+  <ul>{% for post in site.teaching reversed %}
+    {% include archive-single-cv.html %}
+  {% endfor %}</ul>
+  
+Service and leadership
+======
+* Currently signed in to 43 different slack teams
