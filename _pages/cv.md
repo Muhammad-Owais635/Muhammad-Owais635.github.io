@@ -40,32 +40,6 @@ PUBLICATIONS
     {% include archive-single-cv.html %}
   {% endfor %}</ul>
 
-PUBLICATIONS
-------
-
-
-2025
-------
-* **A deep Reinforcement learning-based robust Intrusion Detection System for securing IoMT Healthcare Networks** <br>
-  _**Authors**: Jamshed Ali, Chengliang Wang, Muhammad Wajeeh, Muhammad Owais  &nbsp;  &nbsp; **Journal Name**: Frontiers in Medicine, 12, 1524286. 2025_
-
-2024
-------
-* **FOID: A Feature-Optimized Intrusion Detection System for Securing IoMT Healthcare Networks** <br>
-  _**Authors**: Shaikh, J. A., Wang, C., Owais, M., Zia &nbsp;  &nbsp;  **Journal Name**: In 2024 18th ICOSST (pp. 1-7). IEEE._
-
-* **RCLNet: an eﬀective anomaly-based intrusion detection for securing the IoMT system** <br>
-  _**Authors**: Shaikh, J. A., Wang, C., Muhammad, W. U. S., Arshad, M., Owais  &nbsp;  &nbsp; **Journal Name**: Frontiers in Digital Health, 6, 1467241. 2024_
-
-* **Breaking Barriers in Urdu Speaker Identification: Dataset Construction and Wav2vec2.0 Fine‑Tuning** <br>
-  _**Authors**: Muhammad Irfan, Farha Adeeba, Muhammad Owais &nbsp;  &nbsp;  **Journal Name**: Circuits, Systems and Signal Processing (CSSP). 2024_
-
-
-2023
-------
-* **A Holistic Approach for Detecting Socialbots on Twitter: Integration of Diverse Features** <br>
-  _**Authors**: Muhammad Owais, Muhammad Shoaib, Muhammad Waseem  &nbsp;  &nbsp; **Journal Name**: The Nucleus pp. 199–204. 2023_
-
 
 WORK EXPERIENCE
 ------
