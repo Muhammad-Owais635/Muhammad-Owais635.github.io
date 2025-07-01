@@ -1,7 +1,7 @@
 ---
-title: "Teaching Experience - UET Lahore"
+title: "UET Lahore"
 collection: teaching
-type: "Undergraduate Course"
+type: "Lecturer"
 permalink: /teaching/uet-lahore-python-course
 venue: "University of Engineering and Technology (UET) Lahore, Center for Language Engineering"
 date: 2024-09-20
