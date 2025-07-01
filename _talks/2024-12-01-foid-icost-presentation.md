@@ -4,7 +4,7 @@ collection: talks
 type: "Conference proceedings talk"
 permalink: /talks/2024-12-01-foid-icost-presentation
 venue: "2024 18th International Conference on Open Source Systems and Technologies (ICOSST), IEEE"
-date: 2024-12-01
+date: 2024-12-26
 location: "Lahore, Pakistan"
 ---
 
