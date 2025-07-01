@@ -28,8 +28,8 @@ EDUCATION
     * **Research thesis titled**: ”A Technique To Enhance Social Media Reliance By Detection Social Bots”
     * **Courses**: Advanced Operating Systems, Advanced Computer Architecture, Theory of Computation, Advanced Algorithm Analysis, Research Methodologies, Web Engineering, Information Security Management
 * **B.S in Computer Science**
-  * **University of Sargodha, Sargodha, 2021**  &nbsp;  &nbsp; _[ 20/10/2017 – 27/08/2021 ]_
-  * **City**: Lahore    &nbsp;  &nbsp;  **Country**: Pakistan
+  * **University of Sargodha**  &nbsp;  &nbsp; _[ 20/10/2017 – 27/08/2021 ]_
+  * **City**: Sargodha    &nbsp;  &nbsp;  **Country**: Pakistan
     * **Final year project titled**: ”Planting the Seeds of Sustainability with Plantobook”
     * Plantobook, a React Native mobile application inspired by Instagram but designed specifically for plants.
     * **Courses**: Artificial Intelligence, Operation Research, Numerical Computing, Technical and Report Writing, Cloud Computing, Compiler Construction and more
