@@ -24,9 +24,9 @@ The presentation covered the novel feature selection techniques and machine lear
   
   <img src="/images/icost-conference2.jpeg" alt="ICOSST Conference Image 2" style="width: 48%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
   
-  <img src="/images/icost-conference3.jpeg" alt="ICOSST Conference Image 3" style="width: 48%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
+  <img src="/images/icost-conference5.jpeg" alt="ICOSST Conference Image 5" style="width: 48%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
   
   <img src="/images/icost-conference4.jpeg" alt="ICOSST Conference Image 4" style="width: 48%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
-  <img src="/images/icost-conference5.jpeg" alt="ICOSST Conference Image 5" style="width: 48%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
+  
 
 </div>
