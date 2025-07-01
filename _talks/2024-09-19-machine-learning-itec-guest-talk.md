@@ -27,12 +27,12 @@ As a token of appreciation, I was awarded a **certificate** and an **honorary sh
 
 <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;">
 
-  <img src="/images/ml-itec-talk-1.jpg" alt="ML Talk at ITEC - Image 1" style="width: 45%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
+  <img src="/images/ml-itec-talk-1.jpeg" alt="ML Talk at ITEC - Image 1" style="width: 45%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
 
-  <img src="/images/ml-itec-talk-2.jpg" alt="ML Talk at ITEC - Image 2" style="width: 45%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
+  <img src="/images/ml-itec-talk-2.jpeg" alt="ML Talk at ITEC - Image 2" style="width: 45%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
 
-  <img src="/images/ml-itec-talk-3.jpg" alt="ML Talk at ITEC - Image 3" style="width: 45%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
+  <img src="/images/ml-itec-talk-3.jpeg" alt="ML Talk at ITEC - Image 3" style="width: 45%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
 
-  <img src="/images/ml-itec-talk-4.jpg" alt="ML Talk at ITEC - Image 4" style="width: 45%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
+  <img src="/images/ml-itec-talk-4.jpeg" alt="ML Talk at ITEC - Image 4" style="width: 45%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
 
 </div>
