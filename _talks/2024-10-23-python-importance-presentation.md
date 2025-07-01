@@ -4,7 +4,7 @@ collection: talks
 type: "Talk"
 permalink: /talks/2024-10-23-python-importance-presentation
 venue: "ITEC Punjab, Lahore"
-date: 2023-xx-xx
+date: 2023-10-23
 location: "Lahore, Pakistan"
 ---
 
