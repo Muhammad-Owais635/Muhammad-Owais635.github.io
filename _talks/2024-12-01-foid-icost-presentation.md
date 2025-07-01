@@ -20,12 +20,12 @@ The presentation covered the novel feature selection techniques and machine lear
 
 <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;">
 
-  <img src="/images/icost-conference1.jpg" alt="ICOSST Conference Image 1" style="width: 48%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
+  <img src="/images/icost-conference1.jpeg" alt="ICOSST Conference Image 1" style="width: 48%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
   
-  <img src="/images/icost-conference2.jpg" alt="ICOSST Conference Image 2" style="width: 48%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
+  <img src="/images/icost-conference2.jpeg" alt="ICOSST Conference Image 2" style="width: 48%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
   
-  <img src="/images/icost-conference3.jpg" alt="ICOSST Conference Image 3" style="width: 48%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
+  <img src="/images/icost-conference3.jpeg" alt="ICOSST Conference Image 3" style="width: 48%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
   
-  <img src="/images/icost-conference4.jpg" alt="ICOSST Conference Image 4" style="width: 48%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
+  <img src="/images/icost-conference4.jpeg" alt="ICOSST Conference Image 4" style="width: 48%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
 
 </div>
