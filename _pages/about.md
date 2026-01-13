@@ -7,40 +7,70 @@ redirect_from:
   - /about.html
 ---
 
-I am **Muhammad Owais**, a dedicated researcher and Computer Science Ph.D. student at **Tokyo Metropolitan University (TMU)**, Tokyo, Japan, currently working on **social network analysis and security** within the context of **Natural Language Processing (NLP)** and **Machine Learning (ML)**.
+## 👋 Hi, I’m **Muhammad Owais**
 
-My journey into AI began not in a lab, but with a personal fascination with its transformative potential. I believe that **Artificial Intelligence is a revolutionary force**, reshaping our world by expanding human capability and offering limitless opportunities. Experiencing this firsthand sparked a passion in me to understand how AI can bridge human communication with computational intelligence. That passion has become the driving force behind my academic and research career.
+I am a **Ph.D. researcher in Computer Science** at **Tokyo Metropolitan University** (TMU), Japan, specializing in **social network security, NLP, and machine learning**. I build intelligent systems to understand and defend online environments — from detecting deceptive bot behavior to strengthening social resilience against automated threats.
 
-### 🎓 Academic Foundation
-
-I earned my **BS in Computer Science** from the **University of Sargodha**, where I first built a foundation in core computing concepts and completed a full-stack mobile development project titled *Plantobook*, an Instagram-inspired app designed for plant enthusiasts.
-
-Motivated to explore more intellectually demanding areas, I pursued an **MS in Computer Science** at the **University of Engineering and Technology (UET) Lahore**, one of Pakistan’s top engineering institutions. During this program, I deepened my knowledge in **Artificial Intelligence**, **Theory of Computation**, **Information Security**, **Advanced Algorithm Analysis**, and **Research Methodologies**. This rigorous curriculum sharpened both my theoretical understanding and analytical thinking.
-
-### 💡 Skill Building and Certifications
-
-In the summer of 2022, I began formally shaping my AI skillset. I completed the **"Python Core"** course from Sololearn and enrolled in the prestigious **Machine Learning Specialization by Andrew Ng** (Stanford University, Coursera), giving me a strong practical grounding in algorithms and ML workflows.
-
-### 🧪 Research and Professional Experience
-
-My hands-on experience in AI research began at the **Center for Language Engineering (CLE), UET Lahore**, where I worked as a **Research Officer**. There, I contributed to cutting-edge NLP and speech processing projects including:
-- **Speaker identification** using Wav2Vec, i-vectors, and x-vectors
-- **Urdu Automatic Speech Recognition (ASR)**
-- **Action item detection** from Urdu meeting transcripts
-- Integration of ML/DL models via Flask APIs into Django-based web platforms
-
-Simultaneously, I pursued my **MS research thesis** titled *“A Technique to Enhance Social Media Reliance by Detecting Social Bots.”* In this project, I engineered an **ensemble learning approach** combining content-based, behavioral, temporal, and network features. The proposed **XGBoost** model achieved **0.898 accuracy** on the **Twibot-22** dataset, outperforming existing benchmarks.
-
-As a **Lecturer at Superior University Lahore**, I translated this knowledge into practice by teaching **Programming Fundamentals**, **Object-Oriented Programming**, and **Data Structures and Algorithms**, helping students grasp complex technical topics. I also actively participated in collaborative research, contributing to a **deep reinforcement learning-based Intrusion Detection System** for IoMT networks, which later became part of an international publication.
-
-### 📍 Current Research
-
-Now, at **Tokyo Metropolitan University**, I serve as a **Ph.D. researcher** and research assistant, where I’m delving deeper into **social networks, anomaly detection, and AI-driven security**. My current work investigates large-scale botnet behavior, automated detection methods, and NLP applications in multilingual contexts.
+My work sits at the intersection of **AI, cybersecurity, and human communication**. I am passionate about designing systems that are not only **technically strong**, but also **fair, explainable, and socially responsible**.
 
 ---
 
-## 🎯 Future Aspirations
+## 🎓 Academic Journey
 
-I see **AI not just as a tool, but as a language**—one that translates human complexity into structured intelligence. My ultimate goal is to contribute to resilient and intelligent systems that solve real-world problems, especially in the domains of **cybersecurity**, **speech & language technology**, and **social computing**.
+**Ph.D. in Computer Science, Tokyo Metropolitan University** (2024 – Present)  
+Research focus: *AI for social network security, large-scale behavior analysis, anomaly detection, and multilingual NLP.*
 
-Driven by curiosity, grounded in experience, and guided by purpose, I am committed to advancing both research and innovation in AI.
+**M.S. in Computer Science, UET Lahore**  
+Deepened expertise in machine learning, algorithms, information security, and research methodologies. My Master’s thesis, *“Enhancing Social Media Reliability by Detecting Social Bots,”* explored ensemble and feature-rich ML approaches for bot detection, achieving **benchmark performance on Twibot-22**.
+
+**B.S. in Computer Science, University of Sargodha**  
+Built strong fundamentals in computing and developed *Plantobook*, a full-stack social app for plant enthusiasts.
+
+---
+
+## 💡 Professional & Research Experience
+
+### 🧪 AI & NLP Research
+
+- **Ph.D. Researcher, TMU** — Investigating botnet dynamics, large-scale bot detection, and robust NLP models for multilingual social data.
+- **Research Officer, Center for Language Engineering (CLE), UET Lahore**  
+  Worked on cutting-edge NLP and speech processing projects such as:
+  - **Speaker identification** using advanced audio representations.
+  - **Urdu ASR (Automatic Speech Recognition)** research and model building.
+  - **Action item detection** from meeting transcripts.
+  - Integrating ML/DL systems via APIs into web platforms.
+
+### 👨‍🏫 Teaching & Mentoring
+
+- **Lecturer, Superior University Lahore** — Taught core courses including:
+  - Programming Fundamentals
+  - Object-Oriented Programming
+  - Data Structures & Algorithms  
+  Helping students grasp concepts clearly and build strong technical foundations.
+
+### 🤝 Collaborative Projects
+
+- **Deep Reinforcement Learning-based Intrusion Detection (IoMT)**  
+  Contributed to a joint research project on secure medical systems, which progressed into a published work.
+
+---
+
+## 🛠 Skills & Certifications
+
+- **Languages & Tools:** Python, C/C++, Git, Flask/Django, Jupyter, VSCode
+- **Core Expertise:** Machine Learning, Deep Learning, NLP, Social Network Analysis
+- **Certifications:**  
+  - Python Core (Sololearn)  
+  - **Machine Learning Specialization** by Andrew Ng (Coursera)
+
+I enjoy combining theoretical insight with practical solutions to solve real-world AI challenges.
+
+---
+
+## 🌍 What Drives Me
+
+I see **AI as a language that amplifies human intent and understanding**. My research and professional journey are driven by a goal to build **resilient, ethical, and transparent systems** — especially in cybersecurity, speech & language tech, and social computing.
+
+Whether I’m refining algorithms or teaching students, my focus remains on **bridging computational intelligence with human values**.
+
+Let’s build smarter systems together. 🚀
