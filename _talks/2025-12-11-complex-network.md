@@ -4,8 +4,8 @@ collection: talks
 type: "Conference proceedings talk"
 permalink: /talks/2024-12-01-foid-icost-presentation
 venue: "The 14th International Conference on Complex Networks and their Applications"
-date: 2024-12-26
-location: "Lahore, Pakistan"
+date: 2025-12-11
+location: "Binghamton, New York, USA"
 ---
 
 
