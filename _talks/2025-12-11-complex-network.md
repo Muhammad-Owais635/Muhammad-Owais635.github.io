@@ -1,13 +1,13 @@
-
 ---
 title: "Presentation on Text-Based Social Bot Detection Leveraging Linguistic Structures and Sentiment Features"
 collection: talks
 type: "Conference proceedings talk"
-permalink: /talks/2025-12-11-complex-network
-venue: "The 14th International Conference on Complex Networks and their Applications"
-date: 2025-12-11
-location: "Binghamton, New York, USA"
+permalink: /talks/2024-12-01-foid-icost-presentation
+venue: "2024 18th International Conference on Open Source Systems and Technologies (ICOSST), IEEE"
+date: 2024-12-26
+location: "Lahore, Pakistan"
 ---
+
 
 I presented my research paper titled **Text-Based Social Bot Detection Leveraging Linguistic Structures and Sentiment Features** at the prestigious **Complex Networks Conference 2025**.
 
