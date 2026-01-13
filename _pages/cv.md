@@ -106,3 +106,14 @@ Teaching
   <ul>{% for post in site.teaching reversed %}
     {% include archive-single-cv.html %}
   {% endfor %}</ul>
+
+---
+
+<div style="text-align:right; margin-bottom:20px;">
+  <button onclick="window.print()"
+    style="padding:10px 16px; background:#2563eb; color:white;
+           border:none; border-radius:6px; cursor:pointer;
+           font-size:14px; font-weight:600;">
+    ⬇ Download CV (PDF)
+  </button>
+</div>
