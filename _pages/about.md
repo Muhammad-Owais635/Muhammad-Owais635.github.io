@@ -7,7 +7,7 @@ redirect_from:
   - /about.html
 ---
 
-## 👋 Hello — I’m **Muhammad Owais**
+## Hello — I’m **Muhammad Owais**
 
 I am a **Ph.D. researcher in Computer Science at Tokyo Metropolitan University (TMU), Japan**, where I work on **AI-driven analysis and security of social networks**. My research lies at the intersection of **Natural Language Processing, Machine Learning, and social computing**, with a focus on understanding and mitigating harmful and automated behavior in online platforms.
 
@@ -15,7 +15,7 @@ I am currently developing **Transformer-based models and large language model (L
 
 ---
 
-### 🧠 What I Work On
+### What I Work On
 
 My current research explores how modern neural architectures can capture both **linguistic meaning** and **behavioral signals** in social media. I combine:
 - **Transformer and LLM representations** for tweet- and user-level modeling  
@@ -27,7 +27,7 @@ Rather than treating social media as just text, I view it as a **complex dynamic
 
 ---
 
-### 🌍 Why This Matters
+### Why This Matters
 
 Online platforms increasingly shape **public opinion, political discourse, and social trust** — yet they are also vulnerable to **large-scale automated influence and abuse**. Traditional rule-based or shallow models are no longer sufficient. By leveraging **Transformers and large language models**, my goal is to build **next-generation AI systems** that can understand not only *what* is being said, but *who* is saying it, *how*, and *in what context*.
 
@@ -35,7 +35,7 @@ I aim to contribute research that supports **safer, fairer, and more transparent
 
 ---
 
-### 🔬 Research Philosophy
+### Research Philosophy
 
 I believe strong AI systems must be:
 - **Data-driven**, grounded in real social behavior  
