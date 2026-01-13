@@ -47,6 +47,4 @@ My work seeks to bridge **advanced machine learning** with **human-centered unde
 
 ---
 
-🔗 You can explore my detailed work and activities on the **Publications, CV, Talks, and <ul>{% for post in site.teaching reversed %}
-    {% include archive-single-cv.html %}
-  {% endfor %}</ul> Teaching** pages.
+🔗 You can explore my detailed work and activities on the **Publications, CV, Talks, and Teaching** pages.
