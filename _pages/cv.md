@@ -64,6 +64,15 @@ WORK EXPERIENCE
 
 CERTIFICATIONS
 ------
+🐍 **Deep Learning and Reinforcement Learning**  &nbsp;  &nbsp;  _[ 07/2025 ]_  <br>
+##### _**IBM**_ <br>
+
+🌐 **Gen AI Foundational Models for NLP & Language Understanding**  &nbsp;  &nbsp;  _[ 07/2025 ]_  <br>
+##### _**IBM**_ <br>
+
+🌐 **NLP: Twitter Sentiment Analysis**  &nbsp;  &nbsp;  _[ 08/2025 ]_  <br>
+##### _**Coursera Project Network**_ <br>
+
 🐍 **Python Core**  &nbsp;  &nbsp;  _[ 08/2022 ]_  <br>
 ##### _**Sololearn**_ <br>
 
