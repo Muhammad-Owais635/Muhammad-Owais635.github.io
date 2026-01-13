@@ -19,13 +19,13 @@ In this work, I proposed a text-based approach for detecting social bots by anal
 
 <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;">
 
-  <img src="/images/icost-conference1.jpeg" alt="ICOSST Conference Image 1" style="width: 48%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
+  <img src="/images/Complex1.jpg" alt="ICOSST Conference Image 1" style="width: 48%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
   
-  <img src="/images/icost-conference2.jpeg" alt="ICOSST Conference Image 2" style="width: 48%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
+  <img src="/images/Complex2.jpg" alt="ICOSST Conference Image 2" style="width: 48%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
   
-  <img src="/images/icost-conference5.jpeg" alt="ICOSST Conference Image 5" style="width: 48%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
+  <img src="/images/Complex3.jpg" alt="ICOSST Conference Image 5" style="width: 48%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
   
-  <img src="/images/icost-conference4.jpeg" alt="ICOSST Conference Image 4" style="width: 48%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
+  <img src="/images/Complex4.jpg" alt="ICOSST Conference Image 4" style="width: 48%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
   
 
 </div>
