@@ -2,75 +2,49 @@
 permalink: /
 title: "About Me"
 author_profile: true
-redirect_from: 
+redirect_from:
   - /about/
   - /about.html
 ---
 
-## 👋 Hi, I’m **Muhammad Owais**
+## 👋 Hello — I’m **Muhammad Owais**
 
-I am a **Ph.D. researcher in Computer Science** at **Tokyo Metropolitan University** (TMU), Japan, specializing in **social network security, NLP, and machine learning**. I build intelligent systems to understand and defend online environments — from detecting deceptive bot behavior to strengthening social resilience against automated threats.
+I am a **Ph.D. researcher in Computer Science at Tokyo Metropolitan University (TMU), Japan**, where I work on **AI-driven analysis and security of social networks**. My research lies at the intersection of **Natural Language Processing, Machine Learning, and social computing**, with a focus on understanding and mitigating harmful and automated behavior in online platforms.
 
-My work sits at the intersection of **AI, cybersecurity, and human communication**. I am passionate about designing systems that are not only **technically strong**, but also **fair, explainable, and socially responsible**.
-
----
-
-## 🎓 Academic Journey
-
-**Ph.D. in Computer Science, Tokyo Metropolitan University** (2024 – Present)  
-Research focus: *AI for social network security, large-scale behavior analysis, anomaly detection, and multilingual NLP.*
-
-**M.S. in Computer Science, UET Lahore**  
-Deepened expertise in machine learning, algorithms, information security, and research methodologies. My Master’s thesis, *“Enhancing Social Media Reliability by Detecting Social Bots,”* explored ensemble and feature-rich ML approaches for bot detection, achieving **benchmark performance on Twibot-22**.
-
-**B.S. in Computer Science, University of Sargodha**  
-Built strong fundamentals in computing and developed *Plantobook*, a full-stack social app for plant enthusiasts.
+I am currently developing **Transformer-based models and large language model (LM) pipelines** to analyze social media text, user behavior, and interaction patterns at scale. I am particularly interested in how **foundation models and LLMs** can be adapted beyond generic text generation to solve **real-world problems in social networks**, such as **bot detection, coordinated manipulation, and misinformation dynamics**.
 
 ---
 
-## 💡 Professional & Research Experience
+### 🧠 What I Work On
 
-### 🧪 AI & NLP Research
+My current research explores how modern neural architectures can capture both **linguistic meaning** and **behavioral signals** in social media. I combine:
+- **Transformer and LLM representations** for tweet- and user-level modeling  
+- **Temporal and behavioral features** to understand how accounts evolve over time  
+- **Network-aware learning** to detect coordinated and anomalous activity  
+- **Explainable AI** to make detection systems interpretable and trustworthy  
 
-- **Ph.D. Researcher, TMU** — Investigating botnet dynamics, large-scale bot detection, and robust NLP models for multilingual social data.
-- **Research Officer, Center for Language Engineering (CLE), UET Lahore**  
-  Worked on cutting-edge NLP and speech processing projects such as:
-  - **Speaker identification** using advanced audio representations.
-  - **Urdu ASR (Automatic Speech Recognition)** research and model building.
-  - **Action item detection** from meeting transcripts.
-  - Integrating ML/DL systems via APIs into web platforms.
-
-### 👨‍🏫 Teaching & Mentoring
-
-- **Lecturer, Superior University Lahore** — Taught core courses including:
-  - Programming Fundamentals
-  - Object-Oriented Programming
-  - Data Structures & Algorithms  
-  Helping students grasp concepts clearly and build strong technical foundations.
-
-### 🤝 Collaborative Projects
-
-- **Deep Reinforcement Learning-based Intrusion Detection (IoMT)**  
-  Contributed to a joint research project on secure medical systems, which progressed into a published work.
+Rather than treating social media as just text, I view it as a **complex dynamic system** where language, timing, and interaction patterns reveal how humans and automated agents behave differently.
 
 ---
 
-## 🛠 Skills & Certifications
+### 🌍 Why This Matters
 
-- **Languages & Tools:** Python, C/C++, Git, Flask/Django, Jupyter, VSCode
-- **Core Expertise:** Machine Learning, Deep Learning, NLP, Social Network Analysis
-- **Certifications:**  
-  - Python Core (Sololearn)  
-  - **Machine Learning Specialization** by Andrew Ng (Coursera)
+Online platforms increasingly shape **public opinion, political discourse, and social trust** — yet they are also vulnerable to **large-scale automated influence and abuse**. Traditional rule-based or shallow models are no longer sufficient. By leveraging **Transformers and large language models**, my goal is to build **next-generation AI systems** that can understand not only *what* is being said, but *who* is saying it, *how*, and *in what context*.
 
-I enjoy combining theoretical insight with practical solutions to solve real-world AI challenges.
+I aim to contribute research that supports **safer, fairer, and more transparent digital spaces**, especially in multilingual and cross-cultural settings.
 
 ---
 
-## 🌍 What Drives Me
+### 🔬 Research Philosophy
 
-I see **AI as a language that amplifies human intent and understanding**. My research and professional journey are driven by a goal to build **resilient, ethical, and transparent systems** — especially in cybersecurity, speech & language tech, and social computing.
+I believe strong AI systems must be:
+- **Data-driven**, grounded in real social behavior  
+- **Robust**, able to handle noisy and adversarial environments  
+- **Explainable**, so humans can trust their decisions  
+- **Socially responsible**, because their impact extends beyond algorithms  
 
-Whether I’m refining algorithms or teaching students, my focus remains on **bridging computational intelligence with human values**.
+My work seeks to bridge **advanced machine learning** with **human-centered understanding of online communication**.
 
-Let’s build smarter systems together. 🚀
+---
+
+🔗 You can explore my detailed work and activities on the **Publications, CV, Talks, and Teaching** pages.
