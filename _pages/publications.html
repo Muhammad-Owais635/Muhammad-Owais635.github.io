@@ -6,19 +6,58 @@ author_profile: true
 ---
 
 <style>
-/* ===== Publications Page Styling ===== */
+/* ===== Page Background Harmony ===== */
 
-.pub-container {
-    max-width: 1050px;
-    margin: auto;
-    padding: 20px 10px 40px;
+body {
+    background: linear-gradient(135deg, #0f172a, #1e293b);
 }
+
+/* ===== Glass Card Layout ===== */
+
+.pub-wrapper {
+    max-width: 1100px;
+    margin: 50px auto;
+    padding: 0 20px 40px;
+}
+
+.pub-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 18px;
+    padding: 50px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    border: 1px solid rgba(255,255,255,0.06);
+    transition: 0.3s ease;
+}
+
+.pub-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+}
+
+/* ===== Header Styling ===== */
+
+.pub-title {
+    font-size: 42px;
+    margin-bottom: 8px;
+    background: linear-gradient(90deg, #38bdf8, #818cf8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.pub-subtitle {
+    color: #94a3b8;
+    margin-bottom: 35px;
+    font-size: 16px;
+}
+
+/* ===== Scholar Box ===== */
 
 .pub-intro {
     background: linear-gradient(135deg, rgba(56,189,248,0.12), rgba(129,140,248,0.12));
     border: 1px solid rgba(255,255,255,0.08);
     border-radius: 14px;
-    padding: 18px 22px;
+    padding: 16px 20px;
     margin-bottom: 35px;
     color: #cbd5f5;
     font-size: 15px;
@@ -34,9 +73,11 @@ author_profile: true
     text-decoration: underline;
 }
 
+/* ===== Section Headings ===== */
+
 .pub-section-title {
     margin-top: 35px;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     font-size: 24px;
     font-weight: 600;
     color: #e2e8f0;
@@ -46,7 +87,7 @@ author_profile: true
 .pub-section-title::after {
     content: "";
     display: block;
-    width: 45px;
+    width: 46px;
     height: 3px;
     margin-top: 6px;
     border-radius: 3px;
@@ -60,12 +101,13 @@ author_profile: true
     margin: 10px 0 20px;
 }
 
-/* Optional enhancement for archive items */
+/* ===== Publication Items Enhancement ===== */
+
 .archive__item {
     background: rgba(255,255,255,0.03);
-    border-radius: 10px;
-    padding: 14px 18px;
-    margin-bottom: 14px;
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-bottom: 16px;
     transition: 0.25s ease;
     border: 1px solid rgba(255,255,255,0.04);
 }
@@ -76,7 +118,6 @@ author_profile: true
     border-color: rgba(56,189,248,0.25);
 }
 
-/* Improve text hierarchy */
 .archive__item-title {
     font-size: 16px;
     font-weight: 600;
@@ -87,19 +128,29 @@ author_profile: true
     color: #94a3b8;
 }
 
-/* Mobile spacing */
+/* ===== Responsive ===== */
+
 @media (max-width: 768px) {
-    .pub-section-title {
-        font-size: 20px;
+
+    .pub-card {
+        padding: 30px 22px;
     }
 
-    .archive__item {
-        padding: 12px 14px;
+    .pub-title {
+        font-size: 32px;
+    }
+
+    .pub-section-title {
+        font-size: 20px;
     }
 }
 </style>
 
-<div class="pub-container">
+<div class="pub-wrapper">
+<div class="pub-card">
+
+<div class="pub-title">Publications</div>
+<div class="pub-subtitle">Research articles, conference papers, and scholarly work</div>
 
 {% if site.author.googlescholar %}
 <div class="pub-intro">
@@ -110,7 +161,6 @@ author_profile: true
 
 {% include base_path %}
 
-<!-- Category-based rendering -->
 {% if site.publication_category %}
   {% for category in site.publication_category %}
     {% assign title_shown = false %}
@@ -132,4 +182,5 @@ author_profile: true
   {% endfor %}
 {% endif %}
 
+</div>
 </div>
