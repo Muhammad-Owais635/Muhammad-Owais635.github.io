@@ -1,0 +1,43 @@
+---
+permalink: /
+title: "About Me"
+author_profile: true
+redirect_from:
+  - /about/
+  - /about.html
+---
+
+<style>
+.teaching-container {
+  background: linear-gradient(135deg, #f5f7fa, #e4ecf7);
+  padding: 30px;
+  border-radius: 12px;
+}
+
+.teaching-container h2 {
+  color: #2c3e50;
+}
+
+.archive__item {
+  background: white;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  transition: 0.3s;
+}
+
+.archive__item:hover {
+  transform: translateY(-5px);
+}
+</style>
+
+<div class="teaching-container">
+
+{% include base_path %}
+
+{% for post in site.teaching reversed %}
+  {% include archive-single.html %}
+{% endfor %}
+
+</div>
