@@ -5,22 +5,122 @@ permalink: /publications/
 author_profile: true
 ---
 
+<style>
+/* ===== Publications Page Styling ===== */
+
+.pub-container {
+    max-width: 1050px;
+    margin: auto;
+    padding: 20px 10px 40px;
+}
+
+.pub-intro {
+    background: linear-gradient(135deg, rgba(56,189,248,0.12), rgba(129,140,248,0.12));
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px;
+    padding: 18px 22px;
+    margin-bottom: 35px;
+    color: #cbd5f5;
+    font-size: 15px;
+}
+
+.pub-intro a {
+    color: #38bdf8;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.pub-intro a:hover {
+    text-decoration: underline;
+}
+
+.pub-section-title {
+    margin-top: 35px;
+    margin-bottom: 8px;
+    font-size: 24px;
+    font-weight: 600;
+    color: #e2e8f0;
+    position: relative;
+}
+
+.pub-section-title::after {
+    content: "";
+    display: block;
+    width: 45px;
+    height: 3px;
+    margin-top: 6px;
+    border-radius: 3px;
+    background: linear-gradient(90deg, #38bdf8, #818cf8);
+}
+
+.pub-divider {
+    border: none;
+    height: 1px;
+    background: rgba(255,255,255,0.08);
+    margin: 10px 0 20px;
+}
+
+/* Optional enhancement for archive items */
+.archive__item {
+    background: rgba(255,255,255,0.03);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 14px;
+    transition: 0.25s ease;
+    border: 1px solid rgba(255,255,255,0.04);
+}
+
+.archive__item:hover {
+    transform: translateY(-2px);
+    background: rgba(56,189,248,0.08);
+    border-color: rgba(56,189,248,0.25);
+}
+
+/* Improve text hierarchy */
+.archive__item-title {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.archive__item-excerpt {
+    font-size: 14px;
+    color: #94a3b8;
+}
+
+/* Mobile spacing */
+@media (max-width: 768px) {
+    .pub-section-title {
+        font-size: 20px;
+    }
+
+    .archive__item {
+        padding: 12px 14px;
+    }
+}
+</style>
+
+<div class="pub-container">
+
 {% if site.author.googlescholar %}
-  <div class="wordwrap">You can also find my articles on <a href="{{site.author.googlescholar}}">my Google Scholar profile</a>.</div>
+<div class="pub-intro">
+    You can also find my articles on 
+    <a href="{{site.author.googlescholar}}" target="_blank">my Google Scholar profile</a>.
+</div>
 {% endif %}
 
 {% include base_path %}
 
-<!-- New style rendering if publication categories are defined -->
+<!-- Category-based rendering -->
 {% if site.publication_category %}
-  {% for category in site.publication_category  %}
+  {% for category in site.publication_category %}
     {% assign title_shown = false %}
     {% for post in site.publications reversed %}
       {% if post.category != category[0] %}
         {% continue %}
       {% endif %}
       {% unless title_shown %}
-        <h2>{{ category[1].title }}</h2><hr />
+        <div class="pub-section-title">{{ category[1].title }}</div>
+        <hr class="pub-divider">
         {% assign title_shown = true %}
       {% endunless %}
       {% include archive-single.html %}
@@ -32,5 +132,4 @@ author_profile: true
   {% endfor %}
 {% endif %}
 
-
-
+</div>
