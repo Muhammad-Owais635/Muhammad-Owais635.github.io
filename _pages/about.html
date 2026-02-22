@@ -6,38 +6,151 @@ redirect_from:
   - /about/
   - /about.html
 ---
-
 <style>
-.teaching-container {
-  background: linear-gradient(135deg, #f5f7fa, #e4ecf7);
-  padding: 30px;
-  border-radius: 12px;
+
+/* ===== Page Container ===== */
+.about-container{
+  max-width: 950px;
+  margin: auto;
+  padding: 40px;
+  background: linear-gradient(135deg,#f8fbff,#eef3f9);
+  border-radius: 14px;
 }
 
-.teaching-container h2 {
-  color: #2c3e50;
+/* ===== Title ===== */
+.about-title{
+  font-size: 2.4rem;
+  font-weight: 700;
+  color:#1f2d3d;
+  margin-bottom:10px;
 }
 
-.archive__item {
-  background: white;
-  padding: 20px;
-  margin-bottom: 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-  transition: 0.3s;
+.highlight-name{
+  background: linear-gradient(90deg,#2563eb,#7c3aed);
+  -webkit-background-clip:text;
+  color:transparent;
 }
 
-.archive__item:hover {
-  transform: translateY(-5px);
+/* ===== Intro Card ===== */
+.about-intro{
+  background:white;
+  padding:25px;
+  border-radius:14px;
+  box-shadow:0 6px 18px rgba(0,0,0,0.07);
+  margin-bottom:30px;
+  line-height:1.7;
 }
+
+/* ===== Section Cards ===== */
+.section-card{
+  background:white;
+  padding:25px;
+  margin-top:25px;
+  border-radius:14px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.06);
+  transition:0.3s;
+}
+
+.section-card:hover{
+  transform:translateY(-4px);
+}
+
+/* ===== Section Titles ===== */
+.section-title{
+  font-size:1.5rem;
+  font-weight:600;
+  color:#2563eb;
+  margin-bottom:12px;
+}
+
+/* ===== Lists ===== */
+.modern-list li{
+  margin-bottom:10px;
+  padding-left:8px;
+}
+
+/* ===== Philosophy Box ===== */
+.philosophy{
+  background:linear-gradient(135deg,#2563eb,#7c3aed);
+  color:white;
+}
+
+.philosophy ul{
+  margin-top:10px;
+}
+
+/* ===== Link Footer ===== */
+.about-footer{
+  margin-top:30px;
+  text-align:center;
+  font-weight:500;
+  color:#374151;
+}
+
 </style>
 
-<div class="teaching-container">
 
-{% include base_path %}
+<div class="about-container">
 
-{% for post in site.teaching reversed %}
-  {% include archive-single.html %}
-{% endfor %}
+<div class="about-title">
+Hello — I’m <span class="highlight-name">Muhammad Owais</span>
+</div>
+
+<div class="about-intro">
+
+I am a <b>Ph.D. researcher in Computer Science at Tokyo Metropolitan University (TMU), Japan</b>, working on <b>AI-driven analysis and security of social networks</b>.  
+My research lies at the intersection of <b>Natural Language Processing, Machine Learning, and Social Computing</b>, focusing on understanding and mitigating harmful and automated behavior in online platforms.
+
+I develop <b>Transformer-based models and Large Language Model pipelines</b> to analyze social media text, user behavior, and interaction dynamics at scale — enabling AI systems to move beyond text generation toward solving real-world societal challenges such as <b>bot detection, coordinated manipulation, and misinformation analysis</b>.
+
+</div>
+
+
+<div class="section-card">
+<div class="section-title">🚀 What I Work On</div>
+
+<ul class="modern-list">
+<li><b>Transformer & LLM representations</b> for tweet- and user-level modeling</li>
+<li><b>Temporal behavioral analysis</b> of evolving online accounts</li>
+<li><b>Network-aware learning</b> for coordinated activity detection</li>
+<li><b>Explainable AI</b> for trustworthy automated decision systems</li>
+</ul>
+
+Rather than viewing social media purely as text, I treat it as a 
+<b>complex dynamic socio-technical system</b> where language, timing,
+and interaction patterns reveal behavioral intelligence.
+
+</div>
+
+
+<div class="section-card">
+<div class="section-title">🌍 Why This Matters</div>
+
+Online platforms increasingly influence <b>public opinion, political discourse, and social trust</b>, yet remain vulnerable to automated influence campaigns.
+
+My goal is to design <b>next-generation AI systems</b> capable of understanding not only <i>what</i> is said, but also <i>who</i> says it, <i>how</i>, and <i>within which context</i>, contributing toward <b>safer and more transparent digital ecosystems</b> across multilingual environments.
+
+</div>
+
+
+<div class="section-card philosophy">
+<div class="section-title">🧠 Research Philosophy</div>
+
+<ul>
+<li><b>Data-driven</b> — grounded in real social behavior</li>
+<li><b>Robust</b> — resilient to noisy and adversarial environments</li>
+<li><b>Explainable</b> — enabling human trust in AI decisions</li>
+<li><b>Socially Responsible</b> — designed with societal impact in mind</li>
+</ul>
+
+My work bridges <b>advanced machine learning</b> with 
+<b>human-centered understanding of online communication</b>.
+
+</div>
+
+
+<div class="about-footer">
+🔗 Explore more in <b>Publications • CV • Talks • Teaching</b>
+</div>
 
 </div>
