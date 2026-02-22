@@ -1,1 +1,81 @@
+---
+---
 
+/* ===== Modern Academic Theme ===== */
+
+body {
+  background: #f7f9fc;
+  font-family: -apple-system, BlinkMacSystemFont,
+               "Segoe UI", Roboto, sans-serif;
+}
+
+/* Page container */
+.page {
+  background: white;
+  border-radius: 14px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+  padding: 30px;
+}
+
+/* Titles */
+h1, h2, h3 {
+  font-weight: 650;
+  color: #1f2937;
+}
+
+/* Gradient Name */
+.author__name {
+  background: linear-gradient(90deg,#2563eb,#7c3aed);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* Sidebar card */
+.author__content {
+  background: white;
+  padding: 18px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.07);
+}
+
+/* Navigation bar */
+.masthead {
+  background: white;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+/* Links */
+a {
+  color:#2563eb;
+  transition:0.3s;
+}
+
+a:hover {
+  color:#7c3aed;
+}
+
+/* Cards (Teaching / Publications) */
+.archive__item {
+  background:white;
+  border-radius:12px;
+  padding:20px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.06);
+  transition:0.3s;
+}
+
+.archive__item:hover{
+  transform:translateY(-5px);
+}
+
+/* Buttons */
+.btn {
+  border-radius:8px;
+  background:linear-gradient(90deg,#2563eb,#7c3aed);
+  color:white;
+}
+
+/* Footer */
+.page__footer {
+  background:#111827;
+  color:#e5e7eb;
+}
