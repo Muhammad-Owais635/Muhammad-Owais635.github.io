@@ -1,31 +1,31 @@
----
----
+/* ===== Modern Academic Theme — Refined ===== */
 
-/* ===== Modern Academic Theme ===== */
-
+/* Background */
 body {
-  background: #f7f9fc;
+  background: linear-gradient(135deg, #f6f9ff, #eef2f9);
   font-family: -apple-system, BlinkMacSystemFont,
                "Segoe UI", Roboto, sans-serif;
+  color: #1f2933;
 }
 
 /* Page container */
 .page {
   background: white;
-  border-radius: 14px;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.06);
-  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 10px 35px rgba(15, 23, 42, 0.08);
+  padding: 34px;
 }
 
 /* Titles */
 h1, h2, h3 {
   font-weight: 650;
-  color: #1f2937;
+  color: #0f172a;
+  letter-spacing: -0.3px;
 }
 
 /* Gradient Name */
 .author__name {
-  background: linear-gradient(90deg,#2563eb,#7c3aed);
+  background: linear-gradient(90deg, #0ea5e9, #2563eb);
   -webkit-background-clip: text;
   color: transparent;
 }
@@ -33,49 +33,117 @@ h1, h2, h3 {
 /* Sidebar card */
 .author__content {
   background: white;
-  padding: 18px;
-  border-radius: 12px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.07);
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+  border: 1px solid rgba(15, 23, 42, 0.04);
 }
 
-/* Navigation bar */
+/* ---------- DARK GLASS NAVIGATION ---------- */
+
 .masthead {
-  background: white;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  background: linear-gradient(
+      135deg,
+      rgba(15, 23, 42, 0.96),
+      rgba(2, 6, 23, 0.98)
+  ) !important;
+
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
 }
 
-/* Links */
+/* Divider */
+.masthead::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(56, 189, 248, 0.35),
+      transparent
+  );
+}
+
+/* Inner wrap */
+.masthead__inner-wrap {
+  padding: 0.75em 1.6em;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 14px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
+/* Nav links */
+.masthead a {
+  color: #cbd5f5 !important;
+  font-weight: 500;
+  transition: all 0.22s ease;
+}
+
+.masthead a:hover {
+  color: #38bdf8 !important;
+}
+
+/* Brand */
+.masthead__menu-item--lg a {
+  font-weight: 700;
+  background: linear-gradient(90deg, #38bdf8, #818cf8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ---------- LINKS ---------- */
+
 a {
-  color:#2563eb;
-  transition:0.3s;
+  color: #2563eb;
+  text-decoration: none;
+  transition: all 0.25s ease;
 }
 
 a:hover {
-  color:#7c3aed;
+  color: #0ea5e9;
 }
 
-/* Cards (Teaching / Publications) */
+/* ---------- CARDS ---------- */
+
 .archive__item {
-  background:white;
-  border-radius:12px;
-  padding:20px;
-  box-shadow:0 5px 15px rgba(0,0,0,0.06);
-  transition:0.3s;
+  background: white;
+  border-radius: 14px;
+  padding: 22px;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.07);
+  transition: all 0.28s ease;
+  border: 1px solid rgba(15, 23, 42, 0.04);
 }
 
-.archive__item:hover{
-  transform:translateY(-5px);
+.archive__item:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 35px rgba(15, 23, 42, 0.12);
 }
 
-/* Buttons */
+/* ---------- BUTTONS ---------- */
+
 .btn {
-  border-radius:8px;
-  background:linear-gradient(90deg,#2563eb,#7c3aed);
-  color:white;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #0ea5e9, #2563eb);
+  color: white !important;
+  border: none;
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.35);
+  transition: all 0.25s ease;
 }
 
-/* Footer */
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 25px rgba(37, 99, 235, 0.45);
+}
+
+/* ---------- FOOTER ---------- */
+
 .page__footer {
-  background:#111827;
-  color:#e5e7eb;
+  background: linear-gradient(135deg, #020617, #0f172a);
+  color: #cbd5f5;
+  border-top: 1px solid rgba(148, 163, 184, 0.15);
 }
