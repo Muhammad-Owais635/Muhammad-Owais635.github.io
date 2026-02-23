@@ -7,11 +7,6 @@ redirect_from:
   - /about.html
 
 ---
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
 <style>
   *,
 ::before,
@@ -2544,8 +2539,9 @@ video {
             }
         }
         </script>
+{% include base_path %}
 
-</body>
-
-</html>
+{% for post in site.teaching reversed %}
+  {% include archive-single.html %}
+{% endfor %}
    
