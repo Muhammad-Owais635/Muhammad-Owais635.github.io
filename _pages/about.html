@@ -2526,14 +2526,14 @@ video {
             }
         }
         </script>
- <main>
+ 
     <div id="about-section"></div>
-  </main>
+  
 
   <footer>Site Footer</footer>
 
   <script>
-    fetch("profile-section.html")
+    fetch("talks.html")
       .then(response => response.text())
       .then(data => {
         document.getElementById("about-section").innerHTML = data;
