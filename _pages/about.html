@@ -13,7 +13,7 @@ redirect_from:
 
 <head>
   <style>
-    *,
+ *,
 ::before,
 ::after {
   --tw-border-spacing-x: 0;
@@ -1447,6 +1447,25 @@ video {
 .dark\:hover\:shadow-white\/80:hover:where(.dark, .dark *) {
   --tw-shadow-color: rgb(255 255 255 / 0.8);
   --tw-shadow: var(--tw-shadow-colored);
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.fade-overlay {
+  background: linear-gradient(to bottom,
+      rgba(255,255,255,0),
+      rgba(255,255,255,1));
+}
+
+.dark .fade-overlay {
+  background: linear-gradient(to bottom,
+      rgba(0,0,0,0),
+      rgba(0,0,0,1));
 }
   </style>
 
