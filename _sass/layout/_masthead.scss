@@ -8,7 +8,6 @@
   width: 100%;
   z-index: 20;
 
-  /* Slightly brighter & layered than page background */
   background: linear-gradient(
       135deg,
       rgba(30, 41, 59, 0.85),
@@ -39,9 +38,19 @@
   );
 }
 
-/* Inner layout refinement */
+/* ===== Enhanced Inner Layer ===== */
+
 .masthead__inner-wrap {
-  padding: 0.7em 1.4em;
+  padding: 0.75em 1.6em;
+
+  /* Subtle contrast layer */
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 14px;
+
+  /* Soft inner glow */
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+
+  backdrop-filter: blur(6px);
 }
 
 /* Base link style */
@@ -68,7 +77,7 @@
 /* Menu items */
 .masthead__menu-item {
   background: transparent;
-  border-radius: 8px;
+  border-radius: 10px;
   transition: all 0.22s ease;
   position: relative;
 }
@@ -79,7 +88,7 @@
   transform: translateY(-1px);
 }
 
-/* Optional animated underline effect */
+/* Animated underline */
 .masthead__menu-item a::after {
   content: "";
   position: absolute;
