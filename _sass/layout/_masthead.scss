@@ -1,5 +1,5 @@
 /* ==========================================================================
-   MASTHEAD — Premium Glass Academic Theme
+   MASTHEAD — Premium Glass Academic Theme (Force Override)
    ========================================================================== */
 
 .masthead {
@@ -10,20 +10,17 @@
 
   background: linear-gradient(
       135deg,
-      rgba(30, 41, 59, 0.85),
-      rgba(15, 23, 42, 0.92)
+      rgba(30, 41, 59, 0.92),
+      rgba(15, 23, 42, 0.98)
   );
 
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-
-  animation: intro 0.3s both;
-  animation-delay: 0.15s;
 }
 
-/* Elegant divider */
+/* Divider */
 .masthead::after {
   content: "";
   position: absolute;
@@ -38,58 +35,42 @@
   );
 }
 
-/* ===== Enhanced Inner Layer ===== */
+/* ===== CRITICAL OVERRIDES (This is what actually fixes colors) ===== */
 
-.masthead__inner-wrap {
-  padding: 0.75em 1.6em;
-
-  /* Subtle contrast layer */
-  background: rgba(255, 255, 255, 0.03);
-  border-radius: 14px;
-
-  /* Soft inner glow */
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
-
-  backdrop-filter: blur(6px);
+.greedy-nav {
+  background: transparent !important;
 }
 
-/* Base link style */
-.masthead a {
-  text-decoration: none;
-  color: #cbd5f5;
+.greedy-nav .visible-links {
+  background: transparent !important;
+}
+
+/* Inner panel appearance */
+.greedy-nav .visible-links li {
+  background: transparent;
+}
+
+/* Links */
+.greedy-nav a {
+  color: #cbd5f5 !important;
   font-weight: 500;
-  letter-spacing: 0.2px;
   transition: all 0.25s ease;
 }
 
-/* Hover glow */
-.masthead a:hover {
-  color: #38bdf8;
+/* Hover */
+.greedy-nav a:hover {
+  color: #38bdf8 !important;
 }
 
-/* Menu reset */
-.masthead__menu ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-/* Menu items */
-.masthead__menu-item {
-  background: transparent;
-  border-radius: 10px;
-  transition: all 0.22s ease;
-  position: relative;
-}
-
-/* Smooth hover pill effect */
-.masthead__menu-item:hover {
+/* Menu item hover */
+.greedy-nav .masthead__menu-item:hover {
   background: rgba(56, 189, 248, 0.12);
+  border-radius: 10px;
   transform: translateY(-1px);
 }
 
 /* Animated underline */
-.masthead__menu-item a::after {
+.greedy-nav .masthead__menu-item a::after {
   content: "";
   position: absolute;
   left: 10%;
@@ -101,13 +82,12 @@
   transition: width 0.25s ease;
 }
 
-.masthead__menu-item:hover a::after {
+.greedy-nav .masthead__menu-item:hover a::after {
   width: 80%;
 }
 
-/* Brand / Name styling */
-.masthead__menu-item--lg {
-  padding-right: 2em;
+/* Brand / Site Title */
+.greedy-nav .masthead__menu-item--lg a {
   font-weight: 700;
   background: linear-gradient(90deg, #38bdf8, #818cf8);
   -webkit-background-clip: text;
