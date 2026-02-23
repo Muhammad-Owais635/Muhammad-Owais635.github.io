@@ -2392,74 +2392,10 @@ video {
     
                 <li class="border border-gray-300 dark:border-white/30 rounded-xl p-6 hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:bg-darkHover dark:hover:shadow-white">
     
-                    <h3 class="font-semibold text-gray-800 dark:text-white">
-                        Transformers & Large Language Models
-                    </h3>
-    
-                    <p class="text-sm text-gray-500 mt-1 dark:text-white/60">
-                        2026 · Stanford University
-                    </p>
-    
-                </li>
-    
-                <li class="border border-gray-300 dark:border-white/30 rounded-xl p-6 hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:bg-darkHover dark:hover:shadow-white">
-    
-                    <h3 class="font-semibold text-gray-800 dark:text-white">
-                        Generative AI & Foundational Models for NLP and Language Understanding
-                    </h3>
-    
-                    <p class="text-sm text-gray-500 mt-1 dark:text-white/60">
-                        2025 · IBM
-                    </p>
-    
-                </li>
-    
-                <li class="border border-gray-300 dark:border-white/30 rounded-xl p-6 hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:bg-darkHover dark:hover:shadow-white">
-    
-                    <h3 class="font-semibold text-gray-800 dark:text-white">
-                        Deep Learning and Reinforcement Learning
-                    </h3>
-    
-                    <p class="text-sm text-gray-500 mt-1 dark:text-white/60">
-                        2025 · IBM
-                    </p>
-    
-                </li>
-    
-                <li class="border border-gray-300 dark:border-white/30 rounded-xl p-6 hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:bg-darkHover dark:hover:shadow-white">
-    
-                    <h3 class="font-semibold text-gray-800 dark:text-white">
-                        NLP: Twitter Sentiment Analysis
-                    </h3>
-    
-                    <p class="text-sm text-gray-500 mt-1 dark:text-white/60">
-                        2025 · Coursera
-                    </p>
-    
-                </li>
-    
-                <li class="border border-gray-300 dark:border-white/30 rounded-xl p-6 hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:bg-darkHover dark:hover:shadow-white">
-    
-                    <h3 class="font-semibold text-gray-800 dark:text-white">
-                        Machine Learning
-                    </h3>
-    
-                    <p class="text-sm text-gray-500 mt-1 dark:text-white/60">
-                        2024 · Stanford University
-                    </p>
-    
-                </li>
-    
-                <li class="border border-gray-300 dark:border-white/30 rounded-xl p-6 hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:bg-darkHover dark:hover:shadow-white">
-    
-                    <h3 class="font-semibold text-gray-800 dark:text-white">
-                        Python Core
-                    </h3>
-    
-                    <p class="text-sm text-gray-500 mt-1 dark:text-white/60">
-                        2022 · SoloLearn
-                    </p>
-    
+                    {% include base_path %}
+                  {% for post in site.teaching reversed %}
+                  {% include archive-single.html %}
+                  {% endfor %}    
                 </li>
     
             </ul>
@@ -2539,9 +2475,4 @@ video {
             }
         }
         </script>
-{% include base_path %}
 
-{% for post in site.teaching reversed %}
-  {% include archive-single.html %}
-{% endfor %}
-   
