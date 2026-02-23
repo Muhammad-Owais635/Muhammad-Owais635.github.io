@@ -1,67 +1,74 @@
 /* ==========================================================================
-   MASTHEAD
+   MASTHEAD — Dark Glass Academic Theme
    ========================================================================== */
 
 .masthead {
   position: fixed;
-  background: var(--global-bg-color);
-  height: fit-content;
   top: 0;
   width: 100%;
-
-  -webkit-animation: intro 0.3s both;
-          animation: intro 0.3s both;
-  -webkit-animation-delay: 0.15s;
-          animation-delay: 0.15s;
   z-index: 20;
 
-  &::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    height: 1px;
-    background: var(--global-border-color);
-    width: 100%;
-  }
+  background: rgba(15, 23, 42, 0.75);   /* Glass background */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 
-  &__inner-wrap {
-    @include container;
-    @include clearfix;
-    padding: 0.5em 1em;
-    font-family: $sans-serif-narrow;
-
-    @include breakpoint($x-large) {
-      max-width: $x-large;
-    }
-
-    nav {
-      z-index: 10;
-    }
-
-    a {
-      text-decoration: none;
-    }
-  }
+  animation: intro 0.3s both;
+  animation-delay: 0.15s;
 }
 
-.masthead__menu {
-
-  ul {
-    margin: 0;
-    padding: 0;
-    clear: both;
-    list-style-type: none;
-  }
+/* Subtle divider */
+.masthead::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  height: 1px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.08);
 }
 
+/* Inner spacing */
+.masthead__inner-wrap {
+  padding: 0.6em 1.2em;
+}
+
+/* Links */
+.masthead a {
+  text-decoration: none;
+  color: #cbd5f5;
+  font-weight: 500;
+  transition: 0.2s ease;
+}
+
+/* Hover Accent */
+.masthead a:hover {
+  color: #38bdf8;
+}
+
+/* Menu */
+.masthead__menu ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Menu Items */
 .masthead__menu-item {
-  background-color: var(--global-bg-color);
-  display: block;
-  list-style-type: none;
-  white-space: nowrap;
+  background: transparent;
+  color: #cbd5f5;
+  border-radius: 6px;
+  transition: 0.2s ease;
+}
 
-  &--lg {
-    padding-right: 2em;
-    font-weight: 700;
-  }
+/* Hover micro-interaction */
+.masthead__menu-item:hover {
+  background: rgba(56, 189, 248, 0.12);
+}
+
+/* Large / Brand Item */
+.masthead__menu-item--lg {
+  padding-right: 2em;
+  font-weight: 700;
+  background: linear-gradient(90deg, #38bdf8, #818cf8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
