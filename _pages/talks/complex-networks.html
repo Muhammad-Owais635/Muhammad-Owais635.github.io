@@ -20,36 +20,59 @@ title: Complex Networks 2025
 
 
 <body class="font-Outfit leading-8 dark:bg-darkTheme dark:text-white">
+
+    <!-- Background Graphic -->
     <div class="fixed top-0 right-0 w-11/12 -z-10 translate-y-[-80%] dark:hidden">
-        <img src="./assets/header-bg-color.png" alt="" class="w-full" />
+        <img src="{{ '/assets/header-bg-color.png' | relative_url }}" 
+             alt="" 
+             class="w-full" />
     </div>
 
-      <!-- ----- education section ------ -->
-  {% include aanav.html %}  
+    {% include aanav.html %}
 
-    <!-- ----- home section ------ -->
+    <!-- Home Section -->
     <div class="w-11/12 max-w-3xl text-center mx-auto h-screen flex flex-col items-center justify-center gap-4">
-        <img src="./assets/profile-img.png" alt="" class="rounded-full w-32" />
+
+        <img src="{{ '/assets/profile-img.png' | relative_url }}" 
+             alt="" 
+             class="rounded-full w-32" />
+
         <h3 class="flex items-end gap-2 text-xl md:text-2xl mb-3 font-Ovo">
             Hi! I&apos;m Muhammad Owais
-            <img src="./assets/hand-icon.png" alt="" class="w-6 mb-1" />
+            <img src="{{ '/assets/hand-icon.png' | relative_url }}" 
+                 alt="" 
+                 class="w-6 mb-1" />
         </h3>
-        <h1 class="text-3xl sm:text-6xl lg:text-[66px] font-Ovo">doctoral researcher at TMU Japan.</h1>
-        <p class="max-w-2xl mx-auto font-Ovo">PhD Researcher | Social Network | NLP | LLM | Machine Learning | Deep Learning | Speaker Identification | Speech Recognition</p>
+
+        <h1 class="text-3xl sm:text-6xl lg:text-[66px] font-Ovo">
+            doctoral researcher at TMU Japan.
+        </h1>
+
+        <p class="max-w-2xl mx-auto font-Ovo">
+            PhD Researcher | Social Network | NLP | LLM | Machine Learning | Deep Learning | Speaker Identification | Speech Recognition
+        </p>
 
         <div class="flex flex-col sm:flex-row items-center gap-4 mt-4">
-            <a href="#contact"
-                class="px-10 py-2.5 border rounded-full bg-gradient-to-r from-[#b820e6] to-[#da7d20] text-white flex items-center gap-2 dark:border-transparent">
-                contact me <img src="./assets/right-arrow-white.png" alt="" class="w-4" />
+
+            <a href="{{ '/#contact' | relative_url }}"
+               class="px-10 py-2.5 border rounded-full bg-gradient-to-r from-[#b820e6] to-[#da7d20] text-white flex items-center gap-2 dark:border-transparent">
+                contact me
+                <img src="{{ '/assets/right-arrow-white.png' | relative_url }}" 
+                     alt="" 
+                     class="w-4" />
             </a>
 
-            <a href="./assets/Muhammad Owais CV.pdf" download
-                class="px-10 py-2.5 rounded-full border border-gray-300 dark:border-white/25 hover:bg-slate-100/70 dark:hover:bg-darkHover flex items-center gap-2 bg-white dark:bg-transparent dark:text-white">
-                my resume <img src="./assets/download-icon.png" alt="" class="w-4 dark:invert" />
+            <a href="{{ '/assets/Muhammad Owais CV.pdf' | relative_url }}" 
+               download
+               class="px-10 py-2.5 rounded-full border border-gray-300 dark:border-white/25 hover:bg-slate-100/70 dark:hover:bg-darkHover flex items-center gap-2 bg-white dark:bg-transparent dark:text-white">
+                my resume
+                <img src="{{ '/assets/download-icon.png' | relative_url }}" 
+                     alt="" 
+                     class="w-4 dark:invert" />
             </a>
+
         </div>
     </div>
-
 
 
     
