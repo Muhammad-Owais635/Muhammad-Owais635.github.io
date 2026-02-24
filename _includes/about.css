@@ -1453,4 +1453,98 @@ video {
       rgba(0,0,0,0),
       rgba(0,0,0,1));
 }
+        /* ===== Publications Section Only ===== */
+        #publications {
+            padding: 10px 0;
+            background: transparent;
+        }
+        .black-text {
+    color: black !important;
+}
+        /* ===== Inner Container ===== */
+        #publications .pub-container {
+            max-width: 1130px;
+            margin: 0 auto;
+            padding: 50px 60px;
+            border-radius: 22px;
+        
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.45);
+            color: #ffffff; /* default text inside container */
+        }
+        
+        /* ===== Glass Card Effect ===== */
+        #publications .archive__item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+            border: 1px solid rgba(255,255,255,0.08);
+            transition: 0.3s ease;
+        }
+        
+        #publications .archive__item:hover {
+            transform: translateY(-4px);
+            background: rgba(56,189,248,0.08);
+            border-color: rgba(56,189,248,0.35);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.45);
+        }
+        
+        /* ===== Titles ===== */
+        #publications h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #ffffff; /* only this section */
+        }
+        
+        /* ===== Metadata Text ===== */
+        #publications .pub-meta {
+            color: #94a3b8;
+        }
+        
+        /* ===== Abstract Text ===== */
+        #publications .abstract-text {
+            color: #cbd5f5;
+        }
+        
+        /* ===== Fade Overlay Fix ===== */
+        #publications .fade-overlay {
+            background: linear-gradient(to bottom, transparent, rgba(15,23,42,0.9));
+            pointer-events: none;
+        }
+        
+        /* ===== Buttons ===== */
+        #publications button {
+            color: #38bdf8;
+            font-weight: 500;
+        }
+        
+        #publications button:hover {
+            text-decoration: underline;
+        }
+        
+        /* ===== Links ONLY inside publications ===== */
+        #publications a {
+            color: #38bdf8;          
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        #publications a:hover {
+            text-decoration: underline;
+            color: #7dd3fc;
+        }
+        
+        /* ===== Responsive ===== */
+        @media (max-width: 768px) {
+            #publications .pub-container {
+                padding: 35px 22px;
+                border-radius: 18px;
+            }
+        
+            #publications .archive__item {
+                padding: 18px;
+            }
+        }
+
 </style>
