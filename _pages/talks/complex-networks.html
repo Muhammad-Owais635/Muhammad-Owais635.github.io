@@ -4,9 +4,53 @@ permalink: /talks/complex-networks/
 title: Complex Networks 2025
 ---
 
-{% include base_path %}
-{% include aaabout.css %}
-{% include aanav.html %}
+
+
+ <link rel="stylesheet" href="{{ '/_style/about.css' | relative_url }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muhammad Owais Portfolio</title>
+    
+    <link rel="shortcut icon" href="./assets/favicon.ico" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Ovo&display=swap" rel="stylesheet">
+
+
+<body class="font-Outfit leading-8 dark:bg-darkTheme dark:text-white">
+    <div class="fixed top-0 right-0 w-11/12 -z-10 translate-y-[-80%] dark:hidden">
+        <img src="./assets/header-bg-color.png" alt="" class="w-full" />
+    </div>
+
+      <!-- ----- education section ------ -->
+  {% include aanav.html %}  
+
+    <!-- ----- home section ------ -->
+    <div class="w-11/12 max-w-3xl text-center mx-auto h-screen flex flex-col items-center justify-center gap-4">
+        <img src="./assets/profile-img.png" alt="" class="rounded-full w-32" />
+        <h3 class="flex items-end gap-2 text-xl md:text-2xl mb-3 font-Ovo">
+            Hi! I&apos;m Muhammad Owais
+            <img src="./assets/hand-icon.png" alt="" class="w-6 mb-1" />
+        </h3>
+        <h1 class="text-3xl sm:text-6xl lg:text-[66px] font-Ovo">doctoral researcher at TMU Japan.</h1>
+        <p class="max-w-2xl mx-auto font-Ovo">PhD Researcher | Social Network | NLP | LLM | Machine Learning | Deep Learning | Speaker Identification | Speech Recognition</p>
+
+        <div class="flex flex-col sm:flex-row items-center gap-4 mt-4">
+            <a href="#contact"
+                class="px-10 py-2.5 border rounded-full bg-gradient-to-r from-[#b820e6] to-[#da7d20] text-white flex items-center gap-2 dark:border-transparent">
+                contact me <img src="./assets/right-arrow-white.png" alt="" class="w-4" />
+            </a>
+
+            <a href="./assets/Muhammad Owais CV.pdf" download
+                class="px-10 py-2.5 rounded-full border border-gray-300 dark:border-white/25 hover:bg-slate-100/70 dark:hover:bg-darkHover flex items-center gap-2 bg-white dark:bg-transparent dark:text-white">
+                my resume <img src="./assets/download-icon.png" alt="" class="w-4 dark:invert" />
+            </a>
+        </div>
+    </div>
+
+
+
+    
 
 <div class="max-w-4xl mx-auto py-20">
 
@@ -23,3 +67,5 @@ title: Complex Networks 2025
     </a>
 
 </div>
+
+</body>
