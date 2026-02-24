@@ -3,16 +3,11 @@ layout: default
 permalink: /talks/complex-networks/
 title: Complex Networks 2025
 ---
-  <!-- ----- education section ------ -->
-<p class="text-gray-600 mb-8">
-        Conference presentation description goes here...
-  <a href="{{ '../about/' | relative_url }}">
-    <h2 class="font-semibold">Complex Networks 2025</h2>
-    </a>
-    </p>
+
 {% include base_path %}
-                                    {% include aaabout.css %}
-  {% include aanav.html %}  
+{% include aaabout.css %}
+{% include aanav.html %}
+
 <div class="max-w-4xl mx-auto py-20">
 
     <h1 class="text-4xl font-Ovo mb-6">Complex Networks 2025</h1>
@@ -21,6 +16,10 @@ title: Complex Networks 2025
         Conference presentation description goes here...
     </p>
 
-    <img src="/assets/work-1.png" class="rounded-xl shadow-md mb-6">
+    <img src="{{ '/assets/work-1.png' | relative_url }}" class="rounded-xl shadow-md mb-10">
+
+    <a href="{{ '/#gallary' | relative_url }}" class="text-blue-500 font-medium">
+        ← Back to Gallery
+    </a>
 
 </div>
