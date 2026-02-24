@@ -1311,68 +1311,11 @@ These results demonstrate the method's strong ability to generalize to unseen da
                                         Muhammad Owais, Ph.D.
                                     </h3>
                             
-                                    <div class="space-y-4 flex flex-col items-center text-gray-700 dark:text-white/80">
-                            
-                                        <!-- Email -->
-                                        <div class="flex items-center gap-4 text-gray-700 dark:text-white/80">
-                                            <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center">
-                                                <img src="./assets/email.svg" class="w-5 h-5" alt="">
-                                            </div>
-                                            <a href="mailto:owaiskhana635@gmail.com"
-                                               class="hover:text-blue-600 transition">
-                                               owaiskhana635@gmail.com
-                                            </a>
-                                        </div>
-                                        <!-- LinkedIn -->
-                                        <div class="flex items-center gap-4 text-gray-700 dark:text-white/80">
-                                            <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center">
-                                                <img src="./assets/linkedin.svg" class="w-5 h-5" alt="">
-                                            </div>
-                                            <a href="https://www.linkedin.com/in/muhammad-owais635/" target="_blank"
-                                            class="hover:text-blue-600 transition">
-                                            LinkedIn Profile
-                                            </a>
-                                        </div>
+                                   {% include base_path %}
 
-                                        <!-- Google Scholar -->
-                                        <div class="flex items-center gap-4 text-gray-700 dark:text-white/80">
-                                            <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center">
-                                                <img src="./assets/scholar.svg" class="w-5 h-5" alt="">
-                                            </div>
-                                            <a href="https://scholar.google.com/citations?user=OD079GEAAAAJ&hl=en" target="_blank"
-                                            class="hover:text-blue-600 transition">
-                                            Google Scholar Profile
-                                            </a>
-                                        </div>
-
-                                        <!-- GitHub -->
-                                        <div class="flex items-center gap-4 text-gray-700 dark:text-white/80">
-                                            <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center">
-                                                <img src="./assets/github.svg" class="w-5 h-5" alt="">
-                                            </div>
-                                            <a href="https://github.com/Muhammad-Owais635" target="_blank"
-                                            class="hover:text-blue-600 transition">
-                                            GitHub
-                                            </a>
-                                        </div>
-
-                                        <!-- Portfolio -->
-                    
-
-                                        <!-- Location -->
-                                        <div class="flex items-center gap-4 text-gray-700 dark:text-white/80">
-                                            <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center">
-                                                <img src="./assets/address.svg" class="w-5 h-5" alt="">
-                                            </div>
-                                            <span>
-                                                Hachioji-shi, Matsugaya, Tokyo, Japan
-                                            </span>
-                                        </div>
-                                
-                                        
-                            
-                                    </div>
-                                
+                                  {% for post in site.teaching reversed %}
+                                    {% include archive-single.html %}
+                                  {% endfor %}
                                 </li>
                     
                             </ul>
