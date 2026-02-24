@@ -7,15 +7,112 @@ redirect_from:
   - /about.html
 
 ---
+
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
-   {% include base_path %}
-                  
-                  <!-- {% style about.css %} -->
+    <style>
+        /* ===== Publications Section Only ===== */
+        #publications {
+            padding: 10px 0;
+            background: transparent;
+        }
+        .black-text {
+    color: black !important;
+}
+        /* ===== Inner Container ===== */
+        #publications .pub-container {
+            max-width: 1130px;
+            margin: 0 auto;
+            padding: 50px 60px;
+            border-radius: 22px;
+        
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.45);
+            color: #ffffff; /* default text inside container */
+        }
+        
+        /* ===== Glass Card Effect ===== */
+        #publications .archive__item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+            border: 1px solid rgba(255,255,255,0.08);
+            transition: 0.3s ease;
+        }
+        
+        #publications .archive__item:hover {
+            transform: translateY(-4px);
+            background: rgba(56,189,248,0.08);
+            border-color: rgba(56,189,248,0.35);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.45);
+        }
+        
+        /* ===== Titles ===== */
+        #publications h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #ffffff; /* only this section */
+        }
+        
+        /* ===== Metadata Text ===== */
+        #publications .pub-meta {
+            color: #94a3b8;
+        }
+        
+        /* ===== Abstract Text ===== */
+        #publications .abstract-text {
+            color: #cbd5f5;
+        }
+        
+        /* ===== Fade Overlay Fix ===== */
+        #publications .fade-overlay {
+            background: linear-gradient(to bottom, transparent, rgba(15,23,42,0.9));
+            pointer-events: none;
+        }
+        
+        /* ===== Buttons ===== */
+        #publications button {
+            color: #38bdf8;
+            font-weight: 500;
+        }
+        
+        #publications button:hover {
+            text-decoration: underline;
+        }
+        
+        /* ===== Links ONLY inside publications ===== */
+        #publications a {
+            color: #38bdf8;          
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        #publications a:hover {
+            text-decoration: underline;
+            color: #7dd3fc;
+        }
+        
+        /* ===== Responsive ===== */
+        @media (max-width: 768px) {
+            #publications .pub-container {
+                padding: 35px 22px;
+                border-radius: 18px;
+            }
+        
+            #publications .archive__item {
+                padding: 18px;
+            }
+        }
+        </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Muhammad Owais Portfolio</title>
+    <link rel="stylesheet" href="./output.css">
+    <link rel="stylesheet" href="./input.css">
     <link rel="shortcut icon" href="./assets/favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="/about.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Ovo&display=swap" rel="stylesheet">
@@ -93,9 +190,8 @@ redirect_from:
             Hi! I&apos;m Muhammad Owais
             <img src="./assets/hand-icon.png" alt="" class="w-6 mb-1" />
         </h3>
-        <h1 class="text-3xl sm:text-6xl lg:text-[66px] font-Ovo">research assistant at TMU Japan.</h1>
-        <p class="max-w-2xl mx-auto font-Ovo">I am a frontend developer from California, USA with 10 years of experience
-            in multiple companies like Microsoft, Tesla and Apple.</p>
+        <h1 class="text-3xl sm:text-6xl lg:text-[66px] font-Ovo">doctoral researcher at TMU Japan.</h1>
+        <p class="max-w-2xl mx-auto font-Ovo">PhD Researcher | Social Network | NLP | LLM | Machine Learning | Deep Learning | Speaker Identification | Speech Recognition</p>
 
         <div class="flex flex-col sm:flex-row items-center gap-4 mt-4">
             <a href="#contact"
@@ -110,55 +206,1185 @@ redirect_from:
         </div>
     </div>
 
-    <!-- ----- Education ------ -->
-      <!-- {% include base_path %}            
-      {% style education.html %} -->
+    <!-- ----- education section ------ -->
+
+    <div id="education" class="w-full px-[12%] py-10 scroll-mt-20">
+        <!-- <h4 class="text-center mb-2 text-lg font-Ovo">Introduction</h4> -->
+        <h2 class="text-center text-5xl font-Ovo">Education</h2>
+        <div class="flex w-full flex-col lg:flex-row items-start gap-20 my-20">
+            <div class="max-w-max mx-auto relative"><img src="./assets/user-image.png" alt=""
+                    class="w-64 sm:w-80 rounded-3xl max-w-none">
+                <!-- <div
+                    class="bg-white w-1/2 aspect-square absolute right-0 bottom-0 rounded-full translate-x-1/4 translate-y-1/3 shadow-[0_4px_55px_rgba(149,0,162,0.15)] flex items-center justify-center">
+                    <img src="./assets/circular-text.png" alt="" class="w-full animate-spin_slow">
+                    <img src="./assets/dev-icon.png" alt=""
+                        class="w-1/4 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                </div> -->
+            </div>
+            <div class="flex-1">
+    
+                <ul class="flex flex-col gap-6 max-w-3xl">
+    
+                    <!-- PhD -->
+                    <li class="border border-gray-300 dark:border-white/30 rounded-xl p-6 hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:shadow-white/80 dark:hover:bg-darkHover/50">
+                        
+                        <img src="./assets/tmu.png" alt="TMU" class="w-6 h-6 object-contain">
+                
+                        <h3 class="font-semibold text-gray-700 dark:text-white">
+                            Tokyo Metropolitan University (TMU)
+                        </h3>
+                
+                        <p class="mt-2 text-sm text-gray-600 dark:text-white/80 leading-relaxed">
+                            <strong>2025 – Present</strong><br>
+                            Ph.D. in Computer Science<br>
+                            Advisor: Prof. Dr. Masaki Aida
+                        </p>
+                    </li>
+                
+                    <!-- MS -->
+                    <li class="border border-gray-300 dark:border-white/30 rounded-xl p-6 hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:shadow-white/80 dark:hover:bg-darkHover/50">
+                        
+                        <img src="./assets/uet.png" alt="UET Lahore" class="w-6 h-6 object-contain">
+                
+                        <h3 class="font-semibold text-gray-700 dark:text-white">
+                            University of Engineering and Technology (UET), Lahore
+                        </h3>
+                
+                        <p class="mt-2 text-sm text-gray-600 dark:text-white/80 leading-relaxed">
+                            <strong>2021 – 2023</strong><br>
+                            M.Sc. in Computer Science<br>
+                            Advisor: Prof. Dr. Muhammad Shoaib<br>
+                            Thesis: A Technique To Enhance Social Media Reliance By Detecting Social Bots
+                        </p>
+                    </li>
+                
+                    <!-- BS -->
+                    <li class="border border-gray-300 dark:border-white/30 rounded-xl p-6 hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:shadow-white/80 dark:hover:bg-darkHover/50">
+                        
+                        <img src="./assets/uso.png" alt="University of Sargodha" class="w-6 h-6 object-contain">
+                
+                        <h3 class="font-semibold text-gray-700 dark:text-white">
+                            University of Sargodha
+                        </h3>
+                
+                        <p class="mt-2 text-sm text-gray-600 dark:text-white/80 leading-relaxed">
+                            <strong>2017 – 2021</strong><br>
+                            BS in Computer Science<br>
+                            Advisor: Prof. Muhammad Bilal<br>
+                            Thesis: Planting the Seeds of Sustainability with Plantobook
+                        </p>
+                    </li>
+                
+                </ul>
+            
+            
+            </div>
+        </div>
+    </div>
+   
+
+<!-- My publication Section -->
+
+
+
+<div id="publications" class="w-full px-[12%] py-16 scroll-mt-20">
+
+    <div class="pub-container">
+
+        <!-- <h4 class="text-center mb-2 text-lg font-Ovo text-white/70">
+            Research Contributions
+        </h4> -->
+
+        <h2 class="text-center text-5xl font-Ovo text-white">
+            Publications
+        </h2>
+
+        <p class="text-center max-w-2xl mx-auto mt-5 mb-14 font-Ovo text-white/60">
+            Research articles, conference papers, and scholarly work
+        </p>
+        <h3 class="text-2xl font-semibold mb-10 ">Peer-Reviewed Journal Articles</h3>
+
+        <!-- Peer-Reviewed Journal Articles -->    
+
+        <ul class="flex flex-col gap-6 max-w-4xl mt-12  mx-auto">
+
+        <!-- Paper 1 -->
+        <li class="archive__item rounded-xl p-6">
+
+            <h3 class="font-semibold">
+                A Deep Reinforcement Learning-Based Robust Intrusion Detection System for Securing IoMT Healthcare Networks
+            </h3>
+
+            <p class="text-sm mt-1">
+                Frontiers in Medicine · 2025
+            </p>
+
+            <div class="relative mt-3">
+
+                <p class="text-sm abstract-text line-clamp-2">
+                    The Internet of Medical Things (IoMT) is transforming healthcare by enabling continuous remote patient monitoring, diagnostics, and personalized therapies. However, the widespread deployment of these devices introduces significant security vulnerabilities due to limited resources and inadequate network protocols. Intrusions within IoMT networks can compromise patient privacy, disrupt critical medical services, and jeopardize patient safety. To address these challenges, we propose HCLR-IDS, an advanced Intrusion Detection System (IDS) specifically designed for IoMT networks. The system integrates Convolutional Neural Networks (CNN), Long Short-Term Memory (LSTM) networks, and Reinforcement Learning (RL) techniques, namely Deep Q-Network (DQN) and Proximal Policy Optimization (PPO), to enhance the detection of evolving threats. The methodology begins with Enhanced Mutual Information Feature Selection (MIFS) to preprocess the CICIoMT2024 dataset, selecting the most relevant features while reducing noise and computational complexity. These selected features are then passed through a hybrid CNN-LSTM architecture. The CNN captures spatial patterns in network traffic, while the LSTM identifies temporal patterns. This dual feature extraction approach enables the system to effectively detect both static and dynamic characteristics of IoMT data. After feature extraction, the model incorporates DQN and PPO for decision-making. DQN optimizes actions based on Q-values, enhancing detection rewards, while PPO ensures stability in dynamic environments through a clipping mechanism. This combination of adaptive Q-learning and stable policy optimization significantly improves system robustness, ensuring effective real-time intrusion detection. The model demonstrates exceptional performance with binary classification accuracy of 0.9958, outperforming traditional IDS models. Additionally, it performs effectively in multi-class classification across 18 classes, achieving an accuracy of 0.7773. These results highlight that HCLR-IDS offers a reliable and efficient solution for securing IoMT healthcare systems.
+                </p>
+
+                <div class="fade-overlay absolute bottom-0 left-0 w-full h-8"></div>
+
+            </div>
+
+            <button onclick="toggleAbstract(this)"
+                class="text-sm mt-2 font-medium">
+                Read more
+            </button>
+
+            <div class="hidden mt-4 download-link">
+                <a href="#" class="text-sm font-medium text-sky-400 hover:text-sky-300">
+                    Download Paper
+                </a>
+            </div>
+
+        </li>
+        
     
 
-    <!-- My Publications -->
+        <!-- Paper 2 -->
+        <li class="archive__item rounded-xl p-6">
+        
+            <h3 class="font-semibold text-gray-800 dark:text-white">
+                RCLNet: An Effective Anomaly-Based Intrusion Detection for Securing the IoMT System
+            </h3>
+        
+            <p class="text-sm text-gray-500 mt-1 dark:text-white/60">
+                Frontiers in Digital Health · 2024
+            </p>
+        
+            <!-- Abstract -->
+            <div class="relative mt-3">
+        
+                <p class="text-sm text-gray-600 dark:text-white/80 abstract-text line-clamp-2">
+                    The Internet of Medical Things (IoMT) has revolutionized healthcare with remote patient monitoring and real-time diagnosis, but securing patient data remains a critical challenge due to sophisticated cyber threats and the sensitivity of medical information. Traditional machine learning methods struggle to capture the complex patterns in IoMT data, and conventional intrusion detection systems often fail to identify unknown attacks, leading to high false positive rates and compromised patient data security. To address these issues, we propose RCLNet, an effective Anomaly-based Intrusion Detection System (A-IDS) for IoMT. RCLNet employs a multi-faceted approach, including Random Forest (RF) for feature selection, the integration of Convolutional Neural Networks (CNN) and Long Short-Term Memory (LSTM) models to enhance pattern recognition, and a Self-Adaptive Attention Layer Mechanism (SAALM) designed specifically for the unique challenges of IoMT. Additionally, RCLNet utilizes focal loss (FL) to manage imbalanced data distributions, a common challenge in IoMT datasets. Evaluation using the WUSTL-EHMS-2020 healthcare dataset demonstrates that RCLNet outperforms recent state-of-the-art methods, achieving a remarkable accuracy of 99.78%, highlighting its potential to significantly improve the security and confidentiality of patient data in IoMT healthcare systems.
+                </p>
+        
+                <!-- Fade Effect -->
+                <div class="fade-overlay absolute bottom-0 left-0 w-full h-8"></div>
+            </div>
+        
+            <!-- Read More / Less -->
+            <button onclick="toggleAbstract(this)"
+                class="text-sm text-blue-600 mt-2 font-medium">
+                Read more
+            </button>
+        
+            <!-- Download Link -->
+            <div class="hidden mt-4 download-link">
+                <a href="#" class="text-sm font-medium text-gray-700 dark:text-white">
+                    Download Paper
+                </a>
+            </div>
+        
+        </li>
+        
 
+        <!-- Paper 3 -->
+        <li class="archive__item rounded-xl p-6">
+        
+            <h3 class="font-semibold text-gray-800 dark:text-white">
+                A Holistic Approach for Detecting Socialbots on Twitter: Integration of Diverse Features
+            </h3>
+        
+            <p class="text-sm text-gray-500 mt-1 dark:text-white/60">
+                The Nucleus · 2023
+            </p>
+        
+            <!-- Abstract -->
+            <div class="relative mt-3">
+        
+                <p class="text-sm text-gray-600 dark:text-white/80 abstract-text line-clamp-2">
+                    The usage of social media platforms has grown, offering individuals diverse avenues for communication, expressing opinions and sharing online content. However, this surge has also given rise to the emergence of social bots, which are programmed accounts designed to imitate human behavior. Such bots possess the capability to disseminate false information, manipulate financial markets, aid terrorism, and disrupt democratic processes. To tackle this issue, various approaches have been utilized to detect social bots, including approaches based on profiles, time patterns, content analysis, behavior, and network characteristics. However, neither of the approaches effectively combines all these features to implement social bot detection comprehensively. This paper introduces an ensemble methodology that merges profile, behavioral, temporal, network, graph, and content-based attributes, culminating in a comprehensive model for discerning social bots on the Twitter platform. We utilize the Twibot-22 dataset for conducting experiments and evaluate the performance of our approach against benchmark models. The XGBoost model, with an accuracy of 0.898, exhibited superior performance compared to the benchmark models. This research contributes to the continuous endeavor focused on safeguarding the authenticity of tweet content and mitigating the risks associated with social bots on social networks.
+                </p>
+        
+                <!-- Fade Effect -->
+                <div class="fade-overlay absolute bottom-0 left-0 w-full h-8"></div>
+            </div>
+        
+            <!-- Read More / Less -->
+            <button onclick="toggleAbstract(this)"
+                class="text-sm text-blue-600 mt-2 font-medium">
+                Read more
+            </button>
+        
+            <!-- Download -->
+            <div class="hidden mt-4 download-link">
+                <a href="#" class="text-sm font-medium text-gray-700 dark:text-white">
+                    Download Paper
+                </a>
+            </div>
+        
+        </li>
+
+        </ul>
+
+                <!-- Conference Presentations -->
+
+        <h3 class="text-2xl font-semibold mt-12 mb-10 ">Conference Presentations</h3>
+
+        <ul class="flex flex-col gap-6 max-w-4xl mt-12 mx-auto">
+        <!-- Paper 1 -->
+        <li class="archive__item rounded-xl p-6">
+
+            <h3 class="font-semibold">
+                Text-Based Social Bot Detection Leveraging Linguistic Structures and Sentiment Features.
+            </h3>
+
+            <p class="text-sm mt-1">
+                In 18th International Conference on Open Source Systems and Technologies (ICOSST), IEEE. 2025
+            </p>
+
+            <div class="relative mt-3">
+
+                <p class="text-sm abstract-text line-clamp-2">
+                    Social media platforms have become central to online communication, information sharing, and interaction. However, they are increasingly being exploited by automated accounts that spread misinformation, propaganda, and spam. This paper presents a novel approach for bot detection using a Linguistic Sensitivity-Enriched Feature Extraction and Selection Scheme (LSE-FESS). The proposed scheme extracts a comprehensive set of text-based features that capture diverse linguistic, sentiment, and statistical properties, including readability metrics, lexical diversity, syntactic patterns, named entity counts, part-of-speech distributions, punctuation usage, sentiment scores, and internet-specific elements. To enhance model performance, feature selection techniques and the SMOTEEN algorithm are used to mitigate class imbalance, followed by the application of machine learning classifiers for robust detection. The proposed technique outperforms state-of-the-art methods, achieving accuracies of 0.998, 0.896, and 0.954 in the Cresci-17, Twibot-20, and Twibot-22 datasets, respectively. 
+These results demonstrate the method's strong ability to generalize to unseen data and highlight the importance of textual features in the effective detection of bot posts.
+                </p>
+
+                <div class="fade-overlay absolute bottom-0 left-0 w-full h-8"></div>
+
+            </div>
+
+            <button onclick="toggleAbstract(this)"
+                class="text-sm mt-2 font-medium">
+                Read more
+            </button>
+
+            <div class="hidden mt-4 download-link">
+                <a href="#" class="text-sm font-medium text-sky-400 hover:text-sky-300">
+                    Download Paper
+                </a>
+            </div>
+
+        </li>
+        
+    
+
+        <!-- Paper 2 -->
+       <li class="archive__item rounded-xl p-6">
+        
+            <h3 class="font-semibold text-gray-800 dark:text-white">
+                FOID: A Feature-Optimized Intrusion Detection System for Securing IoMT Healthcare Networks
+            </h3>
+        
+            <p class="text-sm text-gray-500 mt-1 dark:text-white/60">
+                ICOSST (IEEE) · 2024
+            </p>
+        
+            <!-- Abstract -->
+            <div class="relative mt-3">
+        
+                <p class="text-sm text-gray-600 dark:text-white/80 abstract-text line-clamp-2">
+                    The rapid integration of interconnected healthcare devices, software, operating systems, and networks within the Internet of Medical Things (IoMT) has greatly advanced healthcare delivery. However, this interconnectivity also presents significant security challenges. Many IoMT devices lack robust security mechanisms, making them vulnerable to intrusion and cyber-attacks. To address these vulnerabilities, we propose FOID, a feature-optimized intrusion detection scheme (IDS) designed specifically for securing IoMT healthcare systems. FOID enhances the security and reliability of healthcare networks by efficiently detecting and mitigating security breaches, particularly unauthorized access attempts. The scheme utilizes recursive feature elimination (RFE) alongside advanced machine learning models and integrates the SHapley Additive exPlanations (SHAP) mechanism to provide transparency. This comprehensive approach ensures both the integrity and confidentiality of healthcare systems, empowering healthcare professionals with actionable insights to proactively secure IoMT infrastructures. Evaluation of FOID on key IoMT cybersecurity datasets demonstrates its high efficacy, with overall accuracy rates of 98.53% and 97.91% achieved on the ICU and WUSTL-EHMS 2020 datasets, respectively, underscoring its potential as a reliable solution for anomaly detection in IoMT environments.
+                </p>
+        
+                <!-- Fade Effect -->
+                <div class="fade-overlay absolute bottom-0 left-0 w-full h-8"></div>
+            </div>
+        
+            <!-- Read More / Less -->
+            <button onclick="toggleAbstract(this)"
+                class="text-sm text-blue-600 mt-2 font-medium">
+                Read more
+            </button>
+        
+            <!-- Download -->
+            <div class="hidden mt-4 download-link">
+                <a href="#" class="text-sm font-medium text-gray-700 dark:text-white">
+                    Download Paper
+                </a>
+            </div>
+        
+        </li>
+        
+        
+
+        </ul>
+
+        <!-- Working Papers and Work in Progress -->
+
+
+        <h3 class="text-2xl font-semibold mt-12 mb-10 ">Working Papers and Work in Progress</h3>
+        <ul class="flex flex-col gap-6 max-w-4xl mt-12 mx-auto">
+
+        <!-- Paper 1 -->
+        <li class="archive__item rounded-xl p-6">
+
+            <h3 class="font-semibold">
+                “Detecting Evolving Social Bots Through Hybrid Linguistic and Profile-Based Feature Integration.
+            </h3>
+
+            <p class="text-sm mt-1">
+                PLOS ONE. 2026
+            </p>
+
+
+        </li>
+        
+    
+
+        <!-- Paper 2 -->
+        <li class="archive__item rounded-xl p-6">
+        
+            <h3 class="font-semibold text-gray-800 dark:text-white">
+                Self-Jailbreaking Large Language Models: Multi-Turn Adversarial Prompting and Cross-Model Guardrail Failures.
+            </h3>
+        
+            <p class="text-sm text-gray-500 mt-1 dark:text-white/60">
+                Journal under preparation. 2024
+            </p>
+    
+        
+        </li>
+        
+        
+
+        </ul>
+    </div>
+</div>
 
     <!-- My Talk Section -->
-   
-    
-    
-            <!--   Experience -->
-    
- <!--  Research Projects -->
-    
-<!--  Mentorship -->
+    <div id="talks" class="w-full px-[12%] py-10 scroll-mt-20">
 
-<!--  Awards -->
-
-<!--  Certifications -->
-
-<!--  Gallary -->
-  
-   
-    
-    <div id="gallary" class="w-full px-[12%] py-10 scroll-mt-20">
-
-        <h2 class="text-center text-5xl font-Ovo mb-20">Gallary</h2>
-    
-        <div class="max-w-5xl mx-auto font-Ovo">
-    
+        <!-- <h2 class="text-center text-5xl font-Ovo mb-20"></h2> -->
+        <div class="pub-container">
             <ul class="flex flex-col  mt-12 gap-6 max-w-4xl mx-auto">
     
-                <li class="border border-gray-300 dark:border-white/30 rounded-xl p-6 hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:bg-darkHover dark:hover:shadow-white">
-    rtrtet
-                    <!-- {% include base_path %}
-                  
-                  {% style talks.html %} -->
+                <li class="border border-gray-300 dark:border-white/30 rounded-xl p-6 hover: hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:bg-darkHover dark:hover:shadow-white">
+                    <div  class="w-full px-[12%] py-10 scroll-mt-20">
+
+                        <h4 class="text-center mb-2 text-lg font-Ovo">Academic Engagement</h4>
+                        <h2 class="text-center text-5xl font-Ovo">Talks & Presentations</h2>
+                    
+                        <p class="text-center max-w-2xl mx-auto mt-5 mb-12 font-Ovo">
+                            Invited talks, conference presentations, and academic speaking engagements
+                        </p>
+                    
+                        <div class="grid grid-cols-auto my-10 gap-5 dark:text-black">
+                    
+                            <!-- Talk 1 -->
+                            <div class="aspect-square bg-no-repeat bg-cover bg-center rounded-lg relative cursor-pointer group"
+                                style="background-image: url('./assets/work-1.png');">
+                    
+                                <div class="bg-white w-10/12 rounded-md absolute bottom-5 left-1/2 -translate-x-1/2 py-3 px-5 flex items-center justify-between duration-500 group-hover:bottom-7">
+                                    <a href="complex-networks-2025.html#talks">
+                                        <div>
+                                        <h2 class="font-semibold">Complex Networks 2025</h2>
+                                        <p class="text-sm text-gray-700">December 11, 2025</p>
+                                    </div>
+                                </a>
+                    
+                                    <div class="border rounded-full border-black w-9 aspect-square flex items-center justify-center shadow-[2px_2px_0_#000] group-hover:bg-lime-300 transition">
+                                        <img src="./assets/send-icon.png" alt="" class="w-5">
+                                    </div>
+                                </div>
+                            </div>
+                    
+                            <!-- Talk 2 -->
+                            <div class="aspect-square bg-no-repeat bg-cover bg-center rounded-lg relative cursor-pointer group"
+                                style="background-image: url('./assets/work-2.png');">
+                    
+                                <div class="bg-white w-10/12 rounded-md absolute bottom-5 left-1/2 -translate-x-1/2 py-3 px-5 flex items-center justify-between duration-500 group-hover:bottom-7">
+                                    <div>
+                                        <h2 class="font-semibold">ICOSST (IEEE)</h2>
+                                        <p class="text-sm text-gray-700">December 26, 2024</p>
+                                    </div>
+                    
+                                    <div class="border rounded-full border-black w-9 aspect-square flex items-center justify-center shadow-[2px_2px_0_#000] group-hover:bg-lime-300 transition">
+                                        <img src="./assets/send-icon.png" alt="" class="w-5">
+                                    </div>
+                                </div>
+                            </div>
+                    
+                            <!-- Talk 3 -->
+                            <div class="aspect-square bg-no-repeat bg-cover bg-center rounded-lg relative cursor-pointer group"
+                                style="background-image: url('./assets/work-3.png');">
+                    
+                                <div class="bg-white w-10/12 rounded-md absolute bottom-5 left-1/2 -translate-x-1/2 py-3 px-5 flex items-center justify-between duration-500 group-hover:bottom-7">
+                                    <div>
+                                        <h2 class="font-semibold">Machine Learning & AI</h2>
+                                        <p class="text-sm text-gray-700">Guest Talk · Nov 19, 2024</p>
+                                    </div>
+                    
+                                    <div class="border rounded-full border-black w-9 aspect-square flex items-center justify-center shadow-[2px_2px_0_#000] group-hover:bg-lime-300 transition">
+                                        <img src="./assets/send-icon.png" alt="" class="w-5">
+                                    </div>
+                                </div>
+                            </div>
+                    
+                            <!-- Talk 4 -->
+                            <div class="aspect-square bg-no-repeat bg-cover bg-center rounded-lg relative cursor-pointer group"
+                                style="background-image: url('./assets/work-4.png');">
+                    
+                                <div class="bg-white w-10/12 rounded-md absolute bottom-5 left-1/2 -translate-x-1/2 py-3 px-5 flex items-center justify-between duration-500 group-hover:bottom-7">
+                                    <div>
+                                        <h2 class="font-semibold">Python & Its Applications</h2>
+                                        <p class="text-sm text-gray-700">Guest Talk · Sep 20, 2024</p>
+                                    </div>
+                    
+                                    <div class="border rounded-full border-black w-9 aspect-square flex items-center justify-center shadow-[2px_2px_0_#000] group-hover:bg-lime-300 transition">
+                                        <img src="./assets/send-icon.png" alt="" class="w-5">
+                                    </div>
+                                </div>
+                            </div>
+                    
+                        </div>
+                    
+                        <a href="#"
+                            class="w-max flex items-center justify-center gap-2 text-gray-700 border border-gray-300 dark:border-white/25 hover:bg-slate-100/70 dark:hover:bg-darkHover rounded-full py-2 px-8 mx-auto my-20 duration-300 dark:text-white">
+                            Show more
+                            <img src="./assets/right-arrow-bold.png" alt="" class="w-4 dark:hidden">
+                            <img src="./assets/right-arrow-bold-dark.png" alt="" class="w-4 hidden dark:block">
+                        </a>
+                    
+                    </div>
                      
                 </li>
     
             </ul>
+        </div>
     
+    </div>
+
+   
+   
+    
+
+    
+            <!--  Experience -->
+    <div id="professional" class="w-full px-[12%] py-10 scroll-mt-20">
+
+        <!-- <h2 class="text-center text-5xl font-Ovo mb-20"></h2> -->
+        <div class="pub-container">
+            <ul class="flex flex-col  mt-12 gap-6 max-w-4xl mx-auto">
+    
+                <li class="border border-gray-300 dark:border-white/30 rounded-xl p-6 hover: hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:bg-darkHover dark:hover:shadow-white">
+                    <div id="professional" class="w-full px-[12%] py-10 scroll-mt-20">
+                        <h2 class="text-center text-5xl font-Ovo">Professional Experience</h2>
+                    
+                            <!-- Teaching Experience -->
+                            <h3 class="text-2xl font-semibold mb-10 black-text">Teaching Experience</h3>
+                            <div class="max-w-5xl mx-auto font-Ovo">
+                            <!-- <ul class="flex flex-col gap-6 max-w-4xl mx-auto"> -->
+                                <ul class="flex flex-col  mt-12 gap-6 max-w-4xl mx-auto">
+                                
+                    
+                                <li class="border border-gray-300 dark:border-white/30 rounded-xl p-6 hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:bg-darkHover dark:hover:shadow-white">
+                                    <p class="text-sm text-gray-500 black-text/60 mb-1">Spring, 2025</p>
+                    
+                                    <h3 class="font-semibold text-gray-800 black-text">
+                                        University of Engineering and Technology (UET), Lahore
+                                    </h3>
+                    
+                                    <p class="text-sm italic text-gray-600 mt-1 black-text/80">
+                                        Course Instructor (Undergraduate)
+                                    </p>
+                    
+                                    <p class="mt-3 text-sm text-gray-600 black-text/80">
+                                        Application to Information and Communication Technology (1st Semester)
+                                    </p>
+                                </li>
+                    
+                                <li class="border border-gray-300 dark:border-white/30 rounded-xl p-6 hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:bg-darkHover dark:hover:shadow-white">
+                                    <p class="text-sm text-gray-500 black-text/60 mb-1">2023 – 2025</p>
+                    
+                                    <h3 class="font-semibold text-gray-800 black-text">
+                                        Superior University Lahore, Computer Science
+                                    </h3>
+                    
+                                    <p class="text-sm italic text-gray-600 mt-1 black-text/80">
+                                        Course Designer and Instructor (Undergraduate)
+                                    </p>
+                    
+                                    <p class="mt-3 text-sm text-gray-600 black-text/80">
+                                        Programming Fundamentals (1st Semester), Object-Oriented Programming (2nd Semester),
+                                        Introduction to Logic (1st Semester), Data Structures and Algorithms (4th Semester)
+                                    </p>
+                                </li>
+                    
+                                <li class="border border-gray-300 dark:border-white/30 rounded-xl p-6 hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:bg-darkHover dark:hover:shadow-white">
+                                    <p class="text-sm text-gray-500 black-text/60 mb-1">Spring, 2024</p>
+                    
+                                    <h3 class="font-semibold text-gray-800 black-text">
+                                        University of Lahore (UOL)
+                                    </h3>
+                    
+                                    <p class="text-sm italic text-gray-600 mt-1 black-text/80">
+                                        Course Instructor (Undergraduate)
+                                    </p>
+                    
+                                    <p class="mt-3 text-sm text-gray-600 black-text/80">
+                                        Digital Logic and Design (1st Semester)
+                                    </p>
+                                </li>
+                    
+                            </ul>
+                        </div>
+                
+                            <!-- Research Experience -->
+                            <h3 class="text-2xl font-semibold mt-12 mb-10 black-text">Research Experience</h3>
+                
+                            <div class="max-w-5xl mx-auto font-Ovo">
+                            <ul class="flex flex-col  mt-12 gap-6 max-w-4xl mx-auto">
+                    
+                                <li class="border border-gray-300 dark:border-white/30 rounded-xl p-6 hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:bg-darkHover dark:hover:shadow-white">
+                                    <p class="text-sm text-gray-500 black-text/60 mb-1">2022 – 2023</p>
+                    
+                                    <h3 class="font-semibold text-gray-800 black-text">
+                                        Center for Language Engineering (CLE), UET Lahore
+                                    </h3>
+                    
+                                    <p class="text-sm italic text-gray-600 mt-1 black-text/80">
+                                        Research Officer
+                                    </p>
+                                </li>
+                    
+                                <li class="border border-gray-300 dark:border-white/30 rounded-xl p-6 hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:bg-darkHover dark:hover:shadow-white">
+                                    <p class="text-sm text-gray-500 black-text/60 mb-1">Spring, 2022</p>
+                    
+                                    <h3 class="font-semibold text-gray-800 black-text">
+                                        Data Science Lab (DSL), UET Lahore
+                                    </h3>
+                    
+                                    <p class="text-sm italic text-gray-600 mt-1 black-text/80">
+                                        Research Assistant
+                                    </p>
+                                </li>
+                    
+                            </ul>
+                        </div>
+                
+                                
+                            
+                            <!-- Industry Experience -->
+                            <h3 class="text-2xl font-semibold mt-12 mb-10 black-text">
+                                Industry Experience
+                            </h3>
+                            <div class="max-w-5xl mx-auto font-Ovo">
+                    
+                            <ul class="flex flex-col  mt-12 gap-6 max-w-4xl mx-auto">
+                    
+                                <li class="border border-gray-300 dark:border-white/30 rounded-xl p-6 hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:bg-darkHover dark:hover:shadow-white">
+                                    <p class="text-sm text-gray-500 black-text/60 mb-1">2021 – 2022</p>
+                    
+                                    <h3 class="font-semibold text-gray-800 black-text">
+                                        CodeFreaks, Lahore
+                                    </h3>
+                    
+                                    <p class="text-sm italic text-gray-600 mt-1 black-text/80">
+                                        Junior React Native Developer
+                                    </p>
+                                </li>
+                    
+                                <li class="border border-gray-300 dark:border-white/30 rounded-xl p-6 hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:bg-darkHover dark:hover:shadow-white">
+                                    <p class="text-sm text-gray-500 black-text/60 mb-1">Summer, 2020</p>
+                    
+                                    <h3 class="font-semibold text-gray-800 black-text">
+                                        LearnToEarn, Mianwali
+                                    </h3>
+                    
+                                    <p class="text-sm italic text-gray-600 mt-1 black-text/80">
+                                        Junior Java Developer
+                                    </p>
+                                </li>
+                    
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+            </ul>
         </div>
     </div>
- 
-    <!-- Contact me section -->
     
+
+<!--  Research Projects -->
+<div id="research-projects" class="w-full px-[12%] py-10 scroll-mt-20">
+
+    <!-- <h2 class="text-center text-5xl font-Ovo mb-20"></h2> -->
+    <div class="pub-container">
+        <ul class="flex flex-col  mt-12 gap-6 max-w-4xl mx-auto">
+
+            <li class="border border-gray-300 dark:border-white/30 rounded-xl p-6 hover: hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:bg-darkHover dark:hover:shadow-white">
+                <div id="research-projects" class="w-full px-[12%] py-10 scroll-mt-20">
+     
+                    <h2 class="text-center text-5xl  font-Ovo">Research Projects</h2>
+                    <div class="max-w-5xl mx-auto font-Ovo">
+                
+                
+                        <ul class="flex flex-col  mt-12 gap-6 max-w-4xl mx-auto">
+                
+                            <li class="border border-gray-300 dark:border-white/30 rounded-xl p-6 hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:bg-darkHover dark:hover:shadow-white">
+                
+                                <h3 class="font-semibold text-gray-800 black-text">
+                                    E-Khidmat Voice Assistant Application
+                                </h3>
+                
+                                <p class="text-sm text-gray-500 mt-1 black-text/60">
+                                    Center for Language Engineering (CLE), Lahore · 2023
+                                </p>
+                
+                                <p class="mt-3 text-sm text-gray-600 black-text/80">
+                                    Voice-enabled Urdu query system providing spoken and text responses for public service information.
+                                </p>
+                
+                            </li>
+                
+                            <li class="border border-gray-300 dark:border-white/30 rounded-xl p-6 hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:bg-darkHover dark:hover:shadow-white">
+                
+                                <h3 class="font-semibold text-gray-800 black-text">
+                                    Automated Meeting Minutes Generation System
+                                </h3>
+                
+                                <p class="text-sm text-gray-500 mt-1 black-text/60">
+                                    Center for Language Engineering (CLE), Lahore · 2022 – 2023
+                                </p>
+                
+                                <p class="mt-3 text-sm text-gray-600 black-text/80">
+                                    Urdu-dominant multilingual speech processing system for automatic extraction and generation of meeting minutes from mixed Urdu–English discussions.
+                                </p>
+                
+                            </li>
+                
+                            <li class="border border-gray-300 dark:border-white/30 rounded-xl p-6 hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:bg-darkHover dark:hover:shadow-white">
+                
+                                <h3 class="font-semibold text-gray-800 black-text">
+                                    Urdu Speech Recognition System
+                                </h3>
+                
+                                <p class="text-sm text-gray-500 mt-1 black-text/60">
+                                    Center for Language Engineering (CLE), Lahore · 2022 – 2023
+                                </p>
+                
+                                <p class="mt-3 text-sm text-gray-600 black-text/80">
+                                    Automatic speech recognition system designed for continuous Urdu speech using broadcast and conversational data.
+                                </p>
+                
+                            </li>
+                
+                            <li class="border border-gray-300 dark:border-white/30 rounded-xl p-6 hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:bg-darkHover dark:hover:shadow-white">
+                
+                                <h3 class="font-semibold text-gray-800 black-text">
+                                    Speaker Identification from Broadcast Speech Dataset
+                                </h3>
+                
+                                <p class="text-sm text-gray-500 mt-1 black-text/60">
+                                    Center for Language Engineering (CLE), Lahore · 2022 – 2023
+                                </p>
+                
+                                <p class="mt-3 text-sm text-gray-600 black-text/80">
+                                    Speaker recognition system developed using broadcast data of 207 renowned Pakistani personalities across multiple domains.
+                                </p>
+                
+                            </li>
+                
+                        </ul>
+                           
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+    
+
+<!--  Mentorship -->
+<div id="mentorship" class="w-full px-[12%] py-10 scroll-mt-20">
+
+    <!-- <h2 class="text-center text-5xl font-Ovo mb-20"></h2> -->
+    <div class="pub-container">
+        <ul class="flex flex-col  mt-12 gap-6 max-w-4xl mx-auto">
+
+            <li class="border border-gray-300 dark:border-white/30 rounded-xl p-6 hover: hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:bg-darkHover dark:hover:shadow-white">
+                <div id="mentorship" class="w-full px-[12%] py-10 scroll-mt-20">
+
+                    <h2 class="text-center text-5xl font-Ovo">Mentorship</h2>
+                
+                    <div class="max-w-5xl mx-auto font-Ovo">
+                
+                        <ul class="flex flex-col  mt-12 gap-6 max-w-4xl mx-auto">
+                
+                            <li class="border border-gray-300 dark:border-white/30 rounded-xl p-6 hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:bg-darkHover dark:hover:shadow-white">
+                
+                                <h3 class="font-semibold text-gray-800 black-text">
+                                    Hamad & Sana
+                                </h3>
+                
+                                <p class="text-sm text-gray-500 mt-1 black-text/60">
+                                    Department of Computer Science, Superior University Lahore · 2023 – 2024
+                                </p>
+                
+                                <p class="mt-3 text-sm text-gray-600 black-text/80">
+                                    Supervised undergraduate research project titled 
+                                    “Advancing Urdu Speech Recognition through Dataset Construction and Fine-Tuning.”
+                                </p>
+                
+                            </li>
+                
+                            <li class="border border-gray-300 dark:border-white/30 rounded-xl p-6 hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:bg-darkHover dark:hover:shadow-white">
+                
+                                <h3 class="font-semibold text-gray-800 black-text">
+                                    Ahmed & Mujtaba
+                                </h3>
+                
+                                <p class="text-sm text-gray-500 mt-1 black-text/60">
+                                    Department of Computer Science, Superior University Lahore · 2023 – 2024
+                                </p>
+                
+                                <p class="mt-3 text-sm text-gray-600 black-text/80">
+                                    Supervised undergraduate research project titled 
+                                    “Leveraging Phonetic Algorithms and Word Embeddings for Improved Roman Urdu Sentiment Analysis.”
+                                </p>
+                
+                            </li>
+                
+                            <li class="border border-gray-300 dark:border-white/30 rounded-xl p-6 hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:bg-darkHover dark:hover:shadow-white">
+                
+                                <h3 class="font-semibold text-gray-800 black-text">
+                                    Umair & Sidra
+                                </h3>
+                
+                                <p class="text-sm text-gray-500 mt-1 black-text/60">
+                                    Department of Computer Science, Superior University Lahore · 2024
+                                </p>
+                
+                                <p class="mt-3 text-sm text-gray-600 black-text/80">
+                                    Supervised undergraduate research project titled 
+                                    “Action Item Identification Using Multimodal Meeting Transcripts.”
+                                </p>
+                
+                            </li>
+                
+                        </ul>
+                
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+    
+
+
+    <!--  awards -->
+    <div id="awards" class="w-full px-[12%] py-10 scroll-mt-20">
+
+        <!-- <h2 class="text-center text-5xl font-Ovo mb-20"></h2> -->
+        <div class="pub-container">
+            <ul class="flex flex-col  mt-12 gap-6 max-w-4xl mx-auto">
+    
+                <li class="border border-gray-300 dark:border-white/30 rounded-xl p-6 hover: hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:bg-darkHover dark:hover:shadow-white">
+                    <div id="awards" class="w-full px-[12%] py-10 scroll-mt-20">
+
+                        <h2 class="text-center text-5xl font-Ovo">Awards & Achievements</h2>
+                    
+                        <div class="max-w-5xl mx-auto font-Ovo">
+                    
+                            <ul class="flex flex-col  mt-12 gap-6 max-w-4xl mx-auto">
+                    
+                                <li class="border border-gray-300 dark:border-white/30 rounded-xl p-6 hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:bg-darkHover dark:hover:shadow-white">
+                    
+                                    <h3 class="font-semibold text-gray-800 black-text">
+                                        JSPS Research Funding
+                                    </h3>
+                    
+                                    <p class="text-sm text-gray-500 mt-1 black-text/60">
+                                        2025
+                                    </p>
+                    
+                                    <p class="mt-3 text-sm text-gray-600 black-text/80">
+                                        Awarded for doctoral research support in Japan.
+                                    </p>
+                    
+                                </li>
+                    
+                                <li class="border border-gray-300 dark:border-white/30 rounded-xl p-6 hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:bg-darkHover dark:hover:shadow-white">
+                    
+                                    <h3 class="font-semibold text-gray-800 black-text">
+                                        Tokyo Global Partner (TGP) Scholarship
+                                    </h3>
+                    
+                                    <p class="text-sm text-gray-500 mt-1 black-text/60">
+                                        2025
+                                    </p>
+                    
+                                    <p class="mt-3 text-sm text-gray-600 black-text/80">
+                                        Fully funded scholarship awarded for Ph.D. studies at Tokyo Metropolitan University, Japan.
+                                    </p>
+                    
+                                </li>
+                    
+                                <li class="border border-gray-300 dark:border-white/30 rounded-xl p-6 hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:bg-darkHover dark:hover:shadow-white">
+                    
+                                    <h3 class="font-semibold text-gray-800 black-text">
+                                        Best Poster Presentation Award
+                                    </h3>
+                    
+                                    <p class="text-sm text-gray-500 mt-1 black-text/60">
+                                        2023 · Department of Computer Science, UET Lahore
+                                    </p>
+                    
+                                    <p class="mt-3 text-sm text-gray-600 black-text/80">
+                                        Awarded for outstanding research poster presentation.
+                                    </p>
+                    
+                                </li>
+                    
+                                <li class="border border-gray-300 dark:border-white/30 rounded-xl p-6 hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:bg-darkHover dark:hover:shadow-white">
+                    
+                                    <h3 class="font-semibold text-gray-800 black-text">
+                                        Prime Minister’s Youth Laptop Scheme
+                                    </h3>
+                    
+                                    <p class="text-sm text-gray-500 mt-1 black-text/60">
+                                        2022
+                                    </p>
+                    
+                                    <p class="mt-3 text-sm text-gray-600 black-text/80">
+                                        Awarded based on high academic merit and performance.
+                                    </p>
+                    
+                                </li>
+                    
+                                <li class="border border-gray-300 dark:border-white/30 rounded-xl p-6 hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:bg-darkHover dark:hover:shadow-white">
+                    
+                                    <h3 class="font-semibold text-gray-800 black-text">
+                                        Merit-Based Scholarship
+                                    </h3>
+                    
+                                    <p class="text-sm text-gray-500 mt-1 black-text/60">
+                                        2021
+                                    </p>
+                    
+                                    <p class="mt-3 text-sm text-gray-600 black-text/80">
+                                        Awarded during graduate studies for outstanding academic performance.
+                                    </p>
+                    
+                                </li>
+                    
+                                <li class="border border-gray-300 dark:border-white/30 rounded-xl p-6 hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:bg-darkHover dark:hover:shadow-white">
+                    
+                                    <h3 class="font-semibold text-gray-800 black-text">
+                                        Fully Funded Undergraduate Scholarship
+                                    </h3>
+                    
+                                    <p class="text-sm text-gray-500 mt-1 black-text/60">
+                                        2017
+                                    </p>
+                    
+                                    <p class="mt-3 text-sm text-gray-600 black-text/80">
+                                        Awarded for four-year Bachelor’s degree based on academic excellence.
+                                    </p>
+                    
+                                </li>
+                    
+                            </ul>
+                    
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+   
+
+     <!--  certifications -->
+     <div id="certifications" class="w-full px-[12%] py-10 scroll-mt-20">
+
+        <!-- <h2 class="text-center text-5xl font-Ovo mb-20"></h2> -->
+        <div class="pub-container">
+            <ul class="flex flex-col  mt-12 gap-6 max-w-4xl mx-auto">
+    
+                <li class="border border-gray-300 dark:border-white/30 rounded-xl p-6 hover: hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:bg-darkHover dark:hover:shadow-white">
+                    <div id="certifications" class="w-full px-[12%] py-10 scroll-mt-20">
+
+                        <h2 class="text-center text-5xl font-Ovo mb-20">Certifications & Courses</h2>
+                    
+                        <div class="max-w-5xl mx-auto font-Ovo">
+                    
+                            <ul class="flex flex-col  mt-12 gap-6 max-w-4xl mx-auto">
+                    
+                                <li class="border border-gray-300 dark:border-white/30 rounded-xl p-6 hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:bg-darkHover dark:hover:shadow-white">
+                    
+                                    <h3 class="font-semibold text-gray-800 black-text">
+                                        Transformers & Large Language Models
+                                    </h3>
+                    
+                                    <p class="text-sm text-gray-500 mt-1 black-text/60">
+                                        2026 · Stanford University
+                                    </p>
+                    
+                                </li>
+                    
+                                <li class="border border-gray-300 dark:border-white/30 rounded-xl p-6 hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:bg-darkHover dark:hover:shadow-white">
+                    
+                                    <h3 class="font-semibold text-gray-800 black-text">
+                                        Generative AI & Foundational Models for NLP and Language Understanding
+                                    </h3>
+                    
+                                    <p class="text-sm text-gray-500 mt-1 black-text/60">
+                                        2025 · IBM
+                                    </p>
+                    
+                                </li>
+                    
+                                <li class="border border-gray-300 dark:border-white/30 rounded-xl p-6 hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:bg-darkHover dark:hover:shadow-white">
+                    
+                                    <h3 class="font-semibold text-gray-800 black-text">
+                                        Deep Learning and Reinforcement Learning
+                                    </h3>
+                    
+                                    <p class="text-sm text-gray-500 mt-1 black-text/60">
+                                        2025 · IBM
+                                    </p>
+                    
+                                </li>
+                    
+                                <li class="border border-gray-300 dark:border-white/30 rounded-xl p-6 hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:bg-darkHover dark:hover:shadow-white">
+                    
+                                    <h3 class="font-semibold text-gray-800 black-text">
+                                        NLP: Twitter Sentiment Analysis
+                                    </h3>
+                    
+                                    <p class="text-sm text-gray-500 mt-1 black-text/60">
+                                        2025 · Coursera
+                                    </p>
+                    
+                                </li>
+                    
+                                <li class="border border-gray-300 dark:border-white/30 rounded-xl p-6 hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:bg-darkHover dark:hover:shadow-white">
+                    
+                                    <h3 class="font-semibold text-gray-800 black-text">
+                                        Machine Learning
+                                    </h3>
+                    
+                                    <p class="text-sm text-gray-500 mt-1 black-text/60">
+                                        2024 · Stanford University
+                                    </p>
+                    
+                                </li>
+                    
+                                <li class="border border-gray-300 dark:border-white/30 rounded-xl p-6 hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:bg-darkHover dark:hover:shadow-white">
+                    
+                                    <h3 class="font-semibold text-gray-800 black-text">
+                                        Python Core
+                                    </h3>
+                    
+                                    <p class="text-sm text-gray-500 mt-1 black-text/60">
+                                        2022 · SoloLearn
+                                    </p>
+                    
+                                </li>
+                    
+                            </ul>
+                    
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>   
+   
+    
+
+     <!--  gallary -->
+     <div id="gallary" class="w-full px-[12%] py-10 scroll-mt-20">
+
+        <!-- <h2 class="text-center text-5xl font-Ovo mb-20"></h2> -->
+        <div class="pub-container">
+            <ul class="flex flex-col  mt-12 gap-6 max-w-4xl mx-auto">
+    
+                <li class="border border-gray-300 dark:border-white/30 rounded-xl p-6 hover: hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:bg-darkHover dark:hover:shadow-white">
+                    <div id="gallary" class="w-full px-[12%] py-10 scroll-mt-20">
+
+                        <h2 class="text-center text-5xl font-Ovo mb-20">Gallary</h2>
+                    
+                        <div class="max-w-5xl mx-auto font-Ovo">
+                    
+                            <ul class="flex flex-col  mt-12 gap-6 max-w-4xl mx-auto">
+                    
+                                <li class="border border-gray-300 dark:border-white/30 rounded-xl p-6 hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:bg-darkHover dark:hover:shadow-white">
+                    
+                                    <h3 class="font-semibold text-gray-800 dark:text-white">
+                                        Transformers & Large Language Models
+                                    </h3>
+                    
+                                    <p class="text-sm text-gray-500 mt-1 dark:text-white/60">
+                                        2026 · Stanford University
+                                    </p>
+                    
+                                </li>
+                    
+                                <li class="border border-gray-300 dark:border-white/30 rounded-xl p-6 hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:bg-darkHover dark:hover:shadow-white">
+                    
+                                    <h3 class="font-semibold text-gray-800 dark:text-white">
+                                        Generative AI & Foundational Models for NLP and Language Understanding
+                                    </h3>
+                    
+                                    <p class="text-sm text-gray-500 mt-1 dark:text-white/60">
+                                        2025 · IBM
+                                    </p>
+                    
+                                </li>
+                    
+                                <li class="border border-gray-300 dark:border-white/30 rounded-xl p-6 hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:bg-darkHover dark:hover:shadow-white">
+                    
+                                    <h3 class="font-semibold text-gray-800 dark:text-white">
+                                        Deep Learning and Reinforcement Learning
+                                    </h3>
+                    
+                                    <p class="text-sm text-gray-500 mt-1 dark:text-white/60">
+                                        2025 · IBM
+                                    </p>
+                    
+                                </li>
+                    
+                                <li class="border border-gray-300 dark:border-white/30 rounded-xl p-6 hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:bg-darkHover dark:hover:shadow-white">
+                    
+                                    <h3 class="font-semibold text-gray-800 dark:text-white">
+                                        NLP: Twitter Sentiment Analysis
+                                    </h3>
+                    
+                                    <p class="text-sm text-gray-500 mt-1 dark:text-white/60">
+                                        2025 · Coursera
+                                    </p>
+                    
+                                </li>
+                    
+                                <li class="border border-gray-300 dark:border-white/30 rounded-xl p-6 hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:bg-darkHover dark:hover:shadow-white">
+                    
+                                    <h3 class="font-semibold text-gray-800 dark:text-white">
+                                        Machine Learning
+                                    </h3>
+                    
+                                    <p class="text-sm text-gray-500 mt-1 dark:text-white/60">
+                                        2024 · Stanford University
+                                    </p>
+                    
+                                </li>
+                    
+                                <li class="border border-gray-300 dark:border-white/30 rounded-xl p-6 hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:bg-darkHover dark:hover:shadow-white">
+                    
+                                    <h3 class="font-semibold text-gray-800 dark:text-white">
+                                        Python Core
+                                    </h3>
+                    
+                                    <p class="text-sm text-gray-500 mt-1 dark:text-white/60">
+                                        2022 · SoloLearn
+                                    </p>
+                    
+                                </li>
+                    
+                            </ul>
+                    
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+    <!-- Contact me section -->
+    <div id="contact" class="w-full px-[12%] py-10 scroll-mt-20">
+
+        <!-- <h2 class="text-center text-5xl font-Ovo mb-20"></h2> -->
+        <div class="pub-container">
+            <ul class="flex flex-col  mt-12 gap-6 max-w-4xl mx-auto">
+    
+                <li class="border border-gray-300 dark:border-white/30 rounded-xl p-6 hover: hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:bg-darkHover dark:hover:shadow-white">
+                    <div id="contact" class="w-full px-[12%] py-10 scroll-mt-20">
+
+                        <h2 class="text-center text-5xl font-Ovo mb-20">Get in Touch</h2>
+                        <p class="text-center max-w-2xl mx-auto mt-5 mb-12 font-Ovo">
+                            Feel free to contact me for research collaboration, academic discussions,
+                            or professional opportunities.
+                        </p>
+                        <div class="max-w-5xl mx-auto font-Ovo">
+                    
+                            <ul class="flex flex-col  mt-12 gap-6 max-w-4xl mx-auto">
+                    
+                                <li class="border border-gray-300 dark:border-white/30 rounded-xl p-6 hover: hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:bg-darkHover dark:hover:shadow-white">
+                                    <h3 class="text-xl font-semibold text-center mb-6 dark:text-white">
+                                        Muhammad Owais, Ph.D.
+                                    </h3>
+                            
+                                    <div class="space-y-4 flex flex-col items-center text-gray-700 dark:text-white/80">
+                            
+                                        <!-- Email -->
+                                        <div class="flex items-center gap-4 text-gray-700 dark:text-white/80">
+                                            <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center">
+                                                <img src="./assets/email.svg" class="w-5 h-5" alt="">
+                                            </div>
+                                            <a href="mailto:owaiskhana635@gmail.com"
+                                               class="hover:text-blue-600 transition">
+                                               owaiskhana635@gmail.com
+                                            </a>
+                                        </div>
+                                        <!-- LinkedIn -->
+                                        <div class="flex items-center gap-4 text-gray-700 dark:text-white/80">
+                                            <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center">
+                                                <img src="./assets/linkedin.svg" class="w-5 h-5" alt="">
+                                            </div>
+                                            <a href="https://www.linkedin.com/in/muhammad-owais635/" target="_blank"
+                                            class="hover:text-blue-600 transition">
+                                            LinkedIn Profile
+                                            </a>
+                                        </div>
+
+                                        <!-- Google Scholar -->
+                                        <div class="flex items-center gap-4 text-gray-700 dark:text-white/80">
+                                            <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center">
+                                                <img src="./assets/scholar.svg" class="w-5 h-5" alt="">
+                                            </div>
+                                            <a href="https://scholar.google.com/citations?user=OD079GEAAAAJ&hl=en" target="_blank"
+                                            class="hover:text-blue-600 transition">
+                                            Google Scholar Profile
+                                            </a>
+                                        </div>
+
+                                        <!-- GitHub -->
+                                        <div class="flex items-center gap-4 text-gray-700 dark:text-white/80">
+                                            <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center">
+                                                <img src="./assets/github.svg" class="w-5 h-5" alt="">
+                                            </div>
+                                            <a href="https://github.com/Muhammad-Owais635" target="_blank"
+                                            class="hover:text-blue-600 transition">
+                                            GitHub
+                                            </a>
+                                        </div>
+
+                                        <!-- Portfolio -->
+                    
+
+                                        <!-- Location -->
+                                        <div class="flex items-center gap-4 text-gray-700 dark:text-white/80">
+                                            <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center">
+                                                <img src="./assets/address.svg" class="w-5 h-5" alt="">
+                                            </div>
+                                            <span>
+                                                Hachioji-shi, Matsugaya, Tokyo, Japan
+                                            </span>
+                                        </div>
+                                
+                                        
+                            
+                                    </div>
+                                
+                                </li>
+                    
+                            </ul>
+                    
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
 
     <!-- Footer -->
     <div class="mt-20">
@@ -174,7 +1400,7 @@ redirect_from:
             </div>
         </div>
         <div class="text-center sm:flex items-center justify-between border-t border-gray-400 mx-[10%] mt-12 py-3">
-            <p>© 2026 <a href="https://prebuiltui.com/" target="_blank">Owais</a>. All rights reserved.</p> 
+            <p>© 2026 Owais. All rights reserved.</p> 
             <ul class="flex items-center gap-10 justify-center mt-4 sm:mt-0">
                 <li><a target="_blank" href="https://github.com/Muhammad-Owais635">GitHub</a></li>
                 <li><a target="_blank" href="https://www.linkedin.com/in/muhammad-owais635/">LinkedIn</a></li>
@@ -203,3 +1429,6 @@ redirect_from:
         }
         </script>
 
+</body>
+
+</html>
