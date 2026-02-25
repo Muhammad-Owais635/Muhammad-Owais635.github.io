@@ -80,7 +80,7 @@
 
                           <!-- Talk 4 -->
                      <a href="{{ '/talks/tevmlai/' | relative_url }}">
-                            <div class="aspect-square bg-no-repeat bg-cover bg-center rounded-lg relative cursor-pointer group"
+                            <div class="aspect-square bg-no-repeat bg-cover bg-center rounded-lg relative cursor-pointer group extra-talk hidden"
                                 style="background-image: url('/images/ml-itec-talk-3.jpeg');">
                     
                                 <div class="bg-white w-10/12 rounded-md absolute bottom-5 left-1/2 -translate-x-1/2 py-3 px-5 flex items-center justify-between duration-500 group-hover:bottom-7">
@@ -98,9 +98,9 @@
                     
                            
 
-                          <!-- Talk 4 -->
+                          <!-- Talk 5 -->
                       <a href="{{ '/talks/trvpython/' | relative_url }}">
-                            <div class="aspect-square bg-no-repeat bg-cover bg-center rounded-lg relative cursor-pointer group"
+                            <div class="aspect-square bg-no-repeat bg-cover bg-center rounded-lg relative cursor-pointer group extra-talk hidden"
                                 style="background-image: url('/images/tevta-python-2.jpeg');">
                     
                                 <div class="bg-white w-10/12 rounded-md absolute bottom-5 left-1/2 -translate-x-1/2 py-3 px-5 flex items-center justify-between duration-500 group-hover:bottom-7">
@@ -120,11 +120,10 @@
                            
                     
                            
-                         <!-- Talk 5 -->
-                     
+                         <!-- Talk 6 -->
                          
                       <a href="{{ '/talks/codex/' | relative_url }}">
-                            <div class="aspect-square bg-no-repeat bg-cover bg-center rounded-lg relative cursor-pointer group"
+                            <div class="aspect-square bg-no-repeat bg-cover bg-center rounded-lg relative cursor-pointer group extra-talk hidden"
                                 style="background-image: url('/images/codeex-2024-1.jpeg');">
                     
                                 <div class="bg-white w-10/12 rounded-md absolute bottom-5 left-1/2 -translate-x-1/2 py-3 px-5 flex items-center justify-between duration-500 group-hover:bottom-7">
@@ -147,13 +146,11 @@
 
                   
              
-                    <!-- 
-                        <a href="#"
+                    <a href="#"
+                            id="showMoreBtn"
                             class="w-max flex items-center justify-center gap-2 text-gray-700 border border-gray-300 dark:border-white/25 hover:bg-slate-100/70 dark:hover:bg-darkHover rounded-full py-2 px-8 mx-auto my-20 duration-300 dark:text-white">
-                            Show more
-                            <img src="./assets/right-arrow-bold.png" alt="" class="w-4 dark:hidden">
-                            <img src="./assets/right-arrow-bold-dark.png" alt="" class="w-4 hidden dark:block">
-                        </a> -->
+                                Show more
+                            </a>
                     
                     </div>
                      
@@ -163,3 +160,19 @@
         </div>
     
     </div>
+<script>
+    const btn = document.getElementById("showMoreBtn");
+    const extraTalks = document.querySelectorAll(".extra-talk");
+
+    btn.addEventListener("click", function (e) {
+        e.preventDefault();
+
+        extraTalks.forEach(card => {
+            card.classList.toggle("hidden");
+        });
+
+        btn.innerText = btn.innerText.includes("more")
+            ? "Show less"
+            : "Show more";
+    });
+</script>
