@@ -1536,15 +1536,14 @@ video {
         }
         
         /* ===== Responsive ===== */
-        @media (max-width: 768px) {
-            #publications .pub-container {
-                padding: 35px 22px;
-                border-radius: 18px;
-            }
-        
-            #publications .archive__item {
-                padding: 18px;
-            }
+       
+    @media (max-width: 768px) {
+        #publications .pub-container {
+            padding: 35px 22px;
+            border-radius: 18px;
+    
+            margin: 0 14px;
         }
+    }
 
 </style>
