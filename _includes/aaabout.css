@@ -1609,14 +1609,7 @@ video {
 }
 
 /* ===== Links ===== */
-.transparent-theme a {
-    color: #0284c7;
-    text-decoration: none;
-}
 
-.transparent-theme a:hover {
-    text-decoration: underline;
-}
 
 /* ===== Responsive ===== */
 
