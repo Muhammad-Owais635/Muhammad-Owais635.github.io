@@ -1587,11 +1587,7 @@ video {
 }
 
 /* ===== Titles ===== */
-.transparent-theme h3 {
-    font-size: 16px;
-    font-weight: 600;
-    color: inherit;
-}
+
 
 /* ===== Metadata ===== */
 .transparent-theme .pub-meta {
