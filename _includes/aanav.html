@@ -13,46 +13,45 @@
              alt="Logo"
              class="w-28 cursor-pointer mr-14 hidden dark:block" />
     </a>
-
-    <ul id="navLink"
+        <ul id="navLink"
         class="hidden md:flex items-center gap-6 lg:gap-8 rounded-full px-12 py-3 bg-white shadow-sm bg-opacity-50 font-Ovo dark:border dark:border-white/30 dark:bg-transparent">
 
-        <li><a class="hover:text-gray-500 dark:hover:text-gray-300 transition" href="{{ '/#top' | relative_url }}">Home</a></li>
-        <li><a class="hover:text-gray-500 dark:hover:text-gray-300 transition" href="{{ '/#education' | relative_url }}">Education</a></li>
-        <li><a class="hover:text-gray-500 dark:hover:text-gray-300 transition" href="{{ '/#publications' | relative_url }}">Publications</a></li>
-        <li><a class="hover:text-gray-500 dark:hover:text-gray-300 transition" href="{{ '/#talks' | relative_url }}">Talks</a></li>
-        <li><a class="hover:text-gray-500 dark:hover:text-gray-300 transition" href="{{ '/#professional' | relative_url }}">Experience</a></li>
-        <li><a class="hover:text-gray-500 dark:hover:text-gray-300 transition" href="{{ '/#research-projects' | relative_url }}">Projects</a></li>
-        <li><a class="hover:text-gray-500 dark:hover:text-gray-300 transition" href="{{ '/#mentorship' | relative_url }}">Mentorship</a></li>
-        <li><a class="hover:text-gray-500 dark:hover:text-gray-300 transition" href="{{ '/#awards' | relative_url }}">Awards</a></li>
-        <li><a class="hover:text-gray-500 dark:hover:text-gray-300 transition" href="{{ '/#certifications' | relative_url }}">Certifications</a></li>
-        <!-- <li><a class="hover:text-gray-500 dark:hover:text-gray-300 transition" href="{{ '/#gallary' | relative_url }}">Gallary</a></li> -->
-        <!-- <li><a class="hover:text-gray-500 dark:hover:text-gray-300 transition" href="{{ '/#contact' | relative_url }}">Contact</a></li> -->
-    </ul>
+            <li><a class="hover:text-gray-500 dark:hover:text-gray-300 transition" href="{{ '/#top' | relative_url }}">Home</a></li>
+            <li><a class="hover:text-gray-500 dark:hover:text-gray-300 transition" href="{{ '/#education' | relative_url }}">Education</a></li>
+            <li><a class="hover:text-gray-500 dark:hover:text-gray-300 transition" href="{{ '/#publications' | relative_url }}">Publications</a></li>
+            <li><a class="hover:text-gray-500 dark:hover:text-gray-300 transition" href="{{ '/#talks' | relative_url }}">Talks</a></li>
+            <li><a class="hover:text-gray-500 dark:hover:text-gray-300 transition" href="{{ '/#professional' | relative_url }}">Experience</a></li>
+            <li><a class="hover:text-gray-500 dark:hover:text-gray-300 transition" href="{{ '/#research-projects' | relative_url }}">Projects</a></li>
+            <li><a class="hover:text-gray-500 dark:hover:text-gray-300 transition" href="{{ '/#mentorship' | relative_url }}">Mentorship</a></li>
+            <li><a class="hover:text-gray-500 dark:hover:text-gray-300 transition" href="{{ '/#awards' | relative_url }}">Awards</a></li>
+            <li><a class="hover:text-gray-500 dark:hover:text-gray-300 transition" href="{{ '/#certifications' | relative_url }}">Certifications</a></li>
+            <!-- <li><a class="hover:text-gray-500 dark:hover:text-gray-300 transition" href="{{ '/#gallary' | relative_url }}">Gallary</a></li> -->
+            <!-- <li><a class="hover:text-gray-500 dark:hover:text-gray-300 transition" href="{{ '/#contact' | relative_url }}">Contact</a></li> -->
+        </ul>
+           
+        <!-- ----- mobile menu ------ -->
+        <ul id="mobileMenu"
+            class="flex md:hidden flex-col gap-4 py-20 px-10 fixed -right-64 top-0 bottom-0 w-64 z-50 h-screen bg-rose-50 transition duration-500 font-Ovo dark:bg-darkHover dark:text-white">
 
-    <!-- Mobile Menu -->
-    <ul id="mobileMenu"
-        class="flex md:hidden flex-col gap-4 py-20 px-10 fixed -right-64 top-0 bottom-0 w-64 z-50 h-screen bg-rose-50 transition duration-500 font-Ovo dark:bg-darkHover dark:text-white">
+            <div class="absolute right-6 top-6" onclick="closeMenu()">
+                <img src="./assets/close-black.png" alt="" class="w-5 cursor-pointer dark:hidden" />
+                <img src="./assets/close-white.png" alt="" class="w-5 cursor-pointer hidden dark:block" />
+            </div>
 
-        <div class="absolute right-6 top-6" onclick="closeMenu()">
-            <img src="{{ '/assets/close-black.png' | relative_url }}"
-                 class="w-5 cursor-pointer dark:hidden">
-
-            <img src="{{ '/assets/close-white.png' | relative_url }}"
-                 class="w-5 cursor-pointer hidden dark:block">
-        </div>
-
-        <li><a href="{{ '/#top' | relative_url }}" onclick="closeMenu()">Home</a></li>
-        <li><a href="{{ '/#education' | relative_url }}" onclick="closeMenu()">About Me</a></li>
-        <li><a href="{{ '/#publications' | relative_url }}" onclick="closeMenu()">Publications</a></li>
-        <li><a href="{{ '/#talks' | relative_url }}" onclick="closeMenu()">Talks</a></li>
-        <li><a href="{{ '/#professional' | relative_url }}" onclick="closeMenu()">Experience</a></li>
-        <li><a href="{{ '/#research-projects' | relative_url }}" onclick="closeMenu()">Projects</a></li>
-        <li><a href="{{ '/#mentorship' | relative_url }}" onclick="closeMenu()">Mentorship</a></li>
-        <li><a href="{{ '/#awards' | relative_url }}" onclick="closeMenu()">Awards</a></li>
-        <li><a href="{{ '/#certifications' | relative_url }}" onclick="closeMenu()">Certifications</a></li>
-        <!-- <li><a href="{{ '/#gallary' | relative_url }}" onclick="closeMenu()">Gallary</a></li> -->
-        <!-- <li><a href="{{ '/#contact' | relative_url }}" onclick="closeMenu()">Contact</a></li> -->
-    </ul>
-
-</nav>
+            <li><a href="{{ '/#top' | relative_url }}" onclick="closeMenu()">Home</a></li>
+            <li><a href="{{ '/#education' | relative_url }}" onclick="closeMenu()">Education</a></li>
+            <li><a href="{{ '/#publications' | relative_url }}" onclick="closeMenu()">Publications</a></li>
+            <li><a href="{{ '/#talks' | relative_url }}" onclick="closeMenu()">Talks</a></li>
+            <li><a href="{{ '/#professional' | relative_url }}" onclick="closeMenu()">Experience</a></li>
+            <li><a href="{{ '/#research-projects' | relative_url }}" onclick="closeMenu()">Projects</a></li>
+            <li><a href="{{ '/#mentorship' | relative_url }}" onclick="closeMenu()">Mentorship</a></li>
+            <li><a href="{{ '/#awards' | relative_url }}" onclick="closeMenu()">Awards</a></li>
+            <li><a href="{{ '/#certifications' | relative_url }}" onclick="closeMenu()">Certifications</a></li>
+            <!-- <li><a href="{{ '/#gallary' | relative_url }}" onclick="closeMenu()">Gallary</a></li> -->
+            <!-- <li><a href="{{ '/#contact' | relative_url }}" onclick="closeMenu()">Contact</a></li> -->
+        </ul>
+        <button class="block md:hidden ml-3" onclick="openMenu()">
+            <img src="./assets/menu-black.png" class="w-6 dark:hidden" />
+            <img src="./assets/menu-white.png" class="w-6 hidden dark:block" />
+        </button>
+    </nav>
