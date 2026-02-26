@@ -36,13 +36,6 @@
                  
             </button>
 
-
-            <button class="block md:hidden ml-3" onclick="openMenu()">
-                <img src="{{ '/assets/menu-black.png' | relative_url }}" alt="" class="w-6 dark:hidden" />
-                <img src="{{ '/assets/menu-white.png' | relative_url }}"  alt="" class="w-6 hidden dark:block" />
-                
-            </button>
-
         </div>
              
         <!-- ----- mobile menu ------ -->
@@ -67,5 +60,10 @@
             <!-- <li><a href="{{ '/#gallary' | relative_url }}" onclick="closeMenu()">Gallary</a></li> -->
             <!-- <li><a href="{{ '/#contact' | relative_url }}" onclick="closeMenu()">Contact</a></li> -->
         </ul>
+                <button class="block md:hidden ml-3" onclick="openMenu()">
+            
+            <img  src="{{ '/assets/menu-black.png' | relative_url }}" class="w-6 dark:hidden" />
+            <img ssrc="{{ '/assets/menu-white.png' | relative_url }}" class="w-6 hidden dark:block" />
+            </button>
 
     </nav>
