@@ -34,8 +34,9 @@
             class="flex md:hidden flex-col gap-4 py-20 px-10 fixed -right-64 top-0 bottom-0 w-64 z-50 h-screen bg-rose-50 transition duration-500 font-Ovo dark:bg-darkHover dark:text-white">
 
             <div class="absolute right-6 top-6" onclick="closeMenu()">
-                <img src="./assets/close-black.png" alt="" class="w-5 cursor-pointer dark:hidden" />
-                <img src="./assets/close-white.png" alt="" class="w-5 cursor-pointer hidden dark:block" />
+                
+                <img src="{{ '/assets/close-black.png' | relative_url }}" alt="" class="w-5 cursor-pointer dark:hidden" />
+                <img src="{{ '/assets/close-white.png' | relative_url }}" alt="" class="w-5 cursor-pointer hidden dark:block" />
             </div>
 
             <li><a href="{{ '/#top' | relative_url }}" onclick="closeMenu()">Home</a></li>
@@ -51,7 +52,8 @@
             <!-- <li><a href="{{ '/#contact' | relative_url }}" onclick="closeMenu()">Contact</a></li> -->
         </ul>
         <button class="block md:hidden ml-3" onclick="openMenu()">
-            <img src="./assets/menu-black.png" class="w-6 dark:hidden" />
-            <img src="./assets/menu-white.png" class="w-6 hidden dark:block" />
+            
+            <img  src="{{ '/assets/menu-black.png' | relative_url }}" class="w-6 dark:hidden" />
+            <img ssrc="{{ '/assets/menu-white.png' | relative_url }}" class="w-6 hidden dark:block" />
         </button>
     </nav>
