@@ -10,8 +10,7 @@ function closeMenu() {
     mobileMenu.classList.remove("right-0");
     mobileMenu.classList.add("-right-64");
 }
-</script>
- <script >document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
         if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.documentElement.classList.add('dark')
         } else {
