@@ -27,11 +27,23 @@
             <li><a class="hover:text-gray-500 dark:hover:text-gray-300 transition" href="{{ '/#certifications' | relative_url }}">Certifications</a></li>
             <!-- <li><a class="hover:text-gray-500 dark:hover:text-gray-300 transition" href="{{ '/#gallary' | relative_url }}">Gallary</a></li> -->
             <!-- <li><a class="hover:text-gray-500 dark:hover:text-gray-300 transition" href="{{ '/#contact' | relative_url }}">Contact</a></li> -->
-        <button onclick="toggleTheme()">
-                <img src="{{ '/assets/moon_icon.png' | relative_url }}" alt="" class="w-5 dark:hidden" />
-                <img src="{{ '/assets/sun_icon.png' | relative_url }}"  alt="" class="w-5 hidden dark:block" />
-            </button>
         </ul>
+
+     <div class="flex items-center gap-4">
+            <button onclick="toggleTheme()">
+                <img src="{{ '/assets/moon_icon.png' | relative_url }}"  alt="" class="w-5 dark:hidden" />
+                <img src="{{ '/assets/sun_icon.png' | relative_url }}" alt="" class="w-5 hidden dark:block" />
+                 
+            </button>
+
+
+            <button class="block md:hidden ml-3" onclick="openMenu()">
+                <img src="{{ '/assets/menu-black.png' | relative_url }}" alt="" class="w-6 dark:hidden" />
+                <img src="{{ '/assets/menu-white.png' | relative_url }}"  alt="" class="w-6 hidden dark:block" />
+                
+            </button>
+
+        </div>
              
         <!-- ----- mobile menu ------ -->
         <ul id="mobileMenu"
@@ -55,9 +67,5 @@
             <!-- <li><a href="{{ '/#gallary' | relative_url }}" onclick="closeMenu()">Gallary</a></li> -->
             <!-- <li><a href="{{ '/#contact' | relative_url }}" onclick="closeMenu()">Contact</a></li> -->
         </ul>
-        <button class="block md:hidden ml-3" onclick="openMenu()">
-            
-            <img  src="{{ '/assets/menu-black.png' | relative_url }}" class="w-6 dark:hidden" />
-            <img ssrc="{{ '/assets/menu-white.png' | relative_url }}" class="w-6 hidden dark:block" />
-        </button>
+
     </nav>
