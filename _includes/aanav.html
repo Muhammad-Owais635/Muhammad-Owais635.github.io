@@ -27,15 +27,12 @@
             <li><a class="hover:text-gray-500 dark:hover:text-gray-300 transition" href="{{ '/#certifications' | relative_url }}">Certifications</a></li>
             <!-- <li><a class="hover:text-gray-500 dark:hover:text-gray-300 transition" href="{{ '/#gallary' | relative_url }}">Gallary</a></li> -->
             <!-- <li><a class="hover:text-gray-500 dark:hover:text-gray-300 transition" href="{{ '/#contact' | relative_url }}">Contact</a></li> -->
-        </ul>
-                <div class="flex items-center gap-1">
-            <button onclick="toggleTheme()">
+        <button onclick="toggleTheme()">
                 <img src="{{ '/assets/moon_icon.png' | relative_url }}" alt="" class="w-5 dark:hidden" />
                 <img src="{{ '/assets/sun_icon.png' | relative_url }}"  alt="" class="w-5 hidden dark:block" />
             </button>
-
-
-        </div>
+        </ul>
+             
         <!-- ----- mobile menu ------ -->
         <ul id="mobileMenu"
             class="flex md:hidden flex-col gap-4 py-20 px-10 fixed -right-64 top-0 bottom-0 w-64 z-50 h-screen bg-rose-50 transition duration-500 font-Ovo dark:bg-darkHover dark:text-white">
