@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if page.title %}{{ page.title }} | {% endif %}Muhammad Owais Portfolio</title>
+
+    <link rel="shortcut icon" href="{{ '/assets/favicon.ico' | relative_url }}" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Ovo&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ '/_style/about.css' | relative_url }}">
+
+    {% include aaabout.css %}
+
+    <script>
+        /* Apply dark mode before the page paints, to avoid a white flash */
+        if (
+            localStorage.theme === 'dark' ||
+            (!('theme' in localStorage) &&
+            window.matchMedia('(prefers-color-scheme: dark)').matches)
+        ) {
+            document.documentElement.classList.add('dark');
+        }
+    </script>
+</head>
+
+<body class="font-Outfit leading-8 dark:bg-darkTheme dark:text-white">
+
+    <!-- Background Graphic -->
+    <div class="fixed top-0 right-0 w-11/12 -z-10 translate-y-[-80%] dark:hidden">
+        <img src="{{ '/assets/header-bg-color.png' | relative_url }}" alt="" class="w-full" />
+    </div>
+
+    <!-- Navbar -->
+    {% include aanav.html %}
+
+    <!-- Page content -->
+    <main>
+        {{ content }}
+    </main>
+
+    <!-- Footer -->
+    <div class="mt-20">
+        <div class="text-center">
+            <a href="{{ '/' | relative_url }}">
+                <img src="{{ '/assets/logo.png' | relative_url }}" alt="" class="w-36 mx-auto mb-2 dark:hidden">
+                <img src="{{ '/assets/logo_dark.png' | relative_url }}" alt="" class="w-36 mx-auto mb-2 hidden dark:block">
+            </a>
+            <div class="w-max flex items-center gap-2 mx-auto">
+                <img src="{{ '/assets/mail_icon.png' | relative_url }}" alt="" class="w-5 dark:hidden">
+                <img src="{{ '/assets/mail_icon_dark.png' | relative_url }}" alt="" class="w-5 hidden dark:block">
+                <a href="mailto:owaiskhana635@gmail.com">owaiskhana635@gmail.com</a>
+            </div>
+        </div>
+        <div class="text-center sm:flex items-center justify-between border-t border-gray-400 mx-[10%] mt-12 py-3">
+            <p>© 2026 Owais. All rights reserved.</p>
+            <ul class="flex items-center gap-10 justify-center mt-4 sm:mt-0">
+                <li><a target="_blank" href="https://github.com/Muhammad-Owais635">GitHub</a></li>
+                <li><a target="_blank" href="https://www.linkedin.com/in/muhammad-owais635/">LinkedIn</a></li>
+                <li><a target="_blank" href="https://scholar.google.com/citations?user=OD079GEAAAAJ&hl=en">Google Scholar</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        /* ---------- DARK MODE TOGGLE ---------- */
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark');
+            localStorage.theme =
+                document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+        }
+
+        /* ---------- MOBILE MENU ---------- */
+        function openMenu() {
+            const mobileMenu = document.getElementById("mobileMenu");
+            mobileMenu.classList.remove("-right-64");
+            mobileMenu.classList.add("right-0");
+        }
+
+        function closeMenu() {
+            const mobileMenu = document.getElementById("mobileMenu");
+            mobileMenu.classList.remove("right-0");
+            mobileMenu.classList.add("-right-64");
+        }
+
+        /* ---------- PUBLICATION "READ MORE" ---------- */
+        function toggleAbstract(btn) {
+            const card = btn.parentElement;
+            const text = card.querySelector(".abstract-text");
+            const fade = card.querySelector(".fade-overlay");
+            const download = card.querySelector(".download-link");
+
+            text.classList.toggle("line-clamp-2");
+            if (fade) fade.classList.toggle("hidden");
+            if (download) download.classList.toggle("hidden");
+
+            btn.innerText = text.classList.contains("line-clamp-2") ? "Read more" : "Read less";
+        }
+
+        /* ---------- NAVBAR SCROLL EFFECT ---------- */
+        document.addEventListener('DOMContentLoaded', () => {
+            const navbar = document.getElementById("navbar");
+            const navLink = document.getElementById("navLink");
+
+            function updateNavbar() {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('bg-white', 'bg-opacity-50', 'backdrop-blur-lg',
+                        'shadow-sm', 'dark:bg-darkTheme', 'dark:shadow-white/20');
+                    navLink.classList.remove('bg-white', 'shadow-sm', 'bg-opacity-50',
+                        'dark:border', 'dark:border-white/30', 'dark:bg-transparent');
+                } else {
+                    navbar.classList.remove('bg-white', 'bg-opacity-50', 'backdrop-blur-lg',
+                        'shadow-sm', 'dark:bg-darkTheme', 'dark:shadow-white/20');
+                    navLink.classList.add('bg-white', 'shadow-sm', 'bg-opacity-50',
+                        'dark:border', 'dark:border-white/30', 'dark:bg-transparent');
+                }
+            }
+
+            window.addEventListener('scroll', updateNavbar);
+            updateNavbar();
+        });
+    </script>
+
+</body>
+</html>
