@@ -7,107 +7,367 @@ redirect_from:
   - /about.html
 ---
 
-<!-- Home Section -->
-<div id="top" class="w-11/12 max-w-3xl text-center mx-auto h-screen flex flex-col items-center justify-center gap-4">
+<!-- =====================================================================
+     HOME / ABOUT PAGE  (hero + about + interests + education + news +
+     selected publications + explore + contact). Self-contained styles, prefix "hm-".
+     Replaces the old hero and the separate _includes/aaaabout.html.
+====================================================================== -->
+<style>
+    .hm {
+        --hm-text: #111827; --hm-muted: #6b7280; --hm-soft: #4b5563; --hm-line: #e5e7eb;
+        --hm-card: #ffffff; --hm-panel: #fafafa; --hm-a: #b820e6; --hm-b: #da7d20;
+        color: var(--hm-text); font-family: Outfit, sans-serif;
+    }
+    .dark .hm { --hm-text: #fff; --hm-muted: rgba(255,255,255,.55); --hm-soft: rgba(255,255,255,.8); --hm-line: rgba(255,255,255,.15); --hm-card: rgba(255,255,255,.03); --hm-panel: rgba(255,255,255,.04); }
+    .hm-wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+    .hm-grad { background: linear-gradient(to right, var(--hm-a), var(--hm-b)); -webkit-background-clip: text; background-clip: text; color: transparent; }
 
-    <img src="{{ '/assets/profile-img.png' | relative_url }}"
-         alt="Muhammad Owais"
-         class="rounded-full w-32" />
+    /* ---------- reveal on scroll ---------- */
+    .hm-reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s ease; }
+    .hm-reveal.is-in { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) { .hm-reveal { opacity: 1; transform: none; transition: none; } .hm-ring { animation: none !important; } }
 
-    <h3 class="flex items-end gap-2 text-xl md:text-2xl mb-3 font-Ovo">
-        Hi! I&apos;m Muhammad Owais
-        <img src="{{ '/assets/hand-icon.png' | relative_url }}"
-             alt=""
-             class="w-6 mb-1" />
-    </h3>
+    /* ---------- HERO ---------- */
+    .hm-hero { padding: 150px 0 80px; }
+    .hm-hero .hm-wrap { display: grid; grid-template-columns: 1.15fr .85fr; gap: 64px; align-items: center; }
+    .hm-hello { display: inline-flex; align-items: center; gap: 10px; padding: 6px 16px 6px 8px; border: 1px solid var(--hm-line); border-radius: 9999px; background: var(--hm-card); font-size: 14px; line-height: 1.5; color: var(--hm-soft); }
+    .hm-dot { position: relative; width: 10px; height: 10px; border-radius: 9999px; background: #10b981; }
+    .hm-dot::after { content: ""; position: absolute; inset: -4px; border-radius: 9999px; border: 2px solid #10b981; opacity: .5; animation: hmPulse 2s ease-out infinite; }
+    @keyframes hmPulse { from { transform: scale(.6); opacity: .7; } to { transform: scale(1.6); opacity: 0; } }
+    .hm-name { margin-top: 22px; font-family: Ovo, serif; font-size: 26px; line-height: 1.3; color: var(--hm-soft); }
+    .hm-name span { display: inline-block; animation: hmWave 2.4s ease-in-out 1s 2; transform-origin: 70% 70%; }
+    @keyframes hmWave { 0%,60%,100% { transform: rotate(0); } 10%,30% { transform: rotate(16deg); } 20% { transform: rotate(-8deg); } }
+    .hm-title { margin-top: 10px; font-family: Ovo, serif; font-size: 60px; line-height: 1.08; letter-spacing: -.01em; color: var(--hm-text); }
+    .hm-lead { margin-top: 22px; max-width: 580px; font-size: 18px; line-height: 1.8; color: var(--hm-soft); }
+    .hm-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+    .hm-tags span { padding: 5px 14px; border-radius: 9999px; font-size: 14px; line-height: 1.5; border: 1px solid var(--hm-line); background: var(--hm-card); color: var(--hm-text); }
+    .hm-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 32px; }
+    .hm-btn { display: inline-flex; align-items: center; gap: 8px; padding: 11px 26px; border-radius: 9999px; font-size: 15px; font-weight: 500; line-height: 1.4; text-decoration: none !important; transition: transform .2s, opacity .2s, background .2s, border-color .2s; }
+    .hm-btn svg { width: 17px; height: 17px; }
+    .hm-btn-main { color: #fff !important; background: linear-gradient(to right, var(--hm-a), var(--hm-b)); }
+    .hm-btn-main:hover { opacity: .92; transform: translateY(-2px); }
+    .hm-btn-ghost { color: var(--hm-text) !important; border: 1px solid #d1d5db; background: var(--hm-card); }
+    .dark .hm-btn-ghost { border-color: rgba(255,255,255,.3); }
+    .hm-btn-ghost:hover { border-color: #9ca3af; transform: translateY(-2px); }
+    .hm-social { display: flex; align-items: center; gap: 10px; margin-top: 26px; }
+    .hm-social a { display: flex; align-items: center; justify-content: center; width: 42px; height: 42px; border-radius: 9999px; border: 1px solid #d1d5db; color: #374151; transition: color .2s, border-color .2s, background .2s, transform .2s; }
+    .hm-social a:hover { color: #2563eb; border-color: #2563eb; background: #eff6ff; transform: translateY(-2px); }
+    .dark .hm-social a { border-color: rgba(255,255,255,.25); color: rgba(255,255,255,.85); }
+    .dark .hm-social a:hover { color: #60a5fa; border-color: #60a5fa; background: #2a004a; }
+    .hm-social svg { width: 19px; height: 19px; display: block; }
+    .hm-loc { display: inline-flex; align-items: center; gap: 6px; margin-left: 8px; font-size: 14px; color: var(--hm-muted); }
+    .hm-loc svg { width: 17px; height: 17px; }
 
-    <h1 class="text-3xl sm:text-6xl lg:text-[66px] font-Ovo">
-        doctoral researcher at TMU Japan.
-    </h1>
+    .hm-photo { position: relative; justify-self: center; width: 100%; max-width: 380px; }
+    .hm-photo::before { content: ""; position: absolute; inset: 24px -18px -18px 24px; border-radius: 32px; background: linear-gradient(135deg, var(--hm-a), var(--hm-b)); opacity: .9; }
+    .hm-photo img.hm-portrait { position: relative; display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: top; border-radius: 28px; background: #f3f4f6; }
+    .hm-badge { position: absolute; left: -44px; bottom: 34px; width: 132px; height: 132px; border-radius: 9999px; background: #fff; box-shadow: 0 12px 40px rgba(149,0,162,.22); display: flex; align-items: center; justify-content: center; }
+    .hm-ring { position: absolute; inset: 0; width: 100%; height: 100%; animation: hmSpin 14s linear infinite; }
+    @keyframes hmSpin { to { transform: rotate(360deg); } }
+    .hm-badge-c { width: 46px; height: 46px; border-radius: 9999px; object-fit: cover; object-position: top; }
 
-    <p class="max-w-2xl mx-auto font-Ovo">
-        PhD Researcher | Social Network | NLP | LLM | Machine Learning | Deep Learning | Speaker Identification | Speech Recognition
-    </p>
+    /* ---------- generic section ---------- */
+    .hm-sec { padding: 72px 0; }
+    .hm-sec-head { display: flex; align-items: end; justify-content: space-between; gap: 16px; margin-bottom: 32px; }
+    .hm-eyebrow { display: inline-flex; align-items: center; gap: 10px; font-family: Ovo, serif; font-size: 14px; line-height: 1.5; letter-spacing: .08em; text-transform: uppercase; color: var(--hm-muted); }
+    .hm-eyebrow::before { content: ""; width: 28px; height: 2px; border-radius: 2px; background: linear-gradient(to right, var(--hm-a), var(--hm-b)); }
+    .hm-h2 { margin-top: 10px; font-family: Ovo, serif; font-size: 38px; line-height: 1.15; color: var(--hm-text); }
+    .hm-link { display: inline-flex; align-items: center; gap: 6px; font-size: 15px; font-weight: 600; color: #2563eb !important; text-decoration: none !important; white-space: nowrap; }
+    .dark .hm-link { color: #60a5fa !important; }
+    .hm-link svg { width: 16px; height: 16px; transition: transform .2s; }
+    .hm-link:hover svg { transform: translateX(3px); }
 
-    <div class="flex flex-col sm:flex-row sm:flex-wrap
-                items-center justify-center
-                gap-3 sm:gap-1
-                w-full sm:w-10/12
-                px-4 sm:px-0
-                mx-auto font-Ovo">
+    /* ---------- about ---------- */
+    .hm-about { display: grid; grid-template-columns: 1.3fr .7fr; gap: 48px; align-items: start; }
+    .hm-about p { font-size: 18px; line-height: 1.85; color: var(--hm-soft); }
+    .hm-about p + p { margin-top: 16px; }
+    .hm-about strong { color: var(--hm-text); font-weight: 600; }
+    .hm-now { padding: 24px; border: 1px solid var(--hm-line); border-radius: 18px; background: var(--hm-panel); }
+    .hm-now h3 { font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--hm-a); }
+    .dark .hm-now h3 { color: #e9a6ff; }
+    .hm-now ul { margin-top: 14px; }
+    .hm-now li { display: grid; grid-template-columns: 26px 1fr; gap: 8px; font-size: 15px; line-height: 1.55; color: var(--hm-soft); }
+    .hm-now li + li { margin-top: 12px; }
+    .hm-now li b { display: block; color: var(--hm-text); font-weight: 600; }
+    .hm-now li i { font-style: normal; font-size: 18px; line-height: 1.3; }
 
-        <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center shrink-0">
-                <img src="{{ '/assets/email.svg' | relative_url }}" class="w-5 h-5" alt="">
+    /* ---------- interests ---------- */
+    .hm-int { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 16px; }
+    .hm-int > div { padding: 24px 22px; border: 1px solid var(--hm-line); border-radius: 18px; background: var(--hm-card); transition: transform .25s, box-shadow .25s; }
+    .hm-int > div:hover { transform: translateY(-4px); box-shadow: 0 16px 36px rgba(17,24,39,.08); }
+    .dark .hm-int > div:hover { box-shadow: 0 16px 36px rgba(0,0,0,.4); }
+    .hm-ico { display: flex; align-items: center; justify-content: center; width: 46px; height: 46px; border-radius: 14px; color: #fff; background: linear-gradient(135deg, var(--hm-a), var(--hm-b)); }
+    .hm-ico svg { width: 24px; height: 24px; }
+    .hm-int h3 { margin-top: 16px; font-size: 17px; font-weight: 600; line-height: 1.4; color: var(--hm-text); }
+    .hm-int p { margin-top: 6px; font-size: 14px; line-height: 1.6; color: var(--hm-muted); }
+
+    /* ---------- education ---------- */
+    .hm-edu { position: relative; display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; }
+    .hm-edu > div { position: relative; padding: 24px; border: 1px solid var(--hm-line); border-radius: 18px; background: var(--hm-card); }
+    .hm-edu-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .hm-logo { width: 54px; height: 54px; padding: 6px; border-radius: 14px; background: #fff; border: 1px solid #e5e7eb; object-fit: contain; }
+    .hm-year { font-size: 13px; font-weight: 600; padding: 2px 10px; border-radius: 9999px; color: #4b5563; background: #e5e7eb; }
+    .dark .hm-year { color: #e9a6ff; background: rgba(184,32,230,.25); }
+    .hm-edu h3 { margin-top: 18px; font-family: Ovo, serif; font-size: 26px; line-height: 1.2; color: var(--hm-text); }
+    .hm-edu p { margin-top: 4px; font-size: 15px; line-height: 1.5; color: var(--hm-soft); }
+    .hm-edu small { display: block; margin-top: 2px; font-size: 14px; color: var(--hm-muted); }
+
+    /* ---------- news ---------- */
+    .hm-news { border-top: 1px solid var(--hm-line); }
+    .hm-news li { display: grid; grid-template-columns: 110px 1fr; gap: 20px; padding: 16px 0; border-bottom: 1px solid var(--hm-line); font-size: 16px; line-height: 1.6; color: var(--hm-soft); }
+    .hm-news time { font-size: 14px; font-weight: 600; color: var(--hm-muted); padding-top: 1px; }
+    .hm-news a { color: var(--hm-text) !important; font-weight: 600; text-decoration: none !important; }
+    .hm-news a:hover { color: #2563eb !important; } .dark .hm-news a:hover { color: #60a5fa !important; }
+    .hm-new { display: inline-block; margin-left: 6px; padding: 0 8px; font-size: 11px; font-weight: 700; line-height: 18px; border-radius: 9999px; color: #fff; background: linear-gradient(to right, var(--hm-a), var(--hm-b)); vertical-align: 2px; }
+
+    /* ---------- publications ---------- */
+    .hm-pubs { display: grid; gap: 14px; }
+    .hm-pub { display: grid; grid-template-columns: 70px 1fr auto; gap: 20px; align-items: center; padding: 20px 22px; border: 1px solid var(--hm-line); border-radius: 16px; background: var(--hm-card); text-decoration: none !important; color: inherit !important; transition: border-color .2s, transform .2s; }
+    .hm-pub:hover { border-color: #2563eb; transform: translateX(3px); }
+    .dark .hm-pub:hover { border-color: #60a5fa; }
+    .hm-pub time { font-family: Ovo, serif; font-size: 22px; }
+    .hm-pub h3 { font-size: 17px; font-weight: 600; line-height: 1.45; color: var(--hm-text); }
+    .hm-pub p { margin-top: 2px; font-size: 14px; color: var(--hm-muted); }
+    .hm-pub svg { width: 20px; height: 20px; color: var(--hm-muted); }
+
+    /* ---------- explore ---------- */
+    .hm-exp { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 16px; }
+    .hm-exp a { display: block; padding: 24px 22px; border-radius: 18px; border: 1px solid var(--hm-line); background: var(--hm-card); text-decoration: none !important; color: inherit !important; transition: transform .25s, border-color .25s; }
+    .hm-exp a:hover { transform: translateY(-4px); border-color: var(--hm-a); }
+    .hm-exp strong { display: block; font-family: Ovo, serif; font-size: 40px; line-height: 1; }
+    .hm-exp h3 { margin-top: 14px; font-size: 17px; font-weight: 600; color: var(--hm-text); }
+    .hm-exp p { margin-top: 4px; font-size: 14px; line-height: 1.5; color: var(--hm-muted); }
+    .hm-exp span.hm-link { margin-top: 14px; }
+
+    /* ---------- contact band ---------- */
+    .hm-contact { position: relative; overflow: hidden; padding: 56px 48px; border-radius: 28px; color: #fff; text-align: center;
+        background: radial-gradient(circle at 85% 10%, rgba(255,255,255,.22), transparent 40%), linear-gradient(135deg, #5b0f8f, #b820e6 50%, #da7d20); }
+    .hm-contact h2 { font-family: Ovo, serif; font-size: 38px; line-height: 1.2; }
+    .hm-contact p { max-width: 620px; margin: 14px auto 0; font-size: 17px; line-height: 1.7; opacity: .92; }
+    .hm-contact .hm-cta { justify-content: center; }
+    .hm-contact .hm-btn-w { color: #5b0f8f !important; background: #fff; }
+    .hm-contact .hm-btn-w:hover { transform: translateY(-2px); }
+    .hm-contact .hm-btn-o { color: #fff !important; border: 1px solid rgba(255,255,255,.6); }
+    .hm-contact .hm-btn-o:hover { background: rgba(255,255,255,.12); }
+
+    /* ---------- responsive ---------- */
+    @media (max-width: 980px) {
+        .hm-hero .hm-wrap { grid-template-columns: 1fr; gap: 56px; }
+        .hm-photo { max-width: 320px; order: -1; }
+        .hm-int, .hm-exp { grid-template-columns: repeat(2, minmax(0,1fr)); }
+        .hm-about { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+        .hm-wrap { padding: 0 18px; }
+        .hm-hero { padding: 120px 0 48px; }
+        .hm-title { font-size: 40px; }
+        .hm-lead, .hm-about p { font-size: 16px; }
+        .hm-photo { max-width: 260px; }
+        .hm-badge { left: -26px; width: 104px; height: 104px; }
+        .hm-badge-c { width: 36px; height: 36px; }
+        .hm-sec { padding: 52px 0; }
+        .hm-h2 { font-size: 30px; }
+        .hm-sec-head { flex-direction: column; align-items: flex-start; }
+        .hm-int, .hm-edu, .hm-exp { grid-template-columns: 1fr; }
+        .hm-news li { grid-template-columns: 1fr; gap: 2px; }
+        .hm-pub { grid-template-columns: 1fr; gap: 6px; }
+        .hm-pub svg { display: none; }
+        .hm-contact { padding: 40px 22px; border-radius: 22px; }
+        .hm-contact h2 { font-size: 28px; }
+        .hm-loc { margin-left: 0; }
+    }
+</style>
+
+<div class="hm">
+
+<!-- ================= HERO ================= -->
+<section id="top" class="hm-hero">
+    <div class="hm-wrap">
+        <div>
+            <span class="hm-hello"><span class="hm-dot"></span> Open to research collaboration</span>
+            <p class="hm-name">Hi! I&apos;m Muhammad Owais <span>👋</span></p>
+            <h1 class="hm-title">Doctoral researcher at <span class="hm-grad">Tokyo Metropolitan University</span></h1>
+            <p class="hm-lead">
+                I study how people and machines communicate online, using natural language processing, large language
+                models and network science to detect social bots, AI-generated text and misinformation.
+            </p>
+            <div class="hm-tags">
+                <span>Social Networks</span><span>NLP</span><span>LLMs</span><span>Machine Learning</span>
+                <span>Deep Learning</span><span>Speech Recognition</span><span>Speaker Identification</span>
             </div>
-            <a href="mailto:owaiskhana635@gmail.com"
-               class="hover:text-blue-600 transition break-all">
-               owaiskhana635@gmail.com
-            </a>
+            <div class="hm-cta">
+                <a class="hm-btn hm-btn-main" href="mailto:owaiskhana635@gmail.com">Contact me <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+                <a class="hm-btn hm-btn-ghost" href="{{ '/assets/Muhammad Owais CV.pdf' | relative_url }}" download>Download CV <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg></a>
+            </div>
+            <div class="hm-social">
+                <a href="mailto:owaiskhana635@gmail.com" aria-label="Email" title="owaiskhana635@gmail.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 6.5l8.5 6.5 8.5-6.5"/></svg></a>
+                <a href="https://scholar.google.com/citations?user=OD079GEAAAAJ&hl=en" target="_blank" rel="noopener" aria-label="Google Scholar" title="Google Scholar"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 24a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-24L0 9.5l4.84 3.94A8.6 8.6 0 0 1 12 9.75c2.97 0 5.6 1.5 7.16 3.69L24 9.5 12 0z"/></svg></a>
+                <a href="https://www.linkedin.com/in/muhammad-owais635/" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg></a>
+                <a href="https://github.com/Muhammad-Owais635" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.37-3.87-1.37-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.76 2.69 1.25 3.35.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.04 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.62 1.58.23 2.75.11 3.04.74.81 1.18 1.83 1.18 3.09 0 4.41-2.69 5.38-5.26 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg></a>
+                <span class="hm-loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg> Hachioji, Tokyo, Japan</span>
+            </div>
         </div>
 
-        <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center shrink-0">
-                <img src="{{ '/assets/linkedin.svg' | relative_url }}" class="w-5 h-5" alt="">
+        <div class="hm-photo">
+            <img class="hm-portrait" src="{{ '/assets/about-photo.jpg' | relative_url }}" alt="Muhammad Owais">
+            <div class="hm-badge" aria-hidden="true">
+                <img class="hm-ring" src="{{ '/assets/badge-ring.png' | relative_url }}" alt="">
+                <img class="hm-badge-c" src="{{ '/assets/badge-center.jpg' | relative_url }}" alt="">
             </div>
-            <a href="https://www.linkedin.com/in/muhammad-owais635/"
-               target="_blank"
-               class="hover:text-blue-600 transition">
-               LinkedIn
-            </a>
         </div>
+    </div>
+</section>
 
-        <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center shrink-0">
-                <img src="{{ '/assets/scholar.svg' | relative_url }}" class="w-5 h-5" alt="">
+<!-- ================= ABOUT ================= -->
+<section id="aboutme" class="hm-sec">
+    <div class="hm-wrap hm-reveal">
+        <p class="hm-eyebrow">About me</p>
+        <h2 class="hm-h2">Building interpretable AI for online human interaction</h2>
+        <div class="hm-about" style="margin-top:28px">
+            <div>
+                <p>
+                    I am a doctoral researcher in Computer Science at <strong>Tokyo Metropolitan University</strong>,
+                    working in the <strong>Masaki Aida Laboratory</strong>. I specialise in <strong>social network analysis
+                    through natural language processing</strong>, with expertise in large language models, machine learning,
+                    deep learning, speaker identification and speech recognition.
+                </p>
+                <p>
+                    My research focuses on building intelligent and interpretable AI systems for analysing human interaction
+                    and information dynamics in online environments: detecting social bots and AI-generated text, studying
+                    echo chambers and misinformation, and securing healthcare networks with deep learning. Before my PhD I
+                    built Urdu speech and language technology at the Center for Language Engineering, UET Lahore, and taught
+                    undergraduate computer science.
+                </p>
+                <p>Feel free to contact me for research collaboration, academic discussions or professional opportunities.</p>
             </div>
-            <a href="https://scholar.google.com/citations?user=OD079GEAAAAJ&hl=en"
-               target="_blank"
-               class="hover:text-blue-600 transition">
-               Google Scholar
-            </a>
+            <aside class="hm-now">
+                <h3>Currently</h3>
+                <ul>
+                    <li><i>🎓</i><span><b>PhD in Computer Science</b>Tokyo Metropolitan University · expected 2028</span></li>
+                    <li><i>🔬</i><span><b>Research Assistant</b>Masaki Aida Laboratory, TMU · since Apr 2025</span></li>
+                    <li><i>📍</i><span><b>Based in</b>Hachioji, Tokyo, Japan</span></li>
+                </ul>
+            </aside>
         </div>
+    </div>
+</section>
 
-        <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center shrink-0">
-                <img src="{{ '/assets/github.svg' | relative_url }}" class="w-5 h-5" alt="">
+<!-- ================= RESEARCH INTERESTS ================= -->
+<section class="hm-sec" style="padding-top:24px">
+    <div class="hm-wrap hm-reveal">
+        <p class="hm-eyebrow">Research interests</p>
+        <h2 class="hm-h2" style="margin-bottom:32px">What I work on</h2>
+        <div class="hm-int">
+            <div><span class="hm-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="6" r="2.2"/><circle cx="19" cy="6" r="2.2"/><circle cx="12" cy="18" r="2.2"/><circle cx="12" cy="10" r="2.2"/><path d="M7 7l3 2M17 7l-3 2M12 12.2v3.6M6.2 8l4.8 8.2M17.8 8L13 16.2"/></svg></span><h3>Social Network Analysis</h3><p>Echo chambers, misinformation and information flow, using graph and spectral methods.</p></div>
+            <div><span class="hm-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v10H9l-5 4z"/><path d="M8 9h8M8 12h5"/></svg></span><h3>NLP &amp; Large Language Models</h3><p>Social bot and AI-generated text detection, and LLM safety and jailbreaking.</p></div>
+            <div><span class="hm-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></span><h3>Speech &amp; Speaker Recognition</h3><p>Urdu speech recognition, speaker identification and overlapped-speech separation.</p></div>
+            <div><span class="hm-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.4 8.2-8 9-4.6-.8-8-4.5-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg></span><h3>AI for Security</h3><p>Deep-learning intrusion detection for Internet of Medical Things networks.</p></div>
+        </div>
+    </div>
+</section>
+
+<!-- ================= EDUCATION ================= -->
+<section class="hm-sec" style="padding-top:24px">
+    <div class="hm-wrap hm-reveal">
+        <p class="hm-eyebrow">Education</p>
+        <h2 class="hm-h2" style="margin-bottom:32px">Academic background</h2>
+        <div class="hm-edu">
+            <div>
+                <div class="hm-edu-top"><img class="hm-logo" src="{{ '/assets/tmu-icon.png' | relative_url }}" alt="Tokyo Metropolitan University"><span class="hm-year">Expected 2028</span></div>
+                <h3>Ph.D.</h3><p>Computer Science</p><small>Tokyo Metropolitan University (TMU), Japan</small>
             </div>
-            <a href="https://github.com/Muhammad-Owais635"
-               target="_blank"
-               class="hover:text-blue-600 transition">
-               GitHub
+            <div>
+                <div class="hm-edu-top"><img class="hm-logo" src="{{ '/assets/uet.png' | relative_url }}" alt="UET Lahore"><span class="hm-year">2023</span></div>
+                <h3>M.Sc.</h3><p>Computer Science</p><small>University of Engineering and Technology (UET), Lahore</small>
+            </div>
+            <div>
+                <div class="hm-edu-top"><img class="hm-logo" src="{{ '/assets/uso.png' | relative_url }}" alt="University of Sargodha"><span class="hm-year">2021</span></div>
+                <h3>B.S.</h3><p>Computer Science</p><small>University of Sargodha, Pakistan</small>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ================= NEWS (add newest at the top) ================= -->
+<section class="hm-sec" style="padding-top:24px">
+    <div class="hm-wrap hm-reveal">
+        <div class="hm-sec-head">
+            <div><p class="hm-eyebrow">News</p><h2 class="hm-h2">Recent updates</h2></div>
+            <a class="hm-link" href="{{ '/talks/' | relative_url }}">All talks <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+        <ul class="hm-news">
+            <li><time>Dec 2025</time><span>Presented <a href="{{ '/talks/complex-networks/' | relative_url }}">Text-Based Social Bot Detection</a> at Complex Networks 2025, Binghamton, New York. <span class="hm-new">NEW</span></span></li>
+            <li><time>2025</time><span>Paper on deep reinforcement learning intrusion detection for IoMT published in <a href="{{ '/publications/' | relative_url }}">Frontiers in Medicine</a>.</span></li>
+            <li><time>Apr 2025</time><span>Joined the Masaki Aida Laboratory at Tokyo Metropolitan University as a Research Assistant.</span></li>
+            <li><time>Feb 2025</time><span>Served as a judge at the <a href="{{ '/talks/itecuet/' | relative_url }}">UET ITEC 2025 Project Exhibition</a>, evaluating 400+ students.</span></li>
+            <li><time>Dec 2024</time><span>Presented <a href="{{ '/talks/icost/' | relative_url }}">FOID</a> at the 18th IEEE ICOSST conference, Lahore.</span></li>
+            <li><time>Nov 2024</time><span>Invited guest talk on <a href="{{ '/talks/tevmlai/' | relative_url }}">Machine Learning &amp; AI</a> at TEVTA Punjab.</span></li>
+        </ul>
+    </div>
+</section>
+
+<!-- ================= SELECTED PUBLICATIONS ================= -->
+<section class="hm-sec" style="padding-top:24px">
+    <div class="hm-wrap hm-reveal">
+        <div class="hm-sec-head">
+            <div><p class="hm-eyebrow">Research</p><h2 class="hm-h2">Selected publications</h2></div>
+            <a class="hm-link" href="{{ '/publications/' | relative_url }}">All publications <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+        <div class="hm-pubs">
+            <a class="hm-pub" href="https://www.frontiersin.org/journals/medicine/articles/10.3389/fmed.2025.1524286/full" target="_blank" rel="noopener">
+                <time class="hm-grad">2025</time>
+                <div><h3>A Deep Reinforcement Learning-Based Robust Intrusion Detection System for Securing IoMT Healthcare Networks</h3><p>Frontiers in Medicine · Journal</p></div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <a class="hm-pub" href="https://www.frontiersin.org/journals/digital-health/articles/10.3389/fdgth.2024.1467241/full" target="_blank" rel="noopener">
+                <time class="hm-grad">2024</time>
+                <div><h3>RCLNet: An Effective Anomaly-Based Intrusion Detection for Securing the IoMT System</h3><p>Frontiers in Digital Health · Journal</p></div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <a class="hm-pub" href="https://ieeexplore.ieee.org/abstract/document/10871156" target="_blank" rel="noopener">
+                <time class="hm-grad">2024</time>
+                <div><h3>FOID: A Feature-Optimized Intrusion Detection System for Securing IoMT Healthcare Networks</h3><p>ICOSST, IEEE · Conference</p></div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
             </a>
         </div>
     </div>
+</section>
 
-    <div class="w-full flex justify-center text-gray-700 dark:text-white/80">
-        <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center">
-                <img src="{{ '/assets/address.svg' | relative_url }}" class="w-5 h-5" alt="">
-            </div>
-            <span>Hachioji-shi, Matsugaya, Tokyo, Japan</span>
+<!-- ================= EXPLORE ================= -->
+<section class="hm-sec" style="padding-top:24px">
+    <div class="hm-wrap hm-reveal">
+        <p class="hm-eyebrow">Explore</p>
+        <h2 class="hm-h2" style="margin-bottom:32px">More about my work</h2>
+        <div class="hm-exp">
+            <a href="{{ '/publications/' | relative_url }}"><strong class="hm-grad">8</strong><h3>Publications</h3><p>Journal, conference and in-progress papers</p><span class="hm-link">View <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+            <a href="{{ '/talks/' | relative_url }}"><strong class="hm-grad">6</strong><h3>Talks &amp; Events</h3><p>Conference talks, guest lectures and judging</p><span class="hm-link">View <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+            <a href="{{ '/experience/' | relative_url }}"><strong class="hm-grad">5</strong><h3>Teaching</h3><p>Undergraduate courses and student supervision</p><span class="hm-link">View <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+            <a href="{{ '/projects/' | relative_url }}"><strong class="hm-grad">3</strong><h3>Projects</h3><p>Funded Urdu speech and language technology R&amp;D</p><span class="hm-link">View <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
         </div>
     </div>
+</section>
 
-    <div class="flex flex-col sm:flex-row items-center gap-4 mt-4">
-        <a href="mailto:owaiskhana635@gmail.com"
-           class="px-10 py-2.5 border rounded-full bg-gradient-to-r from-[#b820e6] to-[#da7d20] text-white flex items-center gap-2 dark:border-transparent">
-            contact me
-            <img src="{{ '/assets/right-arrow-white.png' | relative_url }}"
-                 alt=""
-                 class="w-4" />
-        </a>
-
-        <a href="{{ '/assets/Muhammad Owais CV.pdf' | relative_url }}"
-           download
-           class="px-10 py-2.5 rounded-full border border-gray-300 dark:border-white/25 hover:bg-slate-100/70 dark:hover:bg-darkHover flex items-center gap-2 bg-white dark:bg-transparent dark:text-white">
-            my resume
-            <img src="{{ '/assets/download-icon.png' | relative_url }}"
-                 alt=""
-                 class="w-4 dark:invert" />
-        </a>
+<!-- ================= CONTACT ================= -->
+<section class="hm-sec" style="padding-top:24px; padding-bottom:24px">
+    <div class="hm-wrap hm-reveal">
+        <div class="hm-contact">
+            <h2>Let&apos;s work together</h2>
+            <p>I am open to research collaborations, academic discussions and professional opportunities in NLP, social network analysis and speech technology.</p>
+            <div class="hm-cta">
+                <a class="hm-btn hm-btn-w" href="mailto:owaiskhana635@gmail.com">Email me <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+                <a class="hm-btn hm-btn-o" href="https://scholar.google.com/citations?user=OD079GEAAAAJ&hl=en" target="_blank" rel="noopener">Google Scholar</a>
+            </div>
+        </div>
     </div>
+</section>
+
 </div>
 
-<!-- About me section -->
-{% include aaaabout.html %}
+<script>
+    /* fade sections in as they scroll into view */
+    (function () {
+        var els = document.querySelectorAll('.hm-reveal');
+        if (!('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('is-in'); }); return; }
+        var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('is-in'); io.unobserve(en.target); } });
+        }, { threshold: 0.12 });
+        els.forEach(function (e) { io.observe(e); });
+    })();
+</script>
