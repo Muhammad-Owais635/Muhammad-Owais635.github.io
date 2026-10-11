@@ -42,6 +42,36 @@
             justify-content: flex-end;
         }
     }
+
+    /* ---------- Compact bar after scrolling ----------
+       When the page is scrolled, the bar gets its background (added by the
+       layout script) and also becomes slimmer: less padding, smaller logo,
+       slimmer menu pill and smaller icons. */
+    #navbar,
+    #navbar > a,
+    #navbar > a img,
+    #navLink,
+    #navbar > div img {
+        transition: padding 0.3s ease, height 0.3s ease, width 0.3s ease,
+                    background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    #navbar.nav-compact {
+        padding-top: 8px;
+        padding-bottom: 8px;
+    }
+    #navbar.nav-compact > a,
+    #navbar.nav-compact > a img { height: 40px; }
+    #navbar.nav-compact #navLink { padding-top: 8px; padding-bottom: 8px; }
+    #navbar.nav-compact > div button:first-child img { width: 18px; }
+    #navbar.nav-compact > div button:last-child img { width: 22px; }
+    @media (min-width: 768px) {
+        #navbar.nav-compact {
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+        #navbar.nav-compact > a,
+        #navbar.nav-compact > a img { height: 48px; }
+    }
 </style>
 
 <nav id="navbar" class="w-full fixed px-5 lg:px-8 xl:px-[8%] py-4 flex items-center justify-between z-50">
@@ -116,3 +146,13 @@
                 
 
     </nav>
+
+<script>
+    /* Slim the navbar once the page is scrolled */
+    (function () {
+        var nav = document.getElementById('navbar');
+        function update() { nav.classList.toggle('nav-compact', window.scrollY > 50); }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+</script>
