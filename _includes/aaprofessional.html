@@ -153,6 +153,106 @@
         .te-grid { grid-template-columns: 1fr; }
         .te-link-row { margin: 0 -12px; padding: 16px 12px; }
     }
+    /* course chips are links */
+    a.te-course { text-decoration: none !important; cursor: pointer; transition: border-color 0.2s, background 0.2s, color 0.2s; }
+    a.te-course:hover { border-color: #2563eb; color: #2563eb; background: #eff6ff; }
+    .dark a.te-course:hover { border-color: #60a5fa; color: #60a5fa; background: #2a004a; }
+
+    /* card: scroll target + highlight flash */
+    .te-card { scroll-margin-top: 140px; }
+    @keyframes teFlash {
+        0%   { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.0); border-color: var(--te-line); }
+        20%  { box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.25); border-color: #2563eb; }
+        100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.0); border-color: var(--te-line); }
+    }
+    .te-card.te-flash { animation: teFlash 2.2s ease; }
+
+    /* "View course content & timeline" button */
+    .te-more {
+        display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; padding: 0;
+        border: 0; background: none; cursor: pointer;
+        font-size: 14px; font-weight: 600; line-height: 1.5; color: #2563eb;
+    }
+    .dark .te-more { color: #60a5fa; }
+    .te-more svg { width: 15px; height: 15px; transition: transform 0.2s; }
+    .te-more:hover { text-decoration: underline; }
+    .te-more:hover svg { transform: translateX(3px); }
+
+    /* ---------- course pop-up ---------- */
+    .te-modal {
+        position: fixed; inset: 0; z-index: 100;
+        display: flex; align-items: center; justify-content: center;
+        padding: 24px; background: rgba(10, 10, 12, 0.6);
+        opacity: 0; visibility: hidden; transition: opacity 0.25s, visibility 0.25s;
+    }
+    .te-modal.is-open { opacity: 1; visibility: visible; }
+    .te-m-panel {
+        --te-text: #111827; --te-muted: #6b7280; --te-soft: #4b5563; --te-line: #e5e7eb;
+        position: relative; width: 100%; max-width: 760px; max-height: calc(100vh - 48px);
+        overflow-y: auto; padding: 36px 40px 40px; border-radius: 18px;
+        background: #ffffff; color: var(--te-text); font-family: Outfit, sans-serif;
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
+        transform: translateY(12px); transition: transform 0.25s;
+    }
+    .dark .te-m-panel {
+        --te-text: #ffffff; --te-muted: rgba(255,255,255,0.55); --te-soft: rgba(255,255,255,0.8); --te-line: rgba(255,255,255,0.15);
+        background: #1a0030;
+    }
+    .te-modal.is-open .te-m-panel { transform: none; }
+    body.te-no-scroll { overflow: hidden; }
+    .te-m-close {
+        position: absolute; top: 16px; right: 16px; width: 40px; height: 40px;
+        display: flex; align-items: center; justify-content: center;
+        border: 1px solid var(--te-line); border-radius: 9999px; background: transparent;
+        color: var(--te-text); cursor: pointer; transition: background 0.2s;
+    }
+    .te-m-close:hover { background: rgba(127, 127, 127, 0.12); }
+    .te-m-close svg { width: 18px; height: 18px; }
+
+    .te-m-eyebrow { font-family: Ovo, serif; font-size: 14px; line-height: 1.5; letter-spacing: 0.08em; text-transform: uppercase; color: var(--te-muted); padding-right: 48px; }
+    .te-m-title { margin-top: 8px; font-family: Ovo, serif; font-size: 32px; line-height: 1.2; color: var(--te-text); padding-right: 40px; }
+    .te-m-meta { display: flex; flex-wrap: wrap; gap: 10px; margin: 20px 0 0; }
+    .te-m-meta div { padding: 8px 14px; border: 1px solid var(--te-line); border-radius: 12px; }
+    .te-m-meta dt { font-size: 11px; font-weight: 600; line-height: 1.4; letter-spacing: 0.06em; text-transform: uppercase; color: var(--te-muted); }
+    .te-m-meta dd { margin: 2px 0 0; font-size: 15px; line-height: 1.4; color: var(--te-text); }
+    .te-m-overview { margin-top: 20px; font-size: 16px; line-height: 1.75; color: var(--te-soft); }
+    .te-m-h { margin-top: 30px; font-family: Ovo, serif; font-size: 20px; line-height: 1.3; color: var(--te-text); }
+
+    .te-m-clos { margin-top: 12px; counter-reset: clo; }
+    .te-m-clos li { position: relative; padding-left: 52px; font-size: 15px; line-height: 1.6; color: var(--te-soft); counter-increment: clo; }
+    .te-m-clos li + li { margin-top: 10px; }
+    .te-m-clos li::before {
+        content: "CLO " counter(clo); position: absolute; left: 0; top: 1px;
+        font-size: 11px; font-weight: 700; line-height: 20px; padding: 0 6px; border-radius: 6px;
+        color: #ffffff; background: linear-gradient(to right, #b820e6, #da7d20);
+    }
+
+    .te-m-assess { margin-top: 14px; display: grid; gap: 10px; }
+    .te-bar { display: grid; grid-template-columns: 130px 1fr 44px; align-items: center; gap: 12px; font-size: 14px; line-height: 1.4; color: var(--te-soft); }
+    .te-bar b { text-align: right; color: var(--te-text); font-weight: 600; }
+    .te-bar-track { height: 8px; border-radius: 9999px; background: var(--te-line); overflow: hidden; }
+    .te-bar-track span { display: block; height: 100%; border-radius: 9999px; background: linear-gradient(to right, #b820e6, #da7d20); }
+
+    .te-tl { position: relative; margin-top: 16px; padding-left: 22px; }
+    .te-tl::before { content: ""; position: absolute; left: 5px; top: 8px; bottom: 8px; width: 2px; background: var(--te-line); }
+    .te-tl li { position: relative; display: grid; grid-template-columns: 88px 1fr; gap: 12px; padding: 7px 0; font-size: 15px; line-height: 1.55; }
+    .te-tl li::before {
+        content: ""; position: absolute; left: -21px; top: 13px; width: 10px; height: 10px;
+        border-radius: 9999px; background: #ffffff; border: 2px solid #9ca3af;
+    }
+    .dark .te-tl li::before { background: #1a0030; }
+    .te-tl-wk { font-size: 13px; font-weight: 600; color: var(--te-muted); padding-top: 1px; }
+    .te-tl-topic { color: var(--te-soft); }
+    .te-tl li.te-tl-exam::before { border: 0; background: linear-gradient(135deg, #b820e6, #da7d20); }
+    .te-tl li.te-tl-exam .te-tl-topic { font-weight: 600; color: var(--te-text); }
+
+    @media (max-width: 640px) {
+        .te-modal { padding: 0; align-items: flex-end; }
+        .te-m-panel { max-height: 92vh; border-radius: 18px 18px 0 0; padding: 28px 20px 32px; }
+        .te-m-title { font-size: 26px; }
+        .te-bar { grid-template-columns: 104px 1fr 40px; }
+        .te-tl li { grid-template-columns: 70px 1fr; }
+    }
 </style>
 
 <section id="teaching" class="te-page">
@@ -187,7 +287,7 @@
                     <p class="te-org">University of Engineering and Technology (UET)</p>
                     <p class="te-meta">Lahore, Pakistan</p>
                     <div class="te-courses">
-                        <span class="te-course">Application to Information and Communication Technology <small>1st semester</small></span>
+                        <a class="te-course" href="#course-ict" data-course="ict">Application to Information and Communication Technology <small>1st semester</small></a>
                     </div>
                 </div>
             </article>
@@ -199,10 +299,10 @@
                     <p class="te-org">Department of Computer Science, Superior University</p>
                     <p class="te-meta">Lahore, Pakistan</p>
                     <div class="te-courses">
-                        <span class="te-course">Programming Fundamentals <small>1st semester</small></span>
-                        <span class="te-course">Introduction to Logic <small>1st semester</small></span>
-                        <span class="te-course">Object-Oriented Programming <small>2nd semester</small></span>
-                        <span class="te-course">Data Structures and Algorithms <small>4th semester</small></span>
+                        <a class="te-course" href="#course-pf" data-course="pf">Programming Fundamentals <small>1st semester</small></a>
+                        <a class="te-course" href="#course-logic" data-course="logic">Introduction to Logic <small>1st semester</small></a>
+                        <a class="te-course" href="#course-oop" data-course="oop">Object-Oriented Programming <small>2nd semester</small></a>
+                        <a class="te-course" href="#course-dsa" data-course="dsa">Data Structures and Algorithms <small>4th semester</small></a>
                     </div>
                 </div>
             </article>
@@ -213,31 +313,47 @@
         <!-- ================================================================ -->
         <div id="courses" class="te-section">
             <h2 class="te-section-title">Courses Taught</h2>
+            <p class="te-section-note">Click a course to see its content, learning outcomes, assessment and 16-week timeline.</p>
             <div class="te-grid">
-                <div class="te-card">
+                <div class="te-card" id="course-pf">
                     <h3>Programming Fundamentals</h3>
                     <p>Undergraduate · 1st semester · Superior University</p>
-                    <span class="te-tag">Designed &amp; taught</span>
+                    <button class="te-more" type="button" data-course="pf">
+                        View course content &amp; timeline
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                    </button>
                 </div>
-                <div class="te-card">
+                <div class="te-card" id="course-oop">
                     <h3>Object-Oriented Programming</h3>
                     <p>Undergraduate · 2nd semester · Superior University</p>
-                    <span class="te-tag">Designed &amp; taught</span>
+                    <button class="te-more" type="button" data-course="oop">
+                        View course content &amp; timeline
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                    </button>
                 </div>
-                <div class="te-card">
+                <div class="te-card" id="course-dsa">
                     <h3>Data Structures and Algorithms</h3>
                     <p>Undergraduate · 4th semester · Superior University</p>
-                    <span class="te-tag">Designed &amp; taught</span>
+                    <button class="te-more" type="button" data-course="dsa">
+                        View course content &amp; timeline
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                    </button>
                 </div>
-                <div class="te-card">
+                <div class="te-card" id="course-logic">
                     <h3>Introduction to Logic</h3>
                     <p>Undergraduate · 1st semester · Superior University</p>
-                    <span class="te-tag">Designed &amp; taught</span>
+                    <button class="te-more" type="button" data-course="logic">
+                        View course content &amp; timeline
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                    </button>
                 </div>
-                <div class="te-card">
+                <div class="te-card" id="course-ict">
                     <h3>Application to Information and Communication Technology</h3>
                     <p>Undergraduate · 1st semester · UET Lahore</p>
-                    <span class="te-tag">Taught</span>
+                    <button class="te-more" type="button" data-course="ict">
+                        View course content &amp; timeline
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                    </button>
                 </div>
             </div>
         </div>
@@ -312,5 +428,137 @@
             </div>
         </div>
 
+        <!-- ================================================================ -->
+        <!-- Course details (edit the text inside each <template>)             -->
+        <!-- ================================================================ -->
+        <template id="tpl-pf">
+            <p class="te-m-eyebrow">Superior University · 1st semester</p>
+            <h2 class="te-m-title">Programming Fundamentals</h2>
+            <dl class="te-m-meta"><div><dt>Level</dt><dd>Undergraduate</dd></div><div><dt>Semester</dt><dd>1st semester</dd></div><div><dt>Credit hours</dt><dd>3+1</dd></div><div><dt>Language</dt><dd>C++</dd></div><div><dt>My role</dt><dd>Designed &amp; taught</dd></div></dl>
+            <p class="te-m-overview">An introduction to problem solving and structured programming. Students learn to design algorithms and turn them into working programs using variables, control structures, functions, arrays and basic data structures.</p>
+            <h3 class="te-m-h">Learning outcomes</h3>
+            <ul class="te-m-clos"><li>Design algorithms and flowcharts for computational problems.</li><li>Write, compile and debug structured programs using selection, loops and functions.</li><li>Use arrays, strings, structures and files to solve practical problems.</li></ul>
+            <h3 class="te-m-h">Assessment</h3>
+            <div class="te-m-assess"><div class="te-bar"><span>Quizzes</span><span class="te-bar-track"><span style="width:10%"></span></span><b>10%</b></div><div class="te-bar"><span>Assignments</span><span class="te-bar-track"><span style="width:10%"></span></span><b>10%</b></div><div class="te-bar"><span>Lab work</span><span class="te-bar-track"><span style="width:15%"></span></span><b>15%</b></div><div class="te-bar"><span>Midterm exam</span><span class="te-bar-track"><span style="width:25%"></span></span><b>25%</b></div><div class="te-bar"><span>Final exam</span><span class="te-bar-track"><span style="width:40%"></span></span><b>40%</b></div></div>
+            <h3 class="te-m-h">16-week timeline</h3>
+            <ol class="te-tl"><li><span class="te-tl-wk">Week 1</span><span class="te-tl-topic">Introduction to computing, problem solving, algorithms and flowcharts</span></li><li><span class="te-tl-wk">Week 2</span><span class="te-tl-topic">Structure of a program, IDE setup, variables and data types</span></li><li><span class="te-tl-wk">Week 3</span><span class="te-tl-topic">Operators, expressions and input/output</span></li><li><span class="te-tl-wk">Week 4</span><span class="te-tl-topic">Selection: if, if-else and switch statements</span></li><li><span class="te-tl-wk">Week 5</span><span class="te-tl-topic">Repetition: while, do-while and for loops</span></li><li><span class="te-tl-wk">Week 6</span><span class="te-tl-topic">Nested loops and problem-solving practice</span></li><li><span class="te-tl-wk">Week 7</span><span class="te-tl-topic">Functions: definition, parameters and return values</span></li><li><span class="te-tl-wk">Week 8</span><span class="te-tl-topic">Scope, overloading and introduction to recursion</span></li><li class="te-tl-exam"><span class="te-tl-wk">Week 9</span><span class="te-tl-topic">Midterm examination</span></li><li><span class="te-tl-wk">Week 10</span><span class="te-tl-topic">One-dimensional arrays, searching and simple sorting</span></li><li><span class="te-tl-wk">Week 11</span><span class="te-tl-topic">Two-dimensional arrays and matrices</span></li><li><span class="te-tl-wk">Week 12</span><span class="te-tl-topic">Character arrays and strings</span></li><li><span class="te-tl-wk">Week 13</span><span class="te-tl-topic">Introduction to pointers and memory</span></li><li><span class="te-tl-wk">Week 14</span><span class="te-tl-topic">Structures and arrays of structures</span></li><li><span class="te-tl-wk">Week 15</span><span class="te-tl-topic">File handling: reading and writing text files</span></li><li><span class="te-tl-wk">Week 16</span><span class="te-tl-topic">Course project presentations and revision</span></li><li class="te-tl-exam"><span class="te-tl-wk">Week 17–18</span><span class="te-tl-topic">Final examination</span></li></ol>
+        </template>
+        <template id="tpl-oop">
+            <p class="te-m-eyebrow">Superior University · 2nd semester</p>
+            <h2 class="te-m-title">Object-Oriented Programming</h2>
+            <dl class="te-m-meta"><div><dt>Level</dt><dd>Undergraduate</dd></div><div><dt>Semester</dt><dd>2nd semester</dd></div><div><dt>Credit hours</dt><dd>3+1</dd></div><div><dt>Language</dt><dd>C++</dd></div><div><dt>My role</dt><dd>Designed &amp; taught</dd></div></dl>
+            <p class="te-m-overview">Moves students from procedural to object-oriented thinking. Covers classes and objects, encapsulation, inheritance, polymorphism and abstraction, and how to use them to build modular, reusable software.</p>
+            <h3 class="te-m-h">Learning outcomes</h3>
+            <ul class="te-m-clos"><li>Model real-world problems with classes, objects and relationships.</li><li>Apply encapsulation, inheritance and polymorphism in programs.</li><li>Build a small object-oriented application using templates, exceptions and files.</li></ul>
+            <h3 class="te-m-h">Assessment</h3>
+            <div class="te-m-assess"><div class="te-bar"><span>Quizzes</span><span class="te-bar-track"><span style="width:10%"></span></span><b>10%</b></div><div class="te-bar"><span>Assignments</span><span class="te-bar-track"><span style="width:10%"></span></span><b>10%</b></div><div class="te-bar"><span>Lab work</span><span class="te-bar-track"><span style="width:15%"></span></span><b>15%</b></div><div class="te-bar"><span>Midterm exam</span><span class="te-bar-track"><span style="width:25%"></span></span><b>25%</b></div><div class="te-bar"><span>Final exam</span><span class="te-bar-track"><span style="width:40%"></span></span><b>40%</b></div></div>
+            <h3 class="te-m-h">16-week timeline</h3>
+            <ol class="te-tl"><li><span class="te-tl-wk">Week 1</span><span class="te-tl-topic">Review of programming fundamentals; procedural vs object-oriented design</span></li><li><span class="te-tl-wk">Week 2</span><span class="te-tl-topic">Classes and objects</span></li><li><span class="te-tl-wk">Week 3</span><span class="te-tl-topic">Constructors, destructors and object lifetime</span></li><li><span class="te-tl-wk">Week 4</span><span class="te-tl-topic">Access specifiers, encapsulation, getters and setters</span></li><li><span class="te-tl-wk">Week 5</span><span class="te-tl-topic">Static members, the this pointer and const objects</span></li><li><span class="te-tl-wk">Week 6</span><span class="te-tl-topic">Composition and aggregation</span></li><li><span class="te-tl-wk">Week 7</span><span class="te-tl-topic">Operator overloading</span></li><li><span class="te-tl-wk">Week 8</span><span class="te-tl-topic">Friend functions and friend classes</span></li><li class="te-tl-exam"><span class="te-tl-wk">Week 9</span><span class="te-tl-topic">Midterm examination</span></li><li><span class="te-tl-wk">Week 10</span><span class="te-tl-topic">Inheritance: basics and access control</span></li><li><span class="te-tl-wk">Week 11</span><span class="te-tl-topic">Types of inheritance; constructors in derived classes</span></li><li><span class="te-tl-wk">Week 12</span><span class="te-tl-topic">Polymorphism and virtual functions</span></li><li><span class="te-tl-wk">Week 13</span><span class="te-tl-topic">Abstract classes and interfaces</span></li><li><span class="te-tl-wk">Week 14</span><span class="te-tl-topic">Function and class templates</span></li><li><span class="te-tl-wk">Week 15</span><span class="te-tl-topic">Exception handling and file streams</span></li><li><span class="te-tl-wk">Week 16</span><span class="te-tl-topic">Course project presentations and revision</span></li><li class="te-tl-exam"><span class="te-tl-wk">Week 17–18</span><span class="te-tl-topic">Final examination</span></li></ol>
+        </template>
+        <template id="tpl-dsa">
+            <p class="te-m-eyebrow">Superior University · 4th semester</p>
+            <h2 class="te-m-title">Data Structures and Algorithms</h2>
+            <dl class="te-m-meta"><div><dt>Level</dt><dd>Undergraduate</dd></div><div><dt>Semester</dt><dd>4th semester</dd></div><div><dt>Credit hours</dt><dd>3+1</dd></div><div><dt>Language</dt><dd>C++</dd></div><div><dt>My role</dt><dd>Designed &amp; taught</dd></div></dl>
+            <p class="te-m-overview">Covers how data is organised and processed efficiently. Students implement core data structures, analyse algorithm complexity and choose the right structure for a problem.</p>
+            <h3 class="te-m-h">Learning outcomes</h3>
+            <ul class="te-m-clos"><li>Analyse the time and space complexity of algorithms using Big-O notation.</li><li>Implement linear and non-linear data structures and their operations.</li><li>Select and apply suitable data structures and algorithms to solve problems.</li></ul>
+            <h3 class="te-m-h">Assessment</h3>
+            <div class="te-m-assess"><div class="te-bar"><span>Quizzes</span><span class="te-bar-track"><span style="width:10%"></span></span><b>10%</b></div><div class="te-bar"><span>Assignments</span><span class="te-bar-track"><span style="width:10%"></span></span><b>10%</b></div><div class="te-bar"><span>Lab work</span><span class="te-bar-track"><span style="width:15%"></span></span><b>15%</b></div><div class="te-bar"><span>Midterm exam</span><span class="te-bar-track"><span style="width:25%"></span></span><b>25%</b></div><div class="te-bar"><span>Final exam</span><span class="te-bar-track"><span style="width:40%"></span></span><b>40%</b></div></div>
+            <h3 class="te-m-h">16-week timeline</h3>
+            <ol class="te-tl"><li><span class="te-tl-wk">Week 1</span><span class="te-tl-topic">Introduction, abstract data types and complexity analysis (Big-O)</span></li><li><span class="te-tl-wk">Week 2</span><span class="te-tl-topic">Arrays; linear and binary search</span></li><li><span class="te-tl-wk">Week 3</span><span class="te-tl-topic">Elementary sorting: bubble, selection and insertion sort</span></li><li><span class="te-tl-wk">Week 4</span><span class="te-tl-topic">Singly linked lists</span></li><li><span class="te-tl-wk">Week 5</span><span class="te-tl-topic">Doubly and circular linked lists</span></li><li><span class="te-tl-wk">Week 6</span><span class="te-tl-topic">Stacks and their applications (expression evaluation)</span></li><li><span class="te-tl-wk">Week 7</span><span class="te-tl-topic">Queues, circular queues and priority queues</span></li><li><span class="te-tl-wk">Week 8</span><span class="te-tl-topic">Recursion and divide-and-conquer; merge sort and quick sort</span></li><li class="te-tl-exam"><span class="te-tl-wk">Week 9</span><span class="te-tl-topic">Midterm examination</span></li><li><span class="te-tl-wk">Week 10</span><span class="te-tl-topic">Trees, binary trees and traversals</span></li><li><span class="te-tl-wk">Week 11</span><span class="te-tl-topic">Binary search trees</span></li><li><span class="te-tl-wk">Week 12</span><span class="te-tl-topic">Balanced trees (AVL)</span></li><li><span class="te-tl-wk">Week 13</span><span class="te-tl-topic">Heaps and heap sort</span></li><li><span class="te-tl-wk">Week 14</span><span class="te-tl-topic">Hashing and collision resolution</span></li><li><span class="te-tl-wk">Week 15</span><span class="te-tl-topic">Graphs: representation, BFS and DFS</span></li><li><span class="te-tl-wk">Week 16</span><span class="te-tl-topic">Shortest paths, minimum spanning trees and revision</span></li><li class="te-tl-exam"><span class="te-tl-wk">Week 17–18</span><span class="te-tl-topic">Final examination</span></li></ol>
+        </template>
+        <template id="tpl-logic">
+            <p class="te-m-eyebrow">Superior University · 1st semester</p>
+            <h2 class="te-m-title">Introduction to Logic</h2>
+            <dl class="te-m-meta"><div><dt>Level</dt><dd>Undergraduate</dd></div><div><dt>Semester</dt><dd>1st semester</dd></div><div><dt>Credit hours</dt><dd>3+0</dd></div><div><dt>My role</dt><dd>Designed &amp; taught</dd></div></dl>
+            <p class="te-m-overview">Develops clear, rigorous reasoning. Students learn to identify and evaluate arguments, work with propositional and predicate logic, and apply proof techniques that underpin computer science.</p>
+            <h3 class="te-m-h">Learning outcomes</h3>
+            <ul class="te-m-clos"><li>Identify, construct and evaluate deductive and inductive arguments.</li><li>Use truth tables, equivalences and rules of inference to test validity.</li><li>Apply predicate logic and basic proof techniques to computing problems.</li></ul>
+            <h3 class="te-m-h">Assessment</h3>
+            <div class="te-m-assess"><div class="te-bar"><span>Quizzes</span><span class="te-bar-track"><span style="width:15%"></span></span><b>15%</b></div><div class="te-bar"><span>Assignments</span><span class="te-bar-track"><span style="width:10%"></span></span><b>10%</b></div><div class="te-bar"><span>Midterm exam</span><span class="te-bar-track"><span style="width:25%"></span></span><b>25%</b></div><div class="te-bar"><span>Final exam</span><span class="te-bar-track"><span style="width:50%"></span></span><b>50%</b></div></div>
+            <h3 class="te-m-h">16-week timeline</h3>
+            <ol class="te-tl"><li><span class="te-tl-wk">Week 1</span><span class="te-tl-topic">What is logic? Arguments, premises and conclusions</span></li><li><span class="te-tl-wk">Week 2</span><span class="te-tl-topic">Deductive and inductive reasoning</span></li><li><span class="te-tl-wk">Week 3</span><span class="te-tl-topic">Propositions and logical connectives</span></li><li><span class="te-tl-wk">Week 4</span><span class="te-tl-topic">Truth tables</span></li><li><span class="te-tl-wk">Week 5</span><span class="te-tl-topic">Tautologies, contradictions and contingencies</span></li><li><span class="te-tl-wk">Week 6</span><span class="te-tl-topic">Logical equivalence and laws of logic</span></li><li><span class="te-tl-wk">Week 7</span><span class="te-tl-topic">Rules of inference</span></li><li><span class="te-tl-wk">Week 8</span><span class="te-tl-topic">Validity and formal proofs</span></li><li class="te-tl-exam"><span class="te-tl-wk">Week 9</span><span class="te-tl-topic">Midterm examination</span></li><li><span class="te-tl-wk">Week 10</span><span class="te-tl-topic">Predicates and quantifiers</span></li><li><span class="te-tl-wk">Week 11</span><span class="te-tl-topic">Nested quantifiers and translation</span></li><li><span class="te-tl-wk">Week 12</span><span class="te-tl-topic">Proof techniques: direct, contradiction and contrapositive</span></li><li><span class="te-tl-wk">Week 13</span><span class="te-tl-topic">Informal fallacies</span></li><li><span class="te-tl-wk">Week 14</span><span class="te-tl-topic">Sets and their relation to logic</span></li><li><span class="te-tl-wk">Week 15</span><span class="te-tl-topic">Logic in computing: Boolean algebra and circuits</span></li><li><span class="te-tl-wk">Week 16</span><span class="te-tl-topic">Revision and problem-solving session</span></li><li class="te-tl-exam"><span class="te-tl-wk">Week 17–18</span><span class="te-tl-topic">Final examination</span></li></ol>
+        </template>
+        <template id="tpl-ict">
+            <p class="te-m-eyebrow">UET Lahore · 1st semester</p>
+            <h2 class="te-m-title">Application to Information and Communication Technology</h2>
+            <dl class="te-m-meta"><div><dt>Level</dt><dd>Undergraduate</dd></div><div><dt>Semester</dt><dd>1st semester</dd></div><div><dt>Credit hours</dt><dd>2+1</dd></div><div><dt>My role</dt><dd>Taught</dd></div></dl>
+            <p class="te-m-overview">A first-semester foundation in computing. Covers how computers, software, networks and the internet work, hands-on use of productivity tools, and the safe and ethical use of technology.</p>
+            <h3 class="te-m-h">Learning outcomes</h3>
+            <ul class="te-m-clos"><li>Explain the basic components of computer systems, networks and the internet.</li><li>Use word processing, spreadsheet and presentation tools effectively.</li><li>Practise safe, ethical and responsible use of ICT.</li></ul>
+            <h3 class="te-m-h">Assessment</h3>
+            <div class="te-m-assess"><div class="te-bar"><span>Quizzes</span><span class="te-bar-track"><span style="width:10%"></span></span><b>10%</b></div><div class="te-bar"><span>Assignments</span><span class="te-bar-track"><span style="width:10%"></span></span><b>10%</b></div><div class="te-bar"><span>Lab work</span><span class="te-bar-track"><span style="width:20%"></span></span><b>20%</b></div><div class="te-bar"><span>Midterm exam</span><span class="te-bar-track"><span style="width:20%"></span></span><b>20%</b></div><div class="te-bar"><span>Final exam</span><span class="te-bar-track"><span style="width:40%"></span></span><b>40%</b></div></div>
+            <h3 class="te-m-h">16-week timeline</h3>
+            <ol class="te-tl"><li><span class="te-tl-wk">Week 1</span><span class="te-tl-topic">Introduction to ICT and computer basics</span></li><li><span class="te-tl-wk">Week 2</span><span class="te-tl-topic">Computer hardware components</span></li><li><span class="te-tl-wk">Week 3</span><span class="te-tl-topic">Software: system software, application software and operating systems</span></li><li><span class="te-tl-wk">Week 4</span><span class="te-tl-topic">Number systems and data representation</span></li><li><span class="te-tl-wk">Week 5</span><span class="te-tl-topic">Word processing</span></li><li><span class="te-tl-wk">Week 6</span><span class="te-tl-topic">Spreadsheets: formulas, functions and charts</span></li><li><span class="te-tl-wk">Week 7</span><span class="te-tl-topic">Presentations</span></li><li><span class="te-tl-wk">Week 8</span><span class="te-tl-topic">The internet, the web and email</span></li><li class="te-tl-exam"><span class="te-tl-wk">Week 9</span><span class="te-tl-topic">Midterm examination</span></li><li><span class="te-tl-wk">Week 10</span><span class="te-tl-topic">Computer networks basics</span></li><li><span class="te-tl-wk">Week 11</span><span class="te-tl-topic">Introduction to databases</span></li><li><span class="te-tl-wk">Week 12</span><span class="te-tl-topic">Cloud computing and online collaboration tools</span></li><li><span class="te-tl-wk">Week 13</span><span class="te-tl-topic">Cybersecurity and privacy</span></li><li><span class="te-tl-wk">Week 14</span><span class="te-tl-topic">Computer ethics, digital citizenship and intellectual property</span></li><li><span class="te-tl-wk">Week 15</span><span class="te-tl-topic">Emerging technologies: AI, IoT and data science</span></li><li><span class="te-tl-wk">Week 16</span><span class="te-tl-topic">Lab project and revision</span></li><li class="te-tl-exam"><span class="te-tl-wk">Week 17–18</span><span class="te-tl-topic">Final examination</span></li></ol>
+        </template>
+
     </div>
 </section>
+
+<!-- Course details pop-up -->
+<div class="te-modal" id="teModal" role="dialog" aria-modal="true" aria-label="Course details">
+    <div class="te-m-panel">
+        <button class="te-m-close" id="teModalClose" type="button" aria-label="Close">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+        <div id="teModalBody"></div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var modal = document.getElementById('teModal');
+    var body  = document.getElementById('teModalBody');
+    var closeBtn = document.getElementById('teModalClose');
+    var lastFocus = null;
+
+    /* Course name in "Teaching Positions" -> scroll to its card and highlight it */
+    document.querySelectorAll('a.te-course[data-course]').forEach(function (a) {
+        a.addEventListener('click', function (e) {
+            e.preventDefault();
+            var card = document.getElementById('course-' + a.dataset.course);
+            if (!card) return;
+            card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            card.classList.remove('te-flash');
+            void card.offsetWidth;            /* restart the animation */
+            card.classList.add('te-flash');
+            history.replaceState(null, '', '#course-' + a.dataset.course);
+        });
+    });
+
+    /* "View course content & timeline" -> open pop-up */
+    function openCourse(id) {
+        var tpl = document.getElementById('tpl-' + id);
+        if (!tpl) return;
+        lastFocus = document.activeElement;
+        body.innerHTML = '';
+        body.appendChild(tpl.content.cloneNode(true));
+        modal.classList.add('is-open');
+        document.body.classList.add('te-no-scroll');
+        modal.querySelector('.te-m-panel').scrollTop = 0;
+        closeBtn.focus();
+    }
+    function closeCourse() {
+        modal.classList.remove('is-open');
+        document.body.classList.remove('te-no-scroll');
+        if (lastFocus) lastFocus.focus();
+    }
+    document.querySelectorAll('.te-more[data-course]').forEach(function (b) {
+        b.addEventListener('click', function () { openCourse(b.dataset.course); });
+    });
+    closeBtn.addEventListener('click', closeCourse);
+    modal.addEventListener('click', function (e) { if (e.target === modal) closeCourse(); });
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && modal.classList.contains('is-open')) closeCourse();
+    });
+
+    /* Opening the page with #course-xxx in the address highlights that course */
+    if (location.hash.indexOf('#course-') === 0) {
+        var card = document.querySelector(location.hash);
+        if (card) setTimeout(function () {
+            card.scrollIntoView({ block: 'center' });
+            card.classList.add('te-flash');
+        }, 300);
+    }
+});
+</script>
