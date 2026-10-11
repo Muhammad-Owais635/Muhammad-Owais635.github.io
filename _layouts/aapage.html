@@ -1,317 +1,159 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% if page.title %}{{ page.title }} | {% endif %}Muhammad Owais Portfolio</title>
-
-    <link rel="shortcut icon" href="{{ '/assets/favicon.ico' | relative_url }}" type="image/x-icon">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Ovo&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ '/_style/about.css' | relative_url }}">
-
-    {% include aaabout.css %}
-
-    <script>
-        /* Apply dark mode before the page paints, to avoid a white flash */
-        if (
-            localStorage.theme === 'dark' ||
-            (!('theme' in localStorage) &&
-            window.matchMedia('(prefers-color-scheme: dark)').matches)
-        ) {
-            document.documentElement.classList.add('dark');
+<style>
+    /* More space between the navbar and the top edge of the screen */
+    #navbar {
+        padding-top: 22px;
+        padding-bottom: 22px;
+    }
+    @media (min-width: 768px) {
+        #navbar {
+            padding-top: 28px;
+            padding-bottom: 28px;
         }
-    </script>
-    <style>
-        /* Let the soft background graphic at the top show on every page,
-           not only the home page (the page sections had their own solid
-           background that covered it). Dark mode keeps the dark body colour. */
-        .rp-page, .tk-page, .te-page, .pl-page, .pj-page, .td-page {
-            background: transparent !important;
+    }
+
+    /* Same logo height in light and dark mode, so the navbar (and the menu
+       inside it) sits at exactly the same distance from the top in both themes.
+       The light logo is square and the dark logo is wide, so a fixed WIDTH
+       made them different heights. */
+    #navbar > a {
+        display: flex;
+        align-items: center;
+        height: 22px;
+    }
+    #navbar > a img {
+        height: 22px;
+        width: auto;
+        max-width: none;
+        object-fit: contain;
+    }
+    @media (min-width: 768px) {
+        #navbar > a,
+        #navbar > a img { height: 28px; }
+    }
+
+    /* Centre the desktop menu on the page: the logo side and the icon side
+       get equal width, so the menu sits exactly in the middle */
+    @media (min-width: 1200px) {
+        #navbar > a,
+        #navbar > div {
+            flex: 1 1 0;
         }
-    </style>
-</head>
-
-<body class="font-Outfit leading-8 dark:bg-darkTheme dark:text-white">
-
-    <!-- Background Graphic -->
-    <div class="fixed top-0 right-0 w-11/12 -z-10 translate-y-[-80%] dark:hidden">
-        <img src="{{ '/assets/header-bg-color.png' | relative_url }}" alt="" class="w-full" />
-    </div>
-
-    <!-- Navbar -->
-    {% include aanav.html %}
-
-    <!-- Page content -->
-    <main>
-        {{ content }}
-    </main>
-
-    <!-- ================= Footer ================= -->
-    <style>
-        .ftr {
-            --ftr-text: #111827;
-            --ftr-muted: #6b7280;
-            --ftr-line: #e5e7eb;
-            --ftr-bg: #fafafa;
-            --ftr-chip: #ffffff;
-            margin-top: 64px;
-            background: var(--ftr-bg);
-            color: var(--ftr-text);
-            font-family: Outfit, sans-serif;
-            position: relative;
+        #navbar > div {
+            justify-content: flex-end;
         }
-        .dark .ftr {
-            --ftr-text: #ffffff;
-            --ftr-muted: rgba(255, 255, 255, 0.6);
-            --ftr-line: rgba(255, 255, 255, 0.12);
-            --ftr-bg: #0b0016;
-            --ftr-chip: transparent;
-        }
-        /* thin brand-gradient line on top */
-        .ftr::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 3px;
-            background: linear-gradient(to right, #b820e6, #da7d20);
-        }
-        .ftr-wrap { max-width: 1120px; margin: 0 auto; padding: 64px 24px 0; }
-        .ftr-grid {
-            display: grid;
-            grid-template-columns: 1.6fr 1fr 1.2fr 1.3fr;
-            gap: 48px;
-        }
-        .ftr-logo { display: inline-block; }
-        .ftr-logo img { height: 64px; width: auto; max-width: none; }
-        .ftr-bio {
-            margin-top: 18px;
-            max-width: 320px;
-            font-size: 15px;
-            line-height: 1.7;
-            color: var(--ftr-muted);
-        }
-        .ftr h3 {
-            font-family: Ovo, serif;
-            font-size: 18px;
-            line-height: 1.3;
-            color: var(--ftr-text);
-            margin-bottom: 18px;
-        }
-        .ftr-list li { line-height: 1.5; }
-        .ftr-list li + li { margin-top: 12px; }
-        .ftr-list a, .ftr-list span {
-            font-size: 15px;
-            line-height: 1.5;
-            color: var(--ftr-muted);
-            transition: color 0.2s;
-        }
-        .ftr-list a:hover { color: #2563eb; }
-        .dark .ftr-list a:hover { color: #60a5fa; }
+    }
 
-        .ftr-contact li { display: flex; align-items: flex-start; gap: 10px; }
-        .ftr-contact svg { width: 18px; height: 18px; flex: none; margin-top: 2px; color: var(--ftr-muted); }
-        .ftr-contact a { word-break: break-all; }
-
-        .ftr-cv {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            margin-top: 20px;
-            padding: 8px 20px;
-            border-radius: 9999px;
-            font-size: 14px;
-            font-weight: 500;
-            line-height: 1.5;
-            color: #ffffff !important;
-            background: linear-gradient(to right, #b820e6, #da7d20);
-            transition: opacity 0.2s, transform 0.2s;
+    /* ---------- Compact bar after scrolling ----------
+       When the page is scrolled, the bar gets its background (added by the
+       layout script) and also becomes slimmer: less padding, smaller logo,
+       slimmer menu pill and smaller icons. */
+    #navbar,
+    #navbar > a,
+    #navbar > a img,
+    #navLink,
+    #navbar > div img {
+        transition: padding 0.3s ease, height 0.3s ease, width 0.3s ease,
+                    background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    #navbar.nav-compact {
+        padding-top: 8px;
+        padding-bottom: 8px;
+    }
+    #navbar.nav-compact > a,
+    #navbar.nav-compact > a img { height: 20px; }
+    #navbar.nav-compact #navLink { padding-top: 8px; padding-bottom: 8px; }
+    #navbar.nav-compact > div button:first-child img { width: 18px; }
+    #navbar.nav-compact > div button:last-child img { width: 22px; }
+    @media (min-width: 768px) {
+        #navbar.nav-compact {
+            padding-top: 10px;
+            padding-bottom: 10px;
         }
-        .ftr-cv:hover { opacity: 0.9; transform: translateY(-1px); }
-        .ftr-cv svg { width: 16px; height: 16px; }
+        #navbar.nav-compact > a,
+        #navbar.nav-compact > a img { height: 24px; }
+    }
+</style>
 
-        .ftr-social { display: flex; gap: 10px; margin-top: 22px; }
-        .ftr-social a {
-            display: flex; align-items: center; justify-content: center;
-            width: 40px; height: 40px; border-radius: 9999px;
-            border: 1px solid #d1d5db; background: var(--ftr-chip); color: #374151;
-            transition: color 0.2s, border-color 0.2s, background 0.2s, transform 0.2s;
-        }
-        .ftr-social a:hover { color: #2563eb; border-color: #2563eb; background: #eff6ff; transform: translateY(-2px); }
-        .dark .ftr-social a { border-color: rgba(255, 255, 255, 0.25); color: rgba(255, 255, 255, 0.85); }
-        .dark .ftr-social a:hover { color: #60a5fa; border-color: #60a5fa; background: #2a004a; }
-        .ftr-social svg { width: 18px; height: 18px; display: block; }
+<nav id="navbar" class="w-full fixed px-5 lg:px-8 xl:px-[8%] py-4 flex items-center justify-between z-50">
 
-        .ftr-bottom {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 16px;
-            margin-top: 56px;
-            padding: 22px 0 28px;
-            border-top: 1px solid var(--ftr-line);
-            font-size: 14px;
-            line-height: 1.5;
-            color: var(--ftr-muted);
-        }
-        .ftr-top {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            color: var(--ftr-muted);
-            transition: color 0.2s;
-        }
-        .ftr-top:hover { color: #2563eb; }
-        .dark .ftr-top:hover { color: #60a5fa; }
-        .ftr-top svg { width: 16px; height: 16px; }
+    <p class="bg-white bg-opacity-50 backdrop-blur-lg shadow-sm dark:bg-darkTheme dark:shadow-white/20 sr-only">
+        Hidden
+    </p>
 
-        @media (max-width: 900px) {
-            .ftr-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
-        }
-        @media (max-width: 560px) {
-            .ftr-wrap { padding-top: 48px; }
-            .ftr-grid { grid-template-columns: 1fr 1fr; gap: 32px 24px; }
-            .ftr-brand { grid-column: 1 / -1; }
-            .ftr-contact-col { grid-column: 1 / -1; }
-            .ftr-bottom { flex-direction: column-reverse; text-align: center; }
-        }
-    </style>
+    <a href="{{ '/' | relative_url }}">
+        <img src="{{ '/assets/wordmark-light.svg' | relative_url }}"
+             alt="Logo"
+             class="w-28 cursor-pointer mr-14 dark:hidden" />
 
-    <footer class="ftr">
-        <div class="ftr-wrap">
-            <div class="ftr-grid">
+        <img src="{{ '/assets/wordmark-dark.svg' | relative_url }}"
+             alt="Logo"
+             class="w-28 cursor-pointer mr-14 hidden dark:block" />
+    </a>
+        <ul id="navLink"
+        class="hidden md:flex items-center gap-6 lg:gap-8 rounded-full px-12 py-3 bg-white shadow-sm bg-opacity-50 font-Ovo dark:border dark:border-white/30 dark:bg-transparent">
 
-                <!-- Brand -->
-                <div class="ftr-brand">
-                    <a class="ftr-logo" href="{{ '/' | relative_url }}" aria-label="Home">
-                        <img src="{{ '/assets/logobright.png' | relative_url }}" alt="Muhammad Owais" class="dark:hidden">
-                        <img src="{{ '/assets/logodark.png' | relative_url }}" alt="Muhammad Owais" class="hidden dark:block">
-                    </a>
-                    <p class="ftr-bio">
-                        Doctoral researcher at Tokyo Metropolitan University, working on social networks,
-                        natural language processing and large language models.
-                    </p>
-                    <div class="ftr-social">
-                        <a href="mailto:owaiskhana635@gmail.com" aria-label="Email" title="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 6.5l8.5 6.5 8.5-6.5"/></svg></a>
-                        <a href="https://github.com/Muhammad-Owais635" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.37-3.87-1.37-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.76 2.69 1.25 3.35.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.04 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.62 1.58.23 2.75.11 3.04.74.81 1.18 1.83 1.18 3.09 0 4.41-2.69 5.38-5.26 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg></a>
-                        <a href="https://www.linkedin.com/in/muhammad-owais635/" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg></a>
-                        <a href="https://scholar.google.com/citations?user=OD079GEAAAAJ&hl=en" target="_blank" rel="noopener" aria-label="Google Scholar" title="Google Scholar"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 24a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-24L0 9.5l4.84 3.94A8.6 8.6 0 0 1 12 9.75c2.97 0 5.6 1.5 7.16 3.69L24 9.5 12 0z"/></svg></a>
-                    </div>
-                </div>
+            <li><a class="hover:text-gray-500 dark:hover:text-gray-300 transition" href="{{ '/#top' | relative_url }}">Home</a></li>
+            <li><a class="hover:text-gray-500 dark:hover:text-gray-300 transition {% if page.url == '/publications/' %}font-semibold{% endif %}"
+               href="{{ '/publications/' | relative_url }}">Research</a></li>
+            <li><a class="hover:text-gray-500 dark:hover:text-gray-300 transition {% if page.url == '/experience/' %}font-semibold{% endif %}"
+               href="{{ '/experience/' | relative_url }}">Teaching</a></li>
+            <li><a class="hover:text-gray-500 dark:hover:text-gray-300 transition {% if page.url == '/projects/' %}font-semibold{% endif %}"
+               href="{{ '/projects/' | relative_url }}">Projects</a></li>
+            <li><a class="hover:text-gray-500 dark:hover:text-gray-300 transition {% if page.url == '/talks/' %}font-semibold{% endif %}"
+               href="{{ '/talks/' | relative_url }}">Talks</a></li>
+            
+            <!--  <li><a class="hover:text-gray-500 dark:hover:text-gray-300 transition" href="{{ '/#mentorship' | relative_url }}">Mentorship</a></li> -->
+            <!-- <li><a class="hover:text-gray-500 dark:hover:text-gray-300 transition" href="{{ '/#awards' | relative_url }}">Awards</a></li> -->
+            <!-- <li><a class="hover:text-gray-500 dark:hover:text-gray-300 transition" href="{{ '/#certifications' | relative_url }}">Certifications</a></li> -->
+            <!-- <li><a class="hover:text-gray-500 dark:hover:text-gray-300 transition" href="{{ '/#gallary' | relative_url }}">Gallary</a></li> -->
+            <!-- <li><a class="hover:text-gray-500 dark:hover:text-gray-300 transition" href="{{ '/#contact' | relative_url }}">Contact</a></li> -->
+        </ul>
 
-                <!-- Explore -->
-                <div>
-                    <h3>Explore</h3>
-                    <ul class="ftr-list">
-                        <li><a href="{{ '/' | relative_url }}">Home</a></li>
-                        <li><a href="{{ '/publications/' | relative_url }}">Publications</a></li>
-                        <li><a href="{{ '/talks/' | relative_url }}">Talks</a></li>
-                        <li><a href="{{ '/experience/' | relative_url }}">Experience</a></li>
-                        <li><a href="{{ '/projects/' | relative_url }}">Projects</a></li>
-                    </ul>
-                </div>
+     <div class="flex items-center gap-4">
+            <button onclick="toggleTheme()">
+                <img src="{{ '/assets/moon_icon.png' | relative_url }}"  alt="" class="w-5 dark:hidden" />
+                <img src="{{ '/assets/sun_icon.png' | relative_url }}" alt="" class="w-5 hidden dark:block" />
+                 
+            </button> 
+        <button class="block md:hidden ml-3" onclick="openMenu()">
+            
+            <img  src="{{ '/assets/menu-black.png' | relative_url }}" class="w-6 dark:hidden" />
+            <img src="{{ '/assets/menu-white.png' | relative_url }}" class="w-6 hidden dark:block" />
+            </button>
 
-                <!-- Research -->
-                <div>
-                    <h3>Research</h3>
-                    <ul class="ftr-list">
-                        <li><span>Social network analysis</span></li>
-                        <li><span>Social bot detection</span></li>
-                        <li><span>NLP &amp; large language models</span></li>
-                        <li><span>Speech &amp; speaker recognition</span></li>
-                        <li><span>IoMT security</span></li>
-                    </ul>
-                </div>
-
-                <!-- Contact -->
-                <div class="ftr-contact-col">
-                    <h3>Get in touch</h3>
-                    <ul class="ftr-list ftr-contact">
-                        <li>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 6.5l8.5 6.5 8.5-6.5"/></svg>
-                            <a href="mailto:owaiskhana635@gmail.com">owaiskhana635@gmail.com</a>
-                        </li>
-                        <li>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
-                            <span>Hachioji, Tokyo, Japan</span>
-                        </li>
-                    </ul>
-                    <a class="ftr-cv" href="{{ '/assets/Muhammad Owais CV.pdf' | relative_url }}" download>
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>
-                        Download CV
-                    </a>
-                </div>
-            </div>
-
-            <div class="ftr-bottom">
-                <p>© {{ 'now' | date: '%Y' }} Muhammad Owais. All rights reserved.</p>
-                <a class="ftr-top" href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">
-                    Back to top
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
-                </a>
-            </div>
         </div>
-    </footer>
+             
+        <!-- ----- mobile menu ------ -->
+        <ul id="mobileMenu"
+            class="flex md:hidden flex-col gap-4 py-20 px-10 fixed -right-64 top-0 bottom-0 w-64 z-50 h-screen bg-rose-50 transition duration-500 font-Ovo dark:bg-darkHover dark:text-white">
 
-    <script>
-        /* ---------- DARK MODE TOGGLE ---------- */
-        function toggleTheme() {
-            document.documentElement.classList.toggle('dark');
-            localStorage.theme =
-                document.documentElement.classList.contains('dark') ? 'dark' : 'light';
-        }
+            <div class="absolute right-6 top-6" onclick="closeMenu()">
+                
+                <img src="{{ '/assets/close-black.png' | relative_url }}" alt="" class="w-5 cursor-pointer dark:hidden" />
+                <img src="{{ '/assets/close-white.png' | relative_url }}" alt="" class="w-5 cursor-pointer hidden dark:block" />
+            </div>
 
-        /* ---------- MOBILE MENU ---------- */
-        function openMenu() {
-            const mobileMenu = document.getElementById("mobileMenu");
-            mobileMenu.classList.remove("-right-64");
-            mobileMenu.classList.add("right-0");
-        }
+            <li><a href="{{ '/' | relative_url }}" onclick="closeMenu()">Home</a></li>
+            <li><a href="{{ '/publications/' | relative_url }}" onclick="closeMenu()">Research</a></li>
+            <li><a href="{{ '/experience/' | relative_url }}" onclick="closeMenu()">Teaching</a></li>
+            <li><a href="{{ '/projects/' | relative_url }}" onclick="closeMenu()">Projects</a></li>
+            <li><a href="{{ '/talks/' | relative_url }}" onclick="closeMenu()">Talks</a></li>
+            <!-- <li><a href="{{ '/#mentorship' | relative_url }}" onclick="closeMenu()">Mentorship</a></li>  -->
+            <!-- <li><a href="{{ '/#awards' | relative_url }}" onclick="closeMenu()">Awards</a></li> -->
+            <!-- <li><a href="{{ '/#certifications' | relative_url }}" onclick="closeMenu()">Certifications</a></li> -->
+            <!-- <li><a href="{{ '/#gallary' | relative_url }}" onclick="closeMenu()">Gallary</a></li> -->
+            <!-- <li><a href="{{ '/#contact' | relative_url }}" onclick="closeMenu()">Contact</a></li> -->
+        </ul>
+                
 
-        function closeMenu() {
-            const mobileMenu = document.getElementById("mobileMenu");
-            mobileMenu.classList.remove("right-0");
-            mobileMenu.classList.add("-right-64");
-        }
+    </nav>
 
-        /* ---------- PUBLICATION "READ MORE" ---------- */
-        function toggleAbstract(btn) {
-            const card = btn.parentElement;
-            const text = card.querySelector(".abstract-text");
-            const fade = card.querySelector(".fade-overlay");
-            const download = card.querySelector(".download-link");
-
-            text.classList.toggle("line-clamp-2");
-            if (fade) fade.classList.toggle("hidden");
-            if (download) download.classList.toggle("hidden");
-
-            btn.innerText = text.classList.contains("line-clamp-2") ? "Read more" : "Read less";
-        }
-
-        /* ---------- NAVBAR SCROLL EFFECT ---------- */
-        document.addEventListener('DOMContentLoaded', () => {
-            const navbar = document.getElementById("navbar");
-            const navLink = document.getElementById("navLink");
-
-            function updateNavbar() {
-                if (window.scrollY > 50) {
-                    navbar.classList.add('bg-white', 'bg-opacity-50', 'backdrop-blur-lg',
-                        'shadow-sm', 'dark:bg-darkTheme', 'dark:shadow-white/20');
-                    navLink.classList.remove('bg-white', 'shadow-sm', 'bg-opacity-50',
-                        'dark:border', 'dark:border-white/30', 'dark:bg-transparent');
-                } else {
-                    navbar.classList.remove('bg-white', 'bg-opacity-50', 'backdrop-blur-lg',
-                        'shadow-sm', 'dark:bg-darkTheme', 'dark:shadow-white/20');
-                    navLink.classList.add('bg-white', 'shadow-sm', 'bg-opacity-50',
-                        'dark:border', 'dark:border-white/30', 'dark:bg-transparent');
-                }
-            }
-
-            window.addEventListener('scroll', updateNavbar);
-            updateNavbar();
-        });
-    </script>
-
-</body>
-</html>
+<script>
+    /* Slim the navbar once the page is scrolled */
+    (function () {
+        var nav = document.getElementById('navbar');
+        function update() { nav.classList.toggle('nav-compact', window.scrollY > 50); }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+</script>
