@@ -1,290 +1,113 @@
 ---
+layout: aapage
 permalink: /
-
 author_profile: false
 redirect_from:
   - /about/
   - /about.html
-
 ---
 
-     
+<!-- Home Section -->
+<div id="top" class="w-11/12 max-w-3xl text-center mx-auto h-screen flex flex-col items-center justify-center gap-4">
 
-{% include base_path %}
-                                    {% include aaabout.css %}
- <link rel="stylesheet" href="{{ '/_style/about.css' | relative_url }}">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Muhammad Owais Portfolio</title>
-    
-    <link rel="shortcut icon" href="./assets/favicon.ico" type="image/x-icon">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Ovo&display=swap" rel="stylesheet">
+    <img src="{{ '/assets/profile-img.png' | relative_url }}"
+         alt="Muhammad Owais"
+         class="rounded-full w-32" />
 
+    <h3 class="flex items-end gap-2 text-xl md:text-2xl mb-3 font-Ovo">
+        Hi! I&apos;m Muhammad Owais
+        <img src="{{ '/assets/hand-icon.png' | relative_url }}"
+             alt=""
+             class="w-6 mb-1" />
+    </h3>
 
-<body class="font-Outfit leading-8 dark:bg-darkTheme dark:text-white">
+    <h1 class="text-3xl sm:text-6xl lg:text-[66px] font-Ovo">
+        doctoral researcher at TMU Japan.
+    </h1>
 
-    <!-- Background Graphic -->
-    <div class="fixed top-0 right-0 w-11/12 -z-10 translate-y-[-80%] dark:hidden">
-        <img src="{{ '/assets/header-bg-color.png' | relative_url }}" 
-             alt="" 
-             class="w-full" />
-    </div>
+    <p class="max-w-2xl mx-auto font-Ovo">
+        PhD Researcher | Social Network | NLP | LLM | Machine Learning | Deep Learning | Speaker Identification | Speech Recognition
+    </p>
 
-    {% include aanav.html %}
+    <div class="flex flex-col sm:flex-row sm:flex-wrap
+                items-center justify-center
+                gap-3 sm:gap-1
+                w-full sm:w-10/12
+                px-4 sm:px-0
+                mx-auto font-Ovo">
 
-    <!-- Home Section -->
-    <div class="w-11/12 max-w-3xl text-center mx-auto h-screen flex flex-col items-center justify-center gap-4">
-
-        <img src="{{ '/assets/profile-img.png' | relative_url }}" 
-             alt="" 
-             class="rounded-full w-32" />
-
-        <h3 class="flex items-end gap-2 text-xl md:text-2xl mb-3 font-Ovo">
-            Hi! I&apos;m Muhammad Owais
-            <img src="{{ '/assets/hand-icon.png' | relative_url }}" 
-                 alt="" 
-                 class="w-6 mb-1" />
-        </h3>
-
-        <h1 class="text-3xl sm:text-6xl lg:text-[66px] font-Ovo">
-            doctoral researcher at TMU Japan.
-        </h1>
-
-        <p class="max-w-2xl mx-auto font-Ovo">
-            PhD Researcher | Social Network | NLP | LLM | Machine Learning | Deep Learning | Speaker Identification | Speech Recognition
-        </p>
-       <div class="flex flex-col sm:flex-row sm:flex-wrap
-            items-center justify-center
-            gap-3 sm:gap-1
-            w-full sm:w-10/12
-            px-4 sm:px-0
-            mx-auto font-Ovo">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center shrink-0">
-                    <img src="./assets/email.svg" class="w-5 h-5" alt="">
-                </div>
-                <a href="mailto:owaiskhana635@gmail.com"
-                   class="hover:text-blue-600 transition break-all">
-                   owaiskhana635@gmail.com
-                </a>
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center shrink-0">
+                <img src="{{ '/assets/email.svg' | relative_url }}" class="w-5 h-5" alt="">
             </div>
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center shrink-0">
-                    <img src="./assets/linkedin.svg" class="w-5 h-5" alt="">
-                </div>
-                <a href="https://www.linkedin.com/in/muhammad-owais635/"
-                class="hover:text-blue-600 transition">
-                LinkedIn
-                </a>
-            </div>
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center shrink-0">
-                    <img src="./assets/scholar.svg" class="w-5 h-5" alt="">
-                </div>
-                <a href="https://scholar.google.com/citations?user=OD079GEAAAAJ&hl=en"
-                class="hover:text-blue-600 transition">
-                Google Scholar
-                </a>
-            </div>
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center shrink-0">
-                    <img src="./assets/github.svg" class="w-5 h-5" alt="">
-                </div>
-                <a href="https://github.com/Muhammad-Owais635"
-                class="hover:text-blue-600 transition">
-                GitHub
-                </a>
-            </div>
-
-        </div>
-        <div class="w-full flex justify-center text-gray-700 dark:text-white/80">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center">
-                    <img src="./assets/address.svg" class="w-5 h-5" alt="">
-                </div>
-                <span>Hachioji-shi, Matsugaya, Tokyo, Japan</span>
-            </div>
+            <a href="mailto:owaiskhana635@gmail.com"
+               class="hover:text-blue-600 transition break-all">
+               owaiskhana635@gmail.com
+            </a>
         </div>
 
-        <div class="flex flex-col sm:flex-row items-center gap-4 mt-4">
-
-            <a href="{{ '/#contact' | relative_url }}"
-               class="px-10 py-2.5 border rounded-full bg-gradient-to-r from-[#b820e6] to-[#da7d20] text-white flex items-center gap-2 dark:border-transparent">
-                contact me
-                <img src="{{ '/assets/right-arrow-white.png' | relative_url }}" 
-                     alt="" 
-                     class="w-4" />
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center shrink-0">
+                <img src="{{ '/assets/linkedin.svg' | relative_url }}" class="w-5 h-5" alt="">
+            </div>
+            <a href="https://www.linkedin.com/in/muhammad-owais635/"
+               target="_blank"
+               class="hover:text-blue-600 transition">
+               LinkedIn
             </a>
+        </div>
 
-            <a href="{{ '/assets/Muhammad Owais CV.pdf' | relative_url }}" 
-               download
-               class="px-10 py-2.5 rounded-full border border-gray-300 dark:border-white/25 hover:bg-slate-100/70 dark:hover:bg-darkHover flex items-center gap-2 bg-white dark:bg-transparent dark:text-white">
-                my resume
-                <img src="{{ '/assets/download-icon.png' | relative_url }}" 
-                     alt="" 
-                     class="w-4 dark:invert" />
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center shrink-0">
+                <img src="{{ '/assets/scholar.svg' | relative_url }}" class="w-5 h-5" alt="">
+            </div>
+            <a href="https://scholar.google.com/citations?user=OD079GEAAAAJ&hl=en"
+               target="_blank"
+               class="hover:text-blue-600 transition">
+               Google Scholar
             </a>
+        </div>
 
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center shrink-0">
+                <img src="{{ '/assets/github.svg' | relative_url }}" class="w-5 h-5" alt="">
+            </div>
+            <a href="https://github.com/Muhammad-Owais635"
+               target="_blank"
+               class="hover:text-blue-600 transition">
+               GitHub
+            </a>
         </div>
     </div>
 
-   <!-- ----- aboutme section ------ -->
-  {% include aaaabout.html %}  
-
-  
-    <!-- ----- education section ------ -->
- 
-  
-<!-- My publication Section -->
-{% include aapublications.html %} 
-
-    <!-- My Talk Section -->
-    {% include aatalks.html %}    
-
-            <!--  Experience -->
-  {% include aaprofessional.html %} 
-  
-<!--  Research Projects -->
-{% include aaresearch.html %} 
-
-<!--  Mentorship -->
-{% include aamentorship.html %} 
-
-    <!--  awards -->
-{% include aaawards.html %} 
-
-     <!--  certifications -->
-   
-{% include aacertifications.html %} 
-
-     <!--  gallary -->
-
-
-    <!-- Contact me section -->
-
-
-
-    <!-- Footer -->
-    <div class="mt-20">
-        <div class="text-center">
-            <a href="#!">
-                <img src="./assets/logo.png" alt="" class="w-36 mx-auto mb-2 dark:hidden">
-                <img src="./assets/logo_dark.png" alt="" class="w-36 mx-auto mb-2 hidden dark:block">
-            </a>
-            <div class="w-max flex items-center gap-2 mx-auto">
-                <img src="./assets/mail_icon.png" alt="" class="w-5 dark:hidden">
-                <img src="./assets/mail_icon_dark.png" alt="" class="w-5 hidden dark:block">
-                <a href="#!">owaiskhana635@gmail.com</a>
+    <div class="w-full flex justify-center text-gray-700 dark:text-white/80">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center">
+                <img src="{{ '/assets/address.svg' | relative_url }}" class="w-5 h-5" alt="">
             </div>
-        </div>
-        <div class="text-center sm:flex items-center justify-between border-t border-gray-400 mx-[10%] mt-12 py-3">
-            <p>© 2026 Owais. All rights reserved.</p> 
-            <ul class="flex items-center gap-10 justify-center mt-4 sm:mt-0">
-                <li><a target="_blank" href="https://github.com/Muhammad-Owais635">GitHub</a></li>
-                <li><a target="_blank" href="https://www.linkedin.com/in/muhammad-owais635/">LinkedIn</a></li>
-                <li><a target="_blank" href="https://scholar.google.com/citations?user=OD079GEAAAAJ&hl=en">Google Scholar</a></li>
-            </ul>
+            <span>Hachioji-shi, Matsugaya, Tokyo, Japan</span>
         </div>
     </div>
 
-    <script>
-        function toggleAbstract(btn) {
-        
-            const card = btn.parentElement;
-            const text = card.querySelector(".abstract-text");
-            const fade = card.querySelector(".fade-overlay");
-            const download = card.querySelector(".download-link");
-        
-            text.classList.toggle("line-clamp-2");
-            fade.classList.toggle("hidden");
-            download.classList.toggle("hidden");
-        
-            if (text.classList.contains("line-clamp-2")) {
-                btn.innerText = "Read more";
-            } else {
-                btn.innerText = "Read less";
-            }
-        }
-        </script>
-    <script>
-const mobileMenu = document.getElementById("mobileMenu");
+    <div class="flex flex-col sm:flex-row items-center gap-4 mt-4">
+        <a href="mailto:owaiskhana635@gmail.com"
+           class="px-10 py-2.5 border rounded-full bg-gradient-to-r from-[#b820e6] to-[#da7d20] text-white flex items-center gap-2 dark:border-transparent">
+            contact me
+            <img src="{{ '/assets/right-arrow-white.png' | relative_url }}"
+                 alt=""
+                 class="w-4" />
+        </a>
 
-function openMenu() {
-    mobileMenu.classList.remove("-right-64");
-    mobileMenu.classList.add("right-0");
-}
+        <a href="{{ '/assets/Muhammad Owais CV.pdf' | relative_url }}"
+           download
+           class="px-10 py-2.5 rounded-full border border-gray-300 dark:border-white/25 hover:bg-slate-100/70 dark:hover:bg-darkHover flex items-center gap-2 bg-white dark:bg-transparent dark:text-white">
+            my resume
+            <img src="{{ '/assets/download-icon.png' | relative_url }}"
+                 alt=""
+                 class="w-4 dark:invert" />
+        </a>
+    </div>
+</div>
 
-function closeMenu() {
-    mobileMenu.classList.remove("right-0");
-    mobileMenu.classList.add("-right-64");
-}
-</script>
-
-  <script>
-document.addEventListener('DOMContentLoaded', () => {
-
-    const mobileMenu = document.getElementById("mobileMenu");
-    const navbar = document.getElementById("navbar");
-    const navLink = document.getElementById("navLink");
-
-    /* ---------- DARK MODE ---------- */
-    if (
-        localStorage.theme === 'dark' ||
-        (!('theme' in localStorage) &&
-        window.matchMedia('(prefers-color-scheme: dark)').matches)
-    ) {
-        document.documentElement.classList.add('dark');
-    }
-
-    window.toggleTheme = function () {
-        document.documentElement.classList.toggle('dark');
-
-        localStorage.theme =
-            document.documentElement.classList.contains('dark')
-                ? 'dark'
-                : 'light';
-    };
-
-    /* ---------- MOBILE MENU TOGGLE ---------- */
-    window.toggleMenu = function () {
-        mobileMenu.classList.toggle("right-0");
-        mobileMenu.classList.toggle("-right-64");
-    };
-
-    window.closeMenu = function () {
-        mobileMenu.classList.remove("right-0");
-        mobileMenu.classList.add("-right-64");
-    };
-
-    /* ---------- NAVBAR SCROLL EFFECT ---------- */
-    window.addEventListener('scroll', () => {
-        if (scrollY > 50) {
-            navbar.classList.add(
-                'bg-white','bg-opacity-50','backdrop-blur-lg',
-                'shadow-sm','dark:bg-darkTheme','dark:shadow-white/20'
-            );
-
-            navLink.classList.remove(
-                'bg-white','shadow-sm','bg-opacity-50',
-                'dark:border','dark:border-white/30','dark:bg-transparent'
-            );
-        } else {
-            navbar.classList.remove(
-                'bg-white','bg-opacity-50','backdrop-blur-lg',
-                'shadow-sm','dark:bg-darkTheme','dark:shadow-white/20'
-            );
-
-            navLink.classList.add(
-                'bg-white','shadow-sm','bg-opacity-50',
-                'dark:border','dark:border-white/30','dark:bg-transparent'
-            );
-        }
-    });
-
-});
-</script>
-
-</body>
-</html>
+<!-- About me section -->
+{% include aaaabout.html %}
