@@ -253,6 +253,14 @@
         .te-bar { grid-template-columns: 104px 1fr 40px; }
         .te-tl li { grid-template-columns: 70px 1fr; }
     }
+    /* research supervision */
+    .te-sup-students { display: flex; align-items: center; gap: 8px; margin-top: 6px; font-size: 16px; line-height: 1.5; color: var(--te-soft); }
+    .te-sup-students svg { width: 18px; height: 18px; flex: none; color: var(--te-muted); }
+    .te-topic {
+        display: inline-block; padding: 0 10px; font-size: 12px; font-weight: 600; line-height: 22px;
+        border-radius: 9999px; color: #4b5563; background: #e5e7eb;
+    }
+    .dark .te-topic { color: #e9a6ff; background: rgba(184, 32, 230, 0.25); }
 </style>
 
 <section id="teaching" class="te-page">
@@ -263,13 +271,13 @@
         <h1 class="te-title">Teaching</h1>
         <p class="te-intro">
             I have designed and taught undergraduate computer science courses, from first-semester
-            programming to data structures and algorithms, and I give guest lectures on Python,
-            machine learning and artificial intelligence.
+            programming to data structures and algorithms, supervised undergraduate research projects,
+            and given guest lectures on Python, machine learning and artificial intelligence.
         </p>
 
         <div class="te-stats">
             <div class="te-stat"><strong>5</strong><span>Undergraduate courses taught</span></div>
-            <div class="te-stat"><strong>2</strong><span>Universities</span></div>
+            <div class="te-stat"><strong>3</strong><span>Student research projects supervised</span></div>
             <div class="te-stat"><strong>2</strong><span>Invited guest lectures</span></div>
             <div class="te-stat"><strong>2023–25</strong><span>Years of teaching</span></div>
         </div>
@@ -356,6 +364,53 @@
                     </button>
                 </div>
             </div>
+        </div>
+
+        <!-- ================================================================ -->
+        <!-- Research supervision                                              -->
+        <!-- ================================================================ -->
+        <div id="supervision" class="te-section">
+            <h2 class="te-section-title">Research Supervision</h2>
+            <p class="te-section-note">Undergraduate final-year research projects I supervised.</p>
+
+            <article class="te-item">
+                <div class="te-date">2023 – 2024</div>
+                <div>
+                    <span class="te-role">Advancing Urdu Speech Recognition through Dataset Construction and Fine-Tuning</span>
+                    <p class="te-sup-students">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.6"/><path d="M15.5 14.2A5 5 0 0 1 21 19"/></svg>
+                        Hamad &amp; Sana
+                    </p>
+                    <p class="te-meta">Department of Computer Science, Superior University Lahore</p>
+                    <div class="te-courses"><span class="te-topic">Speech recognition</span><span class="te-topic">Urdu</span></div>
+                </div>
+            </article>
+
+            <article class="te-item">
+                <div class="te-date">2023 – 2024</div>
+                <div>
+                    <span class="te-role">Leveraging Phonetic Algorithms and Word Embeddings for Improved Roman Urdu Sentiment Analysis</span>
+                    <p class="te-sup-students">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.6"/><path d="M15.5 14.2A5 5 0 0 1 21 19"/></svg>
+                        Ahmed &amp; Mujtaba
+                    </p>
+                    <p class="te-meta">Department of Computer Science, Superior University Lahore</p>
+                    <div class="te-courses"><span class="te-topic">Sentiment analysis</span><span class="te-topic">Roman Urdu NLP</span></div>
+                </div>
+            </article>
+
+            <article class="te-item">
+                <div class="te-date">2024</div>
+                <div>
+                    <span class="te-role">Action Item Identification Using Multimodal Meeting Transcripts</span>
+                    <p class="te-sup-students">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.6"/><path d="M15.5 14.2A5 5 0 0 1 21 19"/></svg>
+                        Umair &amp; Sidra
+                    </p>
+                    <p class="te-meta">Department of Computer Science, Superior University Lahore</p>
+                    <div class="te-courses"><span class="te-topic">Meeting analysis</span><span class="te-topic">Multimodal NLP</span></div>
+                </div>
+            </article>
         </div>
 
         <!-- ================================================================ -->
