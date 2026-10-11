@@ -1,10 +1,25 @@
 <style>
-    /* Centre the desktop menu on the page, independent of the logo / icon widths */
+    /* More space between the navbar and the top edge of the screen */
+    #navbar {
+        padding-top: 22px;
+        padding-bottom: 22px;
+    }
+    @media (min-width: 768px) {
+        #navbar {
+            padding-top: 28px;
+            padding-bottom: 28px;
+        }
+    }
+
+    /* Centre the desktop menu on the page: the logo side and the icon side
+       get equal width, so the menu sits exactly in the middle */
     @media (min-width: 1200px) {
-        #navLink {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
+        #navbar > a,
+        #navbar > div {
+            flex: 1 1 0;
+        }
+        #navbar > div {
+            justify-content: flex-end;
         }
     }
 </style>
