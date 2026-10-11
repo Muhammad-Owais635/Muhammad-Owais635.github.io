@@ -9,8 +9,7 @@ author_profile: false
      BOOK PAGE: From Neurons to Agents (work in progress)
      - Chapter list: edit the <details class="bk-ch"> blocks below.
      - Status: change the "is-done" / "is-now" classes in the Progress list.
-     - If you later want to share a sample PDF, put it in /files/ and
-       uncomment the "Read a sample chapter" button in the hero.
+     - Each chapter is its own page in _pages/book/ (chapter-1.html ... chapter-19.html).
 ====================================================================== -->
 <style>
     .bk-page {
@@ -103,21 +102,32 @@ author_profile: false
     .bk-part-head p span { margin-left: 6px; padding: 2px 10px; border-radius: 999px; font-size: 12.5px; border: 1px solid var(--bk-line); white-space: nowrap; }
 
     .bk-ch { border-bottom: 1px solid var(--bk-line); }
-    .bk-ch summary { list-style: none; display: grid; grid-template-columns: 48px minmax(0,1fr) auto 22px; gap: 16px; align-items: center; padding: 18px 12px; cursor: pointer; border-radius: 10px; transition: background .2s; }
+    .bk-ch summary { list-style: none; display: grid; grid-template-columns: 48px minmax(0,1fr) auto auto 22px; gap: 16px; align-items: center; padding: 18px 12px; cursor: pointer; border-radius: 10px; transition: background .2s; }
     .bk-ch summary::-webkit-details-marker { display: none; }
     .bk-ch summary:hover { background: var(--bk-hover); }
     .bk-ch-n { font-family: Ovo, serif; font-size: 24px; color: var(--bk-muted); }
     .bk-ch[open] .bk-ch-n { background: linear-gradient(to right, var(--bk-a), var(--bk-b)); -webkit-background-clip: text; background-clip: text; color: transparent; }
-    .bk-ch-t strong { display: block; font-size: 17px; font-weight: 600; color: var(--bk-text); transition: color .2s; }
+    #contents { scroll-margin-top: 90px; }
+    .bk-ch-t strong { display: block; line-height: 1.35; font-size: 17px; font-weight: 600; color: var(--bk-text); transition: color .2s; }
     .bk-ch summary:hover .bk-ch-t strong { color: #2563eb; }
     .dark .bk-ch summary:hover .bk-ch-t strong { color: #60a5fa; }
     .bk-ch-t em { display: block; margin-top: 3px; font-style: normal; font-size: 14.5px; line-height: 1.55; color: var(--bk-muted); }
     .bk-ch-c { font-size: 13px; color: var(--bk-muted); white-space: nowrap; }
+    .bk-ch-read { padding: 5px 14px; border-radius: 999px; font-size: 13px; font-weight: 500; color: #fff !important; text-decoration: none !important;
+        background: linear-gradient(to right, var(--bk-a), var(--bk-b)); transition: transform .2s, box-shadow .2s; }
+    .bk-ch-read:hover { transform: translateY(-1px); box-shadow: 0 6px 14px -6px rgba(184,32,230,.6); }
+    .bk-read { display: inline-flex; align-items: center; gap: 6px; margin: 0 12px 22px 76px; font-size: 14.5px; font-weight: 600; color: var(--bk-a) !important; text-decoration: none !important; }
+    .dark .bk-read { color: #e48cff !important; }
+    .bk-read svg { width: 15px; height: 15px; transition: transform .2s; }
+    .bk-read:hover svg { transform: translateX(3px); }
+    .bk-secs a { display: flex; gap: 12px; color: inherit !important; text-decoration: none !important; }
+    .bk-secs a:hover { color: #2563eb !important; }
+    .dark .bk-secs a:hover { color: #60a5fa !important; }
     .bk-ch-ic { width: 20px; height: 20px; color: var(--bk-muted); transition: transform .25s; }
     .bk-ch[open] .bk-ch-ic { transform: rotate(45deg); }
     .bk-secs { list-style: none; margin: 0; padding: 4px 12px 22px 76px; display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 8px 32px; }
     .bk-secs li { display: flex; gap: 12px; font-size: 14.5px; line-height: 1.5; color: var(--bk-soft); }
-    .bk-secs li span { flex: none; min-width: 38px; font-variant-numeric: tabular-nums; color: var(--bk-muted); }
+    .bk-secs li span { flex: none; min-width: 42px; font-variant-numeric: tabular-nums; color: var(--bk-muted); }
 
     /* ---------- progress ---------- */
     .bk-steps { list-style: none; margin: 32px 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); }
@@ -168,7 +178,9 @@ author_profile: false
         .bk-sec, .bk-band { margin-top: 72px; }
         .bk-feats, .bk-who { grid-template-columns: 1fr; }
         .bk-toc-head { flex-direction: column; align-items: flex-start; }
-        .bk-ch summary { grid-template-columns: 36px minmax(0,1fr) 20px; gap: 12px; padding: 16px 4px; }
+        .bk-ch summary { grid-template-columns: 36px minmax(0,1fr) auto 20px; gap: 10px; padding: 16px 4px; }
+        .bk-ch-read { padding: 4px 11px; font-size: 12.5px; }
+        .bk-read { margin: 0 4px 20px 48px; }
         .bk-ch-n { font-size: 20px; }
         .bk-ch-c { display: none; }
         .bk-secs { grid-template-columns: 1fr; padding: 0 4px 20px 48px; }
@@ -231,11 +243,10 @@ author_profile: false
                 </div>
 
                 <div class="bk-cta">
-                    <a class="bk-btn bk-btn-p" href="mailto:owaiskhana635@gmail.com?subject=Sample%20chapter%20request%3A%20From%20Neurons%20to%20Agents&amp;body=Hi%20Owais%2C%0A%0AI%20would%20like%20to%20read%20a%20sample%20chapter%20of%20your%20book.%0A%0AName%3A%0AUniversity%20/%20organisation%3A%0AWhich%20chapter%20interests%20me%20most%3A%0A%0AThank%20you%21">Request a sample chapter <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-                    <a class="bk-btn bk-btn-o" href="#contents">See the contents</a>
-                    <!-- <a class="bk-btn bk-btn-o" href="{{ '/files/book-sample-chapter-1.pdf' | relative_url }}" target="_blank">Read a sample chapter (PDF)</a> -->
+                    <a class="bk-btn bk-btn-p" href="{{ '/book/chapter-1/' | relative_url }}">Start reading <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+                    <a class="bk-btn bk-btn-o" href="#contents">Browse chapters</a>
                 </div>
-                <p class="bk-note">The book is not yet published. The full manuscript is not shared publicly; sample chapters are available on request.</p>
+                <p class="bk-note">All 19 chapters are free to read online as drafts while the book is being revised. Feedback and corrections are very welcome.</p>
             </div>
         </div>
 
@@ -320,100 +331,122 @@ author_profile: false
                     <summary>
                         <span class="bk-ch-n">01</span>
                         <span class="bk-ch-t"><strong>Introduction to Deep Learning</strong><em>What deep learning is, how it relates to AI and machine learning, and how a network turns data into predictions.</em></span>
-                        <span class="bk-ch-c">8 sections</span>
+                        <span class="bk-ch-c">8 sections · 3 min</span>
+                        <a class="bk-ch-read" href="{{ '/book/chapter-1/' | relative_url }}">Read</a>
                         <svg class="bk-ch-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
                     </summary>
-                    <ol class="bk-secs"><li><span>1.1</span>What is Deep Learning</li><li><span>1.2</span>Relationship Between AI, Machine Learning, and Deep Learning</li><li><span>1.3</span>Why Deep Learning Is Needed</li><li><span>1.4</span>Key Characteristics of Deep Learning</li><li><span>1.5</span>Applications of Deep Learning</li><li><span>1.6</span>Basic Building Blocks of Deep Learning</li><li><span>1.7</span>Intuition: How Deep Learning Thinks</li><li><span>1.8</span>Training vs Inference</li></ol>
+                    <ol class="bk-secs"><li><a href="{{ '/book/chapter-1/' | relative_url }}#s1-1"><span>1.1</span>What is Deep Learning?</a></li><li><a href="{{ '/book/chapter-1/' | relative_url }}#s1-2"><span>1.2</span>Relationship Between AI, Machine Learning, and Deep Learning</a></li><li><a href="{{ '/book/chapter-1/' | relative_url }}#s1-3"><span>1.3</span>Why Deep Learning Is Needed</a></li><li><a href="{{ '/book/chapter-1/' | relative_url }}#s1-4"><span>1.4</span>Key Characteristics of Deep Learning</a></li><li><a href="{{ '/book/chapter-1/' | relative_url }}#s1-5"><span>1.5</span>Where Deep Learning Is Used?</a></li><li><a href="{{ '/book/chapter-1/' | relative_url }}#s1-6"><span>1.6</span>Basic Building Blocks of Deep Learning (Preview)</a></li><li><a href="{{ '/book/chapter-1/' | relative_url }}#s1-7"><span>1.7</span>Simple Intuition: How Deep Learning Thinks</a></li><li><a href="{{ '/book/chapter-1/' | relative_url }}#s1-8"><span>1.8</span>Training vs Inference</a></li></ol>
+                    <a class="bk-read" href="{{ '/book/chapter-1/' | relative_url }}">Read Chapter 1 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
                 </details>
                 <details class="bk-ch">
                     <summary>
                         <span class="bk-ch-n">02</span>
                         <span class="bk-ch-t"><strong>The Artificial Neuron and Neural Networks</strong><em>From the biological neuron to the perceptron, logistic and linear regression, and the multilayer perceptron.</em></span>
-                        <span class="bk-ch-c">7 sections</span>
+                        <span class="bk-ch-c">6 sections · 5 min</span>
+                        <a class="bk-ch-read" href="{{ '/book/chapter-2/' | relative_url }}">Read</a>
                         <svg class="bk-ch-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
                     </summary>
-                    <ol class="bk-secs"><li><span>2.1</span>Biological Neuron (Human Brain Inspiration)</li><li><span>2.2</span>Artificial Neuron (Perceptron Unit)</li><li><span>2.3</span>Logistic Regression as a Single Neuron</li><li><span>2.4</span>Linear Regression</li><li><span>2.5</span>From Single Neuron to Neural Networks</li><li><span>2.6</span>Multilayer Perceptron (MLP) / Feedforward Neural Network</li><li><span>2.7</span>Perceptron vs MLP Comparison</li></ol>
+                    <ol class="bk-secs"><li><a href="{{ '/book/chapter-2/' | relative_url }}#s2-1"><span>2.1</span>Biological Neuron (Human Brain Inspiration)</a></li><li><a href="{{ '/book/chapter-2/' | relative_url }}#s2-2"><span>2.2</span>Artificial Neurons (Perceptron Unit)</a></li><li><a href="{{ '/book/chapter-2/' | relative_url }}#s2-3"><span>2.3</span>Logistic Regression as a Single Neuron (Classification Task)</a></li><li><a href="{{ '/book/chapter-2/' | relative_url }}#s2-4"><span>2.4</span>Linear Regression (Regression Task)</a></li><li><a href="{{ '/book/chapter-2/' | relative_url }}#s2-5"><span>2.5</span>From Single Neuron (Logistic Regression) to Neural Networks</a></li><li><a href="{{ '/book/chapter-2/' | relative_url }}#s2-6"><span>2.6</span>Multilayer Perceptron (MLP) or Feedforward Neural Network (FFNN)</a></li></ol>
+                    <a class="bk-read" href="{{ '/book/chapter-2/' | relative_url }}">Read Chapter 2 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
                 </details>
                 <details class="bk-ch">
                     <summary>
                         <span class="bk-ch-n">03</span>
                         <span class="bk-ch-t"><strong>Activation Functions</strong><em>Why networks need non-linearity, and how sigmoid, tanh, ReLU, softmax and friends compare.</em></span>
-                        <span class="bk-ch-c">3 sections</span>
+                        <span class="bk-ch-c">2 sections · 6 min</span>
+                        <a class="bk-ch-read" href="{{ '/book/chapter-3/' | relative_url }}">Read</a>
                         <svg class="bk-ch-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
                     </summary>
-                    <ol class="bk-secs"><li><span>3.1</span>Why Activation Functions Are Needed</li><li><span>3.2</span>Types of Activation Functions</li><li><span>3.3</span>Comparison of Activation Functions</li></ol>
+                    <ol class="bk-secs"><li><a href="{{ '/book/chapter-3/' | relative_url }}#s3-1"><span>3.1</span>Why Activation Functions Are Needed</a></li><li><a href="{{ '/book/chapter-3/' | relative_url }}#s3-2"><span>3.2</span>Type of Activation Function</a></li></ol>
+                    <a class="bk-read" href="{{ '/book/chapter-3/' | relative_url }}">Read Chapter 3 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
                 </details>
                 <details class="bk-ch">
                     <summary>
                         <span class="bk-ch-n">04</span>
                         <span class="bk-ch-t"><strong>Loss Functions</strong><em>MSE, MAE, cross-entropy and hinge loss: what each one measures and when to use it.</em></span>
-                        <span class="bk-ch-c">8 sections</span>
+                        <span class="bk-ch-c">7 sections · 7 min</span>
+                        <a class="bk-ch-read" href="{{ '/book/chapter-4/' | relative_url }}">Read</a>
                         <svg class="bk-ch-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
                     </summary>
-                    <ol class="bk-secs"><li><span>4.1</span>What Is a Loss Function?</li><li><span>4.2</span>Mean Squared Error (MSE)</li><li><span>4.3</span>Mean Absolute Error (MAE)</li><li><span>4.4</span>Binary Cross-Entropy Loss (Log Loss)</li><li><span>4.5</span>Categorical Cross-Entropy</li><li><span>4.6</span>Sparse Categorical Cross-Entropy</li><li><span>4.7</span>Hinge Loss</li><li><span>4.8</span>Comparison of Loss Functions</li></ol>
+                    <ol class="bk-secs"><li><a href="{{ '/book/chapter-4/' | relative_url }}#s4-1"><span>4.1</span>What Is a Loss Function?</a></li><li><a href="{{ '/book/chapter-4/' | relative_url }}#s4-2"><span>4.2</span>Mean Squared Error (MSE)</a></li><li><a href="{{ '/book/chapter-4/' | relative_url }}#s4-3"><span>4.3</span>Mean Absolute Error (MAE)</a></li><li><a href="{{ '/book/chapter-4/' | relative_url }}#s4-4"><span>4.4</span>Binary Cross-Entropy Loss (Log Loss)</a></li><li><a href="{{ '/book/chapter-4/' | relative_url }}#s4-5"><span>4.5</span>Categorical Cross-Entropy</a></li><li><a href="{{ '/book/chapter-4/' | relative_url }}#s4-6"><span>4.6</span>Sparse Categorical Cross-Entropy</a></li><li><a href="{{ '/book/chapter-4/' | relative_url }}#s4-7"><span>4.7</span>Hinge Loss (Brief)</a></li></ol>
+                    <a class="bk-read" href="{{ '/book/chapter-4/' | relative_url }}">Read Chapter 4 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
                 </details>
                 <details class="bk-ch">
                     <summary>
                         <span class="bk-ch-n">05</span>
                         <span class="bk-ch-t"><strong>Gradient Descent and Optimization</strong><em>Gradient descent from the hill-descent intuition to backpropagation, momentum, RMSProp and Adam.</em></span>
-                        <span class="bk-ch-c">7 sections</span>
+                        <span class="bk-ch-c">7 sections · 12 min</span>
+                        <a class="bk-ch-read" href="{{ '/book/chapter-5/' | relative_url }}">Read</a>
                         <svg class="bk-ch-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
                     </summary>
-                    <ol class="bk-secs"><li><span>5.1</span>What Is Gradient Descent?</li><li><span>5.2</span>Intuition: Hill Descent Analogy</li><li><span>5.3</span>Mathematical Idea Behind Gradient Descent</li><li><span>5.4</span>Types of Gradient Descent</li><li><span>5.5</span>Backpropagation</li><li><span>5.6</span>Optimization Algorithms</li><li><span>5.7</span>Optimizers in Keras</li></ol>
+                    <ol class="bk-secs"><li><a href="{{ '/book/chapter-5/' | relative_url }}#s5-1"><span>5.1</span>What Is Gradient Descent?</a></li><li><a href="{{ '/book/chapter-5/' | relative_url }}#s5-2"><span>5.2</span>Intuition: Hill Descent Analogy</a></li><li><a href="{{ '/book/chapter-5/' | relative_url }}#s5-3"><span>5.3</span>Mathematical Idea Behind Gradient Descent</a></li><li><a href="{{ '/book/chapter-5/' | relative_url }}#s5-4"><span>5.4</span>Types of Gradient Descent</a></li><li><a href="{{ '/book/chapter-5/' | relative_url }}#s5-5"><span>5.5</span>Backpropagation (How Neural Networks Learn)</a></li><li><a href="{{ '/book/chapter-5/' | relative_url }}#s5-6"><span>5.6</span>Other Types of Optimizers</a></li><li><a href="{{ '/book/chapter-5/' | relative_url }}#s5-7"><span>5.7</span>Optimizers in Keras (Example)</a></li></ol>
+                    <a class="bk-read" href="{{ '/book/chapter-5/' | relative_url }}">Read Chapter 5 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
                 </details>
                 <details class="bk-ch">
                     <summary>
                         <span class="bk-ch-n">06</span>
                         <span class="bk-ch-t"><strong>The Training Process: Epochs, Batches and Learning Rate</strong><em>Parameters vs hyperparameters, epochs, batch size, learning rate, bias–variance and overfitting.</em></span>
-                        <span class="bk-ch-c">8 sections</span>
+                        <span class="bk-ch-c">6 sections · 3 min</span>
+                        <a class="bk-ch-read" href="{{ '/book/chapter-6/' | relative_url }}">Read</a>
                         <svg class="bk-ch-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
                     </summary>
-                    <ol class="bk-secs"><li><span>6.1</span>Parameters</li><li><span>6.2</span>Hyperparameters</li><li><span>6.3</span>Epoch</li><li><span>6.4</span>Batch Size</li><li><span>6.5</span>Iteration</li><li><span>6.6</span>Learning Rate</li><li><span>6.7</span>Bias and Variance</li><li><span>6.8</span>Overfitting and Underfitting</li></ol>
+                    <ol class="bk-secs"><li><a href="{{ '/book/chapter-6/' | relative_url }}#s6-1"><span>6.1</span>What Is an Epoch?</a></li><li><a href="{{ '/book/chapter-6/' | relative_url }}#s6-2"><span>6.2</span>What Is Batch Size?</a></li><li><a href="{{ '/book/chapter-6/' | relative_url }}#s6-3"><span>6.3</span>What Is an Iteration?</a></li><li><a href="{{ '/book/chapter-6/' | relative_url }}#s6-4"><span>6.4</span>Learning Rate</a></li><li><a href="{{ '/book/chapter-6/' | relative_url }}#s6-5"><span>6.5</span>Bias and Variance</a></li><li><a href="{{ '/book/chapter-6/' | relative_url }}#s6-6"><span>6.6</span>Overfitting and Underfitting</a></li></ol>
+                    <a class="bk-read" href="{{ '/book/chapter-6/' | relative_url }}">Read Chapter 6 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
                 </details>
                 <details class="bk-ch">
                     <summary>
                         <span class="bk-ch-n">07</span>
                         <span class="bk-ch-t"><strong>Regularization</strong><em>L1, L2, Elastic Net, dropout, early stopping and data augmentation, compared side by side.</em></span>
-                        <span class="bk-ch-c">8 sections</span>
+                        <span class="bk-ch-c">1 sections · 4 min</span>
+                        <a class="bk-ch-read" href="{{ '/book/chapter-7/' | relative_url }}">Read</a>
                         <svg class="bk-ch-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
                     </summary>
-                    <ol class="bk-secs"><li><span>7.1</span>What Is Regularization?</li><li><span>7.2</span>Ridge Regularization (L2)</li><li><span>7.3</span>L1 Regularization (Lasso)</li><li><span>7.4</span>Elastic Net Regularization</li><li><span>7.5</span>Dropout</li><li><span>7.6</span>Early Stopping</li><li><span>7.7</span>Data-Based Regularization</li><li><span>7.8</span>Comparison of Regularization Techniques</li></ol>
+                    <ol class="bk-secs"><li><a href="{{ '/book/chapter-7/' | relative_url }}#s7-1"><span>7.1</span>What Is Regularization?</a></li></ol>
+                    <a class="bk-read" href="{{ '/book/chapter-7/' | relative_url }}">Read Chapter 7 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
                 </details>
                 <details class="bk-ch">
                     <summary>
                         <span class="bk-ch-n">08</span>
                         <span class="bk-ch-t"><strong>Convolutional Neural Networks (CNNs)</strong><em>Convolution, pooling and classic CNN architectures, with a complete Keras example.</em></span>
-                        <span class="bk-ch-c">7 sections</span>
+                        <span class="bk-ch-c">6 sections · 8 min</span>
+                        <a class="bk-ch-read" href="{{ '/book/chapter-8/' | relative_url }}">Read</a>
                         <svg class="bk-ch-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
                     </summary>
-                    <ol class="bk-secs"><li><span>8.1</span>Why CNNs Are Needed</li><li><span>8.2</span>Convolution Operation</li><li><span>8.3</span>Pooling</li><li><span>8.4</span>CNN Architecture Overview</li><li><span>8.5</span>CNN Example in Keras</li><li><span>8.6</span>Popular CNN Architectures</li><li><span>8.7</span>Coding Example of CNNs</li></ol>
+                    <ol class="bk-secs"><li><a href="{{ '/book/chapter-8/' | relative_url }}#s8-1"><span>8.1</span>Why Do We Need CNNs?</a></li><li><a href="{{ '/book/chapter-8/' | relative_url }}#s8-2"><span>8.2</span>What Is a Convolution?</a></li><li><a href="{{ '/book/chapter-8/' | relative_url }}#s8-3"><span>8.3</span>Pooling</a></li><li><a href="{{ '/book/chapter-8/' | relative_url }}#s8-4"><span>8.4</span>CNN Architecture Overview</a></li><li><a href="{{ '/book/chapter-8/' | relative_url }}#s8-5"><span>8.5</span>CNN Example in Keras</a></li><li><a href="{{ '/book/chapter-8/' | relative_url }}#s8-6"><span>8.6</span>CNN Architectures</a></li></ol>
+                    <a class="bk-read" href="{{ '/book/chapter-8/' | relative_url }}">Read Chapter 8 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
                 </details>
                 <details class="bk-ch">
                     <summary>
                         <span class="bk-ch-n">09</span>
                         <span class="bk-ch-t"><strong>Sequence Models and Recurrent Neural Networks</strong><em>Tokenization, Word2Vec and recurrent networks, plus why gradients vanish or explode.</em></span>
-                        <span class="bk-ch-c">12 sections</span>
+                        <span class="bk-ch-c">9 sections · 8 min</span>
+                        <a class="bk-ch-read" href="{{ '/book/chapter-9/' | relative_url }}">Read</a>
                         <svg class="bk-ch-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
                     </summary>
-                    <ol class="bk-secs"><li><span>9.1</span>Why Sequence Models Are Needed</li><li><span>9.2</span>NLP in Traditional Machine Learning</li><li><span>9.3</span>Tokenization</li><li><span>9.4</span>Word2Vec</li><li><span>9.5</span>Sequence Models</li><li><span>9.6</span>Recurrent Neural Networks (RNNs)</li><li><span>9.7</span>Feedforward Neural Network vs RNN</li><li><span>9.8</span>Unfolded RNN Over Time</li><li><span>9.9</span>Vanishing Gradient Problem</li><li><span>9.10</span>Exploding Gradient Problem</li><li><span>9.11</span>Applications of RNNs</li><li><span>9.12</span>Simple RNN Implementation in Keras</li></ol>
+                    <ol class="bk-secs"><li><a href="{{ '/book/chapter-9/' | relative_url }}#s9-1"><span>9.1</span>Why Do We Need Sequence Models?</a></li><li><a href="{{ '/book/chapter-9/' | relative_url }}#s9-2"><span>9.2</span>Sequence Model</a></li><li><a href="{{ '/book/chapter-9/' | relative_url }}#s9-3"><span>9.3</span>What Is a Recurrent Neural Network (RNN)?</a></li><li><a href="{{ '/book/chapter-9/' | relative_url }}#s9-4"><span>9.4</span>Feedforward NN vs RNN</a></li><li><a href="{{ '/book/chapter-9/' | relative_url }}#s9-5"><span>9.5</span>Unfolded RNN Over Time</a></li><li><a href="{{ '/book/chapter-9/' | relative_url }}#s9-6"><span>9.6</span>Vanishing Gradient</a></li><li><a href="{{ '/book/chapter-9/' | relative_url }}#s9-7"><span>9.7</span>Exploding Gradient</a></li><li><a href="{{ '/book/chapter-9/' | relative_url }}#s9-8"><span>9.8</span>Applications of RNNs</a></li><li><a href="{{ '/book/chapter-9/' | relative_url }}#s9-9"><span>9.9</span>Simple RNN in Keras</a></li></ol>
+                    <a class="bk-read" href="{{ '/book/chapter-9/' | relative_url }}">Read Chapter 9 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
                 </details>
                 <details class="bk-ch">
                     <summary>
                         <span class="bk-ch-n">10</span>
                         <span class="bk-ch-t"><strong>Long Short-Term Memory (LSTM)</strong><em>How LSTM gates remember and forget, worked through a real sentence, plus BiLSTMs.</em></span>
-                        <span class="bk-ch-c">5 sections</span>
+                        <span class="bk-ch-c">5 sections · 6 min</span>
+                        <a class="bk-ch-read" href="{{ '/book/chapter-10/' | relative_url }}">Read</a>
                         <svg class="bk-ch-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
                     </summary>
-                    <ol class="bk-secs"><li><span>10.1</span>Why LSTM Was Invented</li><li><span>10.2</span>LSTM Architecture</li><li><span>10.3</span>LSTM Working with Example</li><li><span>10.4</span>Bidirectional LSTM (BiLSTM)</li><li><span>10.5</span>LSTM Implementation in Keras</li></ol>
+                    <ol class="bk-secs"><li><a href="{{ '/book/chapter-10/' | relative_url }}#s10-1"><span>10.1</span>Why LSTM Was Invented</a></li><li><a href="{{ '/book/chapter-10/' | relative_url }}#s10-2"><span>10.2</span>LSTM Architecture</a></li><li><a href="{{ '/book/chapter-10/' | relative_url }}#s10-3"><span>10.3</span>Example Sentence “I grew up in France and I speak French”</a></li><li><a href="{{ '/book/chapter-10/' | relative_url }}#s10-4"><span>10.4</span>Bidirectional LSTM</a></li><li><a href="{{ '/book/chapter-10/' | relative_url }}#s10-5"><span>10.5</span>LSTM in Keras (Example)</a></li></ol>
+                    <a class="bk-read" href="{{ '/book/chapter-10/' | relative_url }}">Read Chapter 10 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
                 </details>
                 <details class="bk-ch">
                     <summary>
                         <span class="bk-ch-n">11</span>
                         <span class="bk-ch-t"><strong>Gated Recurrent Units (GRU)</strong><em>A lighter recurrent unit: how GRU works, and when to choose it over LSTM.</em></span>
-                        <span class="bk-ch-c">5 sections</span>
+                        <span class="bk-ch-c">4 sections · 5 min</span>
+                        <a class="bk-ch-read" href="{{ '/book/chapter-11/' | relative_url }}">Read</a>
                         <svg class="bk-ch-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
                     </summary>
-                    <ol class="bk-secs"><li><span>11.1</span>Introduction to GRU</li><li><span>11.2</span>GRU Architecture and Core Idea</li><li><span>11.3</span>GRU Working with Example</li><li><span>11.4</span>GRU vs LSTM</li><li><span>11.5</span>GRU Implementation in Keras</li></ol>
+                    <ol class="bk-secs"><li><a href="{{ '/book/chapter-11/' | relative_url }}#s11-1"><span>11.1</span>GRU</a></li><li><a href="{{ '/book/chapter-11/' | relative_url }}#s11-2"><span>11.2</span>Core Idea of GRU</a></li><li><a href="{{ '/book/chapter-11/' | relative_url }}#s11-3"><span>11.3</span>Example Sentence: “I love AI”</a></li><li><a href="{{ '/book/chapter-11/' | relative_url }}#s11-4"><span>11.4</span>GRU in Keras (Example)</a></li></ol>
+                    <a class="bk-read" href="{{ '/book/chapter-11/' | relative_url }}">Read Chapter 11 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
                 </details>
                 </div>
             </div>
@@ -428,73 +461,89 @@ author_profile: false
                     <summary>
                         <span class="bk-ch-n">12</span>
                         <span class="bk-ch-t"><strong>The Transformer Architecture</strong><em>Attention, multi-head attention, positional encoding, encoders and decoders, BERT and GPT.</em></span>
-                        <span class="bk-ch-c">15 sections</span>
+                        <span class="bk-ch-c">13 sections · 27 min</span>
+                        <a class="bk-ch-read" href="{{ '/book/chapter-12/' | relative_url }}">Read</a>
                         <svg class="bk-ch-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
                     </summary>
-                    <ol class="bk-secs"><li><span>12.1</span>Why Attention Was Needed</li><li><span>12.2</span>Intuition Behind Attention (Human Analogy)</li><li><span>12.3</span>What Is Attention? (Query, Key, Value)</li><li><span>12.4</span>Multi-Head Attention</li><li><span>12.5</span>Positional Encoding</li><li><span>12.6</span>Normalization in Transformers</li><li><span>12.7</span>Transformer Encoder</li><li><span>12.8</span>Masked Attention</li><li><span>12.9</span>Transformer Decoder</li><li><span>12.10</span>Pre-training</li><li><span>12.11</span>Fine-Tuning</li><li><span>12.12</span>BERT Architecture</li><li><span>12.13</span>GPT Architecture</li><li><span>12.14</span>Comparison of Transformer Models</li><li><span>12.15</span>Evaluation Metrics in NLP</li></ol>
+                    <ol class="bk-secs"><li><a href="{{ '/book/chapter-12/' | relative_url }}#s12-1"><span>12.1</span>Why Attention Was Needed</a></li><li><a href="{{ '/book/chapter-12/' | relative_url }}#s12-2"><span>12.2</span>Intuition: Human Attention</a></li><li><a href="{{ '/book/chapter-12/' | relative_url }}#s12-3"><span>12.3</span>What Is Attention?</a></li><li><a href="{{ '/book/chapter-12/' | relative_url }}#s12-4"><span>12.4</span>Example: “Money Bank Grows, River Bank Flows”</a></li><li><a href="{{ '/book/chapter-12/' | relative_url }}#s12-5"><span>12.5</span>What is Multi-Head Attention?</a></li><li><a href="{{ '/book/chapter-12/' | relative_url }}#s12-6"><span>12.6</span>Positional Encoding</a></li><li><a href="{{ '/book/chapter-12/' | relative_url }}#s12-7"><span>12.7</span>What is normalization in Transformers?</a></li><li><a href="{{ '/book/chapter-12/' | relative_url }}#s12-8"><span>12.8</span>Transformer Encoder</a></li><li><a href="{{ '/book/chapter-12/' | relative_url }}#s12-9"><span>12.9</span>Masked attention</a></li><li><a href="{{ '/book/chapter-12/' | relative_url }}#s12-10"><span>12.10</span>Transformer Decoder</a></li><li><a href="{{ '/book/chapter-12/' | relative_url }}#s12-11"><span>12.11</span>Pre-training</a></li><li><a href="{{ '/book/chapter-12/' | relative_url }}#s12-12"><span>12.12</span>Fine-tuning</a></li><li><a href="{{ '/book/chapter-12/' | relative_url }}#s12-13"><span>12.13</span>Evaluation Metrics (NLP)</a></li></ol>
+                    <a class="bk-read" href="{{ '/book/chapter-12/' | relative_url }}">Read Chapter 12 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
                 </details>
                 <details class="bk-ch">
                     <summary>
                         <span class="bk-ch-n">13</span>
                         <span class="bk-ch-t"><strong>Large Language Models</strong><em>Language models at scale: Mixture of Experts, decoding and temperature, prompting and fast inference.</em></span>
-                        <span class="bk-ch-c">10 sections</span>
+                        <span class="bk-ch-c">10 sections · 19 min</span>
+                        <a class="bk-ch-read" href="{{ '/book/chapter-13/' | relative_url }}">Read</a>
                         <svg class="bk-ch-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
                     </summary>
-                    <ol class="bk-secs"><li><span>13.1</span>Language Models</li><li><span>13.2</span>Large Language Models (LLMs)</li><li><span>13.3</span>Mixture of Experts (MoE)</li><li><span>13.4</span>Next-Word Prediction</li><li><span>13.5</span>Temperature in Decoding</li><li><span>13.6</span>Guided Decoding</li><li><span>13.7</span>Prompting Strategies</li><li><span>13.8</span>In-Context Learning (ICL)</li><li><span>13.9</span>Inference Optimization</li><li><span>13.10</span>Two Classes of Inference Optimizations</li></ol>
+                    <ol class="bk-secs"><li><a href="{{ '/book/chapter-13/' | relative_url }}#s13-1"><span>13.1</span>Language Model</a></li><li><a href="{{ '/book/chapter-13/' | relative_url }}#s13-2"><span>13.2</span>Large Language Model</a></li><li><a href="{{ '/book/chapter-13/' | relative_url }}#s13-3"><span>13.3</span>What is MoE (Mixture of Experts)?</a></li><li><a href="{{ '/book/chapter-13/' | relative_url }}#s13-4"><span>13.4</span>Next-Word Prediction (Core Idea)</a></li><li><a href="{{ '/book/chapter-13/' | relative_url }}#s13-5"><span>13.5</span>What Is Temperature?</a></li><li><a href="{{ '/book/chapter-13/' | relative_url }}#s13-6"><span>13.6</span>What is Guided Decoding?</a></li><li><a href="{{ '/book/chapter-13/' | relative_url }}#s13-7"><span>13.7</span>Prompting Strategies</a></li><li><a href="{{ '/book/chapter-13/' | relative_url }}#s13-8"><span>13.8</span>In-Context Learning (ICL)</a></li><li><a href="{{ '/book/chapter-13/' | relative_url }}#s13-9"><span>13.9</span>What is Inference Optimization?</a></li><li><a href="{{ '/book/chapter-13/' | relative_url }}#s13-10"><span>13.10</span>Two Classes of Inference Optimizations</a></li></ol>
+                    <a class="bk-read" href="{{ '/book/chapter-13/' | relative_url }}">Read Chapter 13 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
                 </details>
                 <details class="bk-ch">
                     <summary>
                         <span class="bk-ch-n">14</span>
                         <span class="bk-ch-t"><strong>Training, Scaling and Optimizing LLMs</strong><em>FLOPs, Chinchilla scaling laws, parallelism, FlashAttention, mixed precision, LoRA and quantization.</em></span>
-                        <span class="bk-ch-c">11 sections</span>
+                        <span class="bk-ch-c">11 sections · 9 min</span>
+                        <a class="bk-ch-read" href="{{ '/book/chapter-14/' | relative_url }}">Read</a>
                         <svg class="bk-ch-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
                     </summary>
-                    <ol class="bk-secs"><li><span>14.1</span>LLM Objective Function</li><li><span>14.2</span>FLOPs VS FLOP/s</li><li><span>14.3</span>CHINCHILLA SCALING Laws for LLMs</li><li><span>14.4</span>Challenges of Learned Knowledge in LLMs</li><li><span>14.5</span>Parallelism Strategies for Training LLMs</li><li><span>14.6</span>Memory Optimization Techniques</li><li><span>14.7</span>Attention Computation Optimization</li><li><span>14.8</span>Numerical Precision in Training</li><li><span>14.9</span>Fine-Tuning Large Language Models</li><li><span>14.10</span>Parameter-Efficient Fine-Tuning (PEFT)</li><li><span>14.11</span>Quantization Techniques</li></ol>
+                    <ol class="bk-secs"><li><a href="{{ '/book/chapter-14/' | relative_url }}#s14-1"><span>14.1</span>LLM Objective Function</a></li><li><a href="{{ '/book/chapter-14/' | relative_url }}#s14-2"><span>14.2</span>FLOPs vs FLOP/s</a></li><li><a href="{{ '/book/chapter-14/' | relative_url }}#s14-3"><span>14.3</span>Chinchilla Scaling Law</a></li><li><a href="{{ '/book/chapter-14/' | relative_url }}#s14-4"><span>14.4</span>Learned Knowledge Challenges</a></li><li><a href="{{ '/book/chapter-14/' | relative_url }}#s14-5"><span>14.5</span>Data Parallelism (DP)</a></li><li><a href="{{ '/book/chapter-14/' | relative_url }}#s14-6"><span>14.6</span>ZeRO – Zero Redundancy Optimization</a></li><li><a href="{{ '/book/chapter-14/' | relative_url }}#s14-7"><span>14.7</span>Flash Attention (Major Optimization)</a></li><li><a href="{{ '/book/chapter-14/' | relative_url }}#s14-8"><span>14.8</span>Precision &amp; Mixed Precision Training</a></li><li><a href="{{ '/book/chapter-14/' | relative_url }}#s14-9"><span>14.9</span>Fine-Tuning Large Language Models</a></li><li><a href="{{ '/book/chapter-14/' | relative_url }}#s14-10"><span>14.10</span>Parameter-Efficient Fine-Tuning (PEFT)</a></li><li><a href="{{ '/book/chapter-14/' | relative_url }}#s14-11"><span>14.11</span>Quantization Types</a></li></ol>
+                    <a class="bk-read" href="{{ '/book/chapter-14/' | relative_url }}">Read Chapter 14 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
                 </details>
                 <details class="bk-ch">
                     <summary>
                         <span class="bk-ch-n">15</span>
                         <span class="bk-ch-t"><strong>Preference Tuning: RLHF and DPO</strong><em>Aligning models with human preferences: preference data, RLHF, Best-of-N and DPO.</em></span>
-                        <span class="bk-ch-c">5 sections</span>
+                        <span class="bk-ch-c">5 sections · 18 min</span>
+                        <a class="bk-ch-read" href="{{ '/book/chapter-15/' | relative_url }}">Read</a>
                         <svg class="bk-ch-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
                     </summary>
-                    <ol class="bk-secs"><li><span>15.1</span>Preference Fine-Tuning</li><li><span>15.2</span>Preference Data</li><li><span>15.3</span>Reinforcement Learning from Human Feedback (RLHF)</li><li><span>15.4</span>Best-of-N (BoN) — An RL-Free Alternative</li><li><span>15.5</span>DPO: Direct Preference Optimization (Supervised Alternative)</li></ol>
+                    <ol class="bk-secs"><li><a href="{{ '/book/chapter-15/' | relative_url }}#s15-1"><span>15.1</span>Preference Fine-Tuning</a></li><li><a href="{{ '/book/chapter-15/' | relative_url }}#s15-2"><span>15.2</span>Preference Data</a></li><li><a href="{{ '/book/chapter-15/' | relative_url }}#s15-3"><span>15.3</span>Reinforcement Learning from Human Feedback (RLHF)</a></li><li><a href="{{ '/book/chapter-15/' | relative_url }}#s15-4"><span>15.4</span>Best-of-N (BoN) — An RL-Free Alternative</a></li><li><a href="{{ '/book/chapter-15/' | relative_url }}#s15-5"><span>15.5</span>DPO: Direct Preference Optimization (Supervised Alternative)</a></li></ol>
+                    <a class="bk-read" href="{{ '/book/chapter-15/' | relative_url }}">Read Chapter 15 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
                 </details>
                 <details class="bk-ch">
                     <summary>
                         <span class="bk-ch-n">16</span>
                         <span class="bk-ch-t"><strong>Reasoning in LLMs</strong><em>Reasoning models, Pass@k and Cons@k, GRPO, and the DeepSeek R1 training recipe.</em></span>
-                        <span class="bk-ch-c">13 sections</span>
+                        <span class="bk-ch-c">14 sections · 18 min</span>
+                        <a class="bk-ch-read" href="{{ '/book/chapter-16/' | relative_url }}">Read</a>
                         <svg class="bk-ch-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
                     </summary>
-                    <ol class="bk-secs"><li><span>16.1</span>Reasoning</li><li><span>16.2</span>Reasoning in LLMs</li><li><span>16.3</span>Reasoning Models</li><li><span>16.4</span>Reasoning-Based Benchmarks</li><li><span>16.5</span>Pass@k</li><li><span>16.6</span>How Temperature Affects Pass@k</li><li><span>16.7</span>Cons@k</li><li><span>16.8</span>Scaling with Reinforcement Learning</li><li><span>16.9</span>Increasing Length Problem</li><li><span>16.10</span>Additional Bias-Reduction and Diversity-Promoting Adjustments</li><li><span>16.11</span>DeepSeek R1-Zero Training</li><li><span>16.12</span>DeepSeek R1 – Training Recipe</li><li><span>16.13</span>Distillation</li></ol>
+                    <ol class="bk-secs"><li><a href="{{ '/book/chapter-16/' | relative_url }}#s16-1"><span>16.1</span>Reasoning</a></li><li><a href="{{ '/book/chapter-16/' | relative_url }}#s16-2"><span>16.2</span>Reasoning in LLMs</a></li><li><a href="{{ '/book/chapter-16/' | relative_url }}#s16-3"><span>16.3</span>Reasoning Models</a></li><li><a href="{{ '/book/chapter-16/' | relative_url }}#s16-4"><span>16.4</span>Reasoning-based benchmarks</a></li><li><a href="{{ '/book/chapter-16/' | relative_url }}#s16-5"><span>16.5</span>Pass@k</a></li><li><a href="{{ '/book/chapter-16/' | relative_url }}#s16-6"><span>16.6</span>How Temperature Affects Pass@k</a></li><li><a href="{{ '/book/chapter-16/' | relative_url }}#s16-7"><span>16.7</span>Cons@k</a></li><li><a href="{{ '/book/chapter-16/' | relative_url }}#s16-8"><span>16.8</span>Scaling with RL</a></li><li><a href="{{ '/book/chapter-16/' | relative_url }}#s16-9"><span>16.9</span>GRPO: Group Relative Policy Optimization</a></li><li><a href="{{ '/book/chapter-16/' | relative_url }}#s16-10"><span>16.10</span>Increasing Length</a></li><li><a href="{{ '/book/chapter-16/' | relative_url }}#s16-11"><span>16.11</span>Additional Bias-Reduction and Diversity-Promoting Adjustments</a></li><li><a href="{{ '/book/chapter-16/' | relative_url }}#s16-12"><span>16.12</span>DeepSeek R1-Zero’s training</a></li><li><a href="{{ '/book/chapter-16/' | relative_url }}#s16-13"><span>16.13</span>DeepSeek R1 – Training Recipe</a></li><li><a href="{{ '/book/chapter-16/' | relative_url }}#s16-14"><span>16.14</span>Distillation</a></li></ol>
+                    <a class="bk-read" href="{{ '/book/chapter-16/' | relative_url }}">Read Chapter 16 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
                 </details>
                 <details class="bk-ch">
                     <summary>
                         <span class="bk-ch-n">17</span>
                         <span class="bk-ch-t"><strong>Agentic LLMs: RAG, Tools and Agents</strong><em>Retrieval-augmented generation, tool calling, MCP, AI agents and agent-to-agent communication.</em></span>
-                        <span class="bk-ch-c">7 sections</span>
+                        <span class="bk-ch-c">7 sections · 10 min</span>
+                        <a class="bk-ch-read" href="{{ '/book/chapter-17/' | relative_url }}">Read</a>
                         <svg class="bk-ch-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
                     </summary>
-                    <ol class="bk-secs"><li><span>17.1</span>Retrieval-Augmented Generation (RAG)</li><li><span>17.2</span>Document Preparation for RAG</li><li><span>17.3</span>Retrieval and Ranking Overview</li><li><span>17.4</span>Tool Calling</li><li><span>17.5</span>Agents</li><li><span>17.6</span>Agent-to-Agent Communication (A2A)</li><li><span>17.7</span>Advanced RAG Variants</li></ol>
+                    <ol class="bk-secs"><li><a href="{{ '/book/chapter-17/' | relative_url }}#s17-1"><span>17.1</span>Retrieval-Augmented Generation</a></li><li><a href="{{ '/book/chapter-17/' | relative_url }}#s17-2"><span>17.2</span>How documents are prepared (important)</a></li><li><a href="{{ '/book/chapter-17/' | relative_url }}#s17-3"><span>17.3</span>Retrieval overview</a></li><li><a href="{{ '/book/chapter-17/' | relative_url }}#s17-4"><span>17.4</span>Tool calling</a></li><li><a href="{{ '/book/chapter-17/' | relative_url }}#s17-5"><span>17.5</span>Agents</a></li><li><a href="{{ '/book/chapter-17/' | relative_url }}#s17-6"><span>17.6</span>Standardization: A2A (Agent-to-Agent)</a></li><li><a href="{{ '/book/chapter-17/' | relative_url }}#s17-7"><span>17.7</span>Advanced RAG</a></li></ol>
+                    <a class="bk-read" href="{{ '/book/chapter-17/' | relative_url }}">Read Chapter 17 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
                 </details>
                 <details class="bk-ch">
                     <summary>
                         <span class="bk-ch-n">18</span>
                         <span class="bk-ch-t"><strong>Evaluating LLMs</strong><em>Rule-based metrics, LLM-as-a-judge and its biases, factuality and hallucination analysis.</em></span>
-                        <span class="bk-ch-c">10 sections</span>
+                        <span class="bk-ch-c">10 sections · 6 min</span>
+                        <a class="bk-ch-read" href="{{ '/book/chapter-18/' | relative_url }}">Read</a>
                         <svg class="bk-ch-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
                     </summary>
-                    <ol class="bk-secs"><li><span>18.1</span>Rule-Based Metrics</li><li><span>18.2</span>LLM-as-a-Judge (LaaJ)</li><li><span>18.3</span>Variations of LLM-as-a-Judge</li><li><span>18.4</span>Biases in Evaluation</li><li><span>18.5</span>Best Practices for Evaluation</li><li><span>18.6</span>Factuality</li><li><span>18.7</span>Hallucination Analysis</li><li><span>18.8</span>Pareto Frontier</li><li><span>18.9</span>Diffusion in LLMs</li><li><span>18.10</span>Staying Up-to-Date with NLP Advances</li></ol>
+                    <ol class="bk-secs"><li><a href="{{ '/book/chapter-18/' | relative_url }}#s18-1"><span>18.1</span>Rule-based metrics</a></li><li><a href="{{ '/book/chapter-18/' | relative_url }}#s18-2"><span>18.2</span>LaaJ (LLM-as-a-Judge)</a></li><li><a href="{{ '/book/chapter-18/' | relative_url }}#s18-3"><span>18.3</span>Variations of LaaJ (LLM-as-a-Judge)</a></li><li><a href="{{ '/book/chapter-18/' | relative_url }}#s18-4"><span>18.4</span>Biases</a></li><li><a href="{{ '/book/chapter-18/' | relative_url }}#s18-5"><span>18.5</span>Best practice</a></li><li><a href="{{ '/book/chapter-18/' | relative_url }}#s18-6"><span>18.6</span>Factuality</a></li><li><a href="{{ '/book/chapter-18/' | relative_url }}#s18-7"><span>18.7</span>Hallucination Analysis</a></li><li><a href="{{ '/book/chapter-18/' | relative_url }}#s18-8"><span>18.8</span>Pareto frontier</a></li><li><a href="{{ '/book/chapter-18/' | relative_url }}#s18-9"><span>18.9</span>Diffusion in LLMs</a></li><li><a href="{{ '/book/chapter-18/' | relative_url }}#s18-10"><span>18.10</span>How to stay up-to-date with NLP advances</a></li></ol>
+                    <a class="bk-read" href="{{ '/book/chapter-18/' | relative_url }}">Read Chapter 18 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
                 </details>
                 <details class="bk-ch">
                     <summary>
                         <span class="bk-ch-n">19</span>
                         <span class="bk-ch-t"><strong>LLM Safety, Security and Vulnerabilities</strong><em>Alignment, jailbreaks and prompt injection, and how to red-team a language model.</em></span>
-                        <span class="bk-ch-c">3 sections</span>
+                        <span class="bk-ch-c">3 sections · 3 min</span>
+                        <a class="bk-ch-read" href="{{ '/book/chapter-19/' | relative_url }}">Read</a>
                         <svg class="bk-ch-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
                     </summary>
-                    <ol class="bk-secs"><li><span>19.1</span>Safety and Alignment</li><li><span>19.2</span>LLM Vulnerabilities</li><li><span>19.3</span>Red-Teaming LLMs</li></ol>
+                    <ol class="bk-secs"><li><a href="{{ '/book/chapter-19/' | relative_url }}#s19-1"><span>19.1</span>Safety &amp; Alignment</a></li><li><a href="{{ '/book/chapter-19/' | relative_url }}#s19-2"><span>19.2</span>LLM Vulnerabilities (Most Important Part)</a></li><li><a href="{{ '/book/chapter-19/' | relative_url }}#s19-3"><span>19.3</span>Red-Teaming LLMs (You as Attacker)</a></li></ol>
+                    <a class="bk-read" href="{{ '/book/chapter-19/' | relative_url }}">Read Chapter 19 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
                 </details>
                 </div>
             </div>
@@ -505,7 +554,7 @@ author_profile: false
             <p class="bk-eyebrow">Where it stands</p>
             <h2 class="bk-h2">Progress</h2>
             <ol class="bk-steps">
-                <li class="is-done"><span></span><strong>First draft</strong><p>All 19 chapters written</p></li>
+                <li class="is-done"><span></span><strong>First draft</strong><p>All 19 chapters written and online</p></li>
                 <li class="is-now"><span></span><strong>Revising</strong><p>Editing, figures and technical review</p></li>
                 <li><span></span><strong>Publisher</strong><p>Finding the right publisher</p></li>
                 <li><span></span><strong>Publication</strong><p>Release date to be announced</p></li>
@@ -516,13 +565,13 @@ author_profile: false
         <div class="bk-band">
             <div>
                 <h2>Interested in the book?</h2>
-                <p>Request a sample chapter, ask to be told when it&apos;s released, or offer to review a draft chapter.
-                   I&apos;m also happy to hear from publishers and from instructors who would like to use it in a course.</p>
+                <p>Start with Chapter 1, or jump to any chapter from the contents. If you spot a mistake, want to review a chapter,
+                   or would like to use the book in a course, I&apos;d love to hear from you. Publishers are welcome to get in touch too.</p>
             </div>
             <div class="bk-band-btns">
-                <a class="bk-btn bk-btn-w" href="mailto:owaiskhana635@gmail.com?subject=Sample%20chapter%20request%3A%20From%20Neurons%20to%20Agents&amp;body=Hi%20Owais%2C%0A%0AI%20would%20like%20to%20read%20a%20sample%20chapter%20of%20your%20book.%0A%0AName%3A%0AUniversity%20/%20organisation%3A%0AWhich%20chapter%20interests%20me%20most%3A%0A%0AThank%20you%21">Request a sample chapter <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-                <a class="bk-btn bk-btn-g" href="mailto:owaiskhana635@gmail.com?subject=Notify%20me%3A%20From%20Neurons%20to%20Agents&amp;body=Hi%20Owais%2C%0A%0APlease%20let%20me%20know%20when%20your%20book%20is%20available.%0A%0AName%3A%0A">Notify me when it&apos;s out</a>
-                <a class="bk-btn bk-btn-g" href="mailto:owaiskhana635@gmail.com?subject=Feedback%20/%20review%20offer%3A%20From%20Neurons%20to%20Agents&amp;body=Hi%20Owais%2C%0A%0AI%20would%20like%20to%20review%20or%20give%20feedback%20on%20your%20book.%0A%0AName%3A%0AArea%20of%20expertise%3A%0A">Offer feedback</a>
+                <a class="bk-btn bk-btn-w" href="{{ '/book/chapter-1/' | relative_url }}">Start reading <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+                <a class="bk-btn bk-btn-g" href="mailto:owaiskhana635@gmail.com?subject=Feedback%20on%20From%20Neurons%20to%20Agents&amp;body=Hi%20Owais%2C%0A%0AI%20read%20your%20book%20and%20have%20some%20feedback.%0A%0AChapter%3A%0AComment%3A%0A%0AName%3A%0A">Send feedback</a>
+                <a class="bk-btn bk-btn-g" href="mailto:owaiskhana635@gmail.com?subject=Notify%20me%3A%20From%20Neurons%20to%20Agents&amp;body=Hi%20Owais%2C%0A%0APlease%20let%20me%20know%20when%20your%20book%20is%20available.%0A%0AName%3A%0A">Notify me when it&apos;s published</a>
             </div>
         </div>
 
