@@ -1,179 +1,316 @@
- <div id="professional" class="transparent-theme  w-full px-[12%] mt-20 py-10 scroll-mt-20">
+<!-- =====================================================================
+     TEACHING PAGE
+     Same design family as Publications and Talks (self-contained styles,
+     prefix "te-"), so it does not depend on the pre-built Tailwind file.
+====================================================================== -->
+<style>
+    .te-page {
+        --te-text: #111827;
+        --te-muted: #6b7280;
+        --te-soft: #4b5563;
+        --te-line: #e5e7eb;
+        --te-hover: #fafafa;
+        --te-card: #ffffff;
+        --te-accent: #b820e6;
+        --te-accent-2: #da7d20;
 
-        <!-- <h2 class="text-center text-5xl font-Ovo mb-20"></h2> -->
-        <div class="section-container border border-gray-300 dark:border-white/30 rounded-xl p-6 hover: hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:bg-darkHover dark:hover:shadow-white">
-            
-                        <h2 class="text-center text-5xl mt-12 font-Ovo">Professional Experience</h2>
-                    
-                          
-                
-                            <!-- Research Experience -->
-                            
-                
-                           
-                            <ul class="flex flex-col  gap-6 w-full px-[12%] py-10 scroll-mt-20 font-Ovo">
-                                <h2 class="text-xl font-semibold dark:text-white">Research Experience</h2>
+        background: #ffffff;
+        color: var(--te-text);
+        font-family: Outfit, sans-serif;
+        min-height: 100vh;
+        padding: 140px 24px 96px;   /* space below the fixed navbar */
+    }
+    .dark .te-page {
+        --te-text: #ffffff;
+        --te-muted: rgba(255, 255, 255, 0.55);
+        --te-soft: rgba(255, 255, 255, 0.78);
+        --te-line: rgba(255, 255, 255, 0.15);
+        --te-hover: #2a004a;
+        --te-card: rgba(255, 255, 255, 0.03);
+        background: #11001f;
+    }
+    .te-wrap { max-width: 880px; margin: 0 auto; }
 
-                             <li class="border border-gray-300 dark:border-white/30 rounded-xl p-6 hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:bg-darkHover dark:hover:shadow-white">
-                                    <p class="text-sm text-gray-500 dark:text-white/60 mb-1">Apr 2025 – Present</p>
-                    
-                                    <h3 class="text-xl font-semibold text-gray-800 dark:text-white">
-                                        Masaki Aida Laboratory, TMU, Tokyo
-                                    </h3>
-                    
-                                    <p class="text-base italic text-gray-600 mt-1 dark:text-white/80">
-                                        Research Assistant
-                                    </p>
-                              
-                                    <p class="mt-3 text-base text-gray-500 dark:text-white/60">
-                                        Applied information network science and NLP-based social network analysis to
-                                     model user behavior and network dynamics in large-scale systems. Analyzed
-                                     phenomena such as echo chambers and online misinformation, developing datadriven insights and potential countermeasures. Utilized graph-based approaches,
-                                     including spectral methods, to study complex network structures and information flow. Evaluated large-scale communication data to support network optimization and data-driven service strategies.
-                                    </p>
-                              
-                                </li>
-                    
-                                <li class="border border-gray-300 dark:border-white/30 rounded-xl p-6 hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:bg-darkHover dark:hover:shadow-white">
-                                    <p class="text-sm text-gray-500 dark:text-white/60 mb-1">Aug 2022 – Oct 2023</p>
-                    
-                                    <h3 class="text-xl font-semibold text-gray-800 dark:text-white">
-                                        Center for Language Engineering (CLE), UET Lahore
-                                    </h3>
-                    
-                                    <p class="text-base italic text-gray-600 mt-1 dark:text-white/80">
-                                        Research Officer
-                                    </p>
-                                 <p class="mt-3 text-base text-gray-500 dark:text-white/60">
-                                        Contributed to multiple Urdu-focused AI projects, including automatic meeting 
-                                 minutes generation, speech separation, and multilingual speech corpus development. Developed intelligent speech-enabled systems for public service delivery 
-                                 (E-Khidmat) and worked on Urdu broadcast media content extraction and analytics, leveraging NLP, speech processing, and machine learning techniques.
-                                    </p>
-                                 
-                                </li>
-                    
-                                <li class="border border-gray-300 dark:border-white/30 rounded-xl p-6 hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:bg-darkHover dark:hover:shadow-white">
-                                    <p class="text-sm text-gray-500 dark:text-white/60 mb-1">Mar 2022 – Aug 2022</p>
-                    
-                                    <h3 class="text-xl font-semibold text-gray-800 dark:text-white">
-                                        Data Science Lab (DSL), UET Lahore
-                                    </h3>
-                    
-                                    <p class="text-base italic text-gray-600 mt-1 dark:text-white/80">
-                                        Research Intern
-                                    </p>
-                                 <p class="mt-3 text-base text-gray-500 dark:text-white/60">
-                                        Contributed to advanced data science research on large-scale and complex
-                                  datasets, focusing on data collection, integration, and information extraction using machine learning and data mining techniques. Supported the development of
-                                  scalable data processing systems to address real-world challenges involving highvolume, heterogeneous, and noisy data.
-                                    </p>
-                                </li>
-                    
-                            </ul>
-                    
+    /* ---------- Header ---------- */
+    .te-eyebrow {
+        display: inline-flex; align-items: center; gap: 10px;
+        font-family: Ovo, serif; font-size: 15px; line-height: 1.5;
+        letter-spacing: 0.08em; text-transform: uppercase; color: var(--te-muted);
+    }
+    .te-eyebrow::before {
+        content: ""; width: 32px; height: 2px; border-radius: 2px;
+        background: linear-gradient(to right, var(--te-accent), var(--te-accent-2));
+    }
+    .te-title { margin-top: 14px; font-family: Ovo, serif; font-size: 52px; line-height: 1.1; color: var(--te-text); }
+    .te-intro { margin-top: 22px; max-width: 720px; font-size: 18px; line-height: 1.8; color: var(--te-soft); }
 
-     <!-- Teaching Experience -->
-                           
-                           
-                            <!-- <ul class="flex flex-col gap-6 max-w-4xl mx-auto"> -->
-                                <ul class="flex flex-col  gap-6 w-full px-[12%] py-10 scroll-mt-20 font-Ovo">
-                                    <h2 class="text-xl font-semibold   dark:text-white ">Teaching Experience</h2>
-                                
-                    
-                                <li class="border border-gray-300 dark:border-white/30 rounded-xl p-6 hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:bg-darkHover dark:hover:shadow-white">
-                                    <p class="text-sm text-gray-500 dark:text-white/60 mb-1">Sep 2024 – Jan 2025</p>
-                    
-                                    <h3 class="text-xl font-semibold text-gray-800 dark:text-white">
-                                        University of Engineering and Technology (UET), Lahore
-                                    </h3>
-                    
-                                    <p class="text-base italic text-gray-600 mt-1 dark:text-white/80">
-                                        Course Instructor (Undergraduate)
-                                    </p>
-                    
-                                    <p class="mt-3 text-base text-gray-500 dark:text-white/60">
-                                        Application to Information and Communication Technology (1st Semester)
-                                    </p>
-                                </li>
-                    
-                                <li class="border border-gray-300 dark:border-white/30 rounded-xl p-6 hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:bg-darkHover dark:hover:shadow-white">
-                                    <p class="text-sm text-gray-500 dark:text-white/60 mb-1">Aug 2023 – Feb 2025</p>
-                    
-                                    <h3 class="text-xl font-semibold text-gray-800 dark:text-white">
-                                        Superior University Lahore, Computer Science
-                                    </h3>
-                    
-                                    <p class="text-base italic text-gray-600 mt-1 dark:text-white/80">
-                                        Course Designer and Instructor (Undergraduate)
-                                    </p>
-                    
-                                    <p class="mt-3 text-base text-gray-605 dark:text-white/60">
-                                        Programming Fundamentals (1st Semester), Object-Oriented Programming (2nd Semester),
-                                        Introduction to Logic (1st Semester), Data Structures and Algorithms (4th Semester)
-                                    </p>
-                                </li>
-                    
-                                <!-- <li class="border border-gray-300 dark:border-white/30 rounded-xl p-6 hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:bg-darkHover dark:hover:shadow-white">
-                                    <p class="text-sm text-gray-500 dark:text-white/60 mb-1">Spring, 2024</p>
-                    
-                                    <h3 class="text-xl font-semibold text-gray-800 dark:text-white">
-                                        University of Lahore (UOL)
-                                    </h3>
-                    
-                                    <p class="text-base italic text-gray-600 mt-1 dark:text-white/80">
-                                        Course Instructor (Undergraduate)
-                                    </p>
-                    
-                                    <p class="mt-3 text-base text-gray-500 dark:text-white/60">
-                                        Digital Logic and Design (1st Semester)
-                                    </p>
-                                </li> -->
-                    
-                            </ul>
-                            
-                            <!-- Industry Experience -->
-                            
-                           
-                    
-                            <ul class="flex flex-col  gap-6 w-full px-[12%] py-10 scroll-mt-20 font-Ovo">
-                                <h2 class="text-xl font-semibold dark:text-white">
-                                    Industry Experience
-                                </h2>
-                    
-                                <li class="border border-gray-300 dark:border-white/30 rounded-xl p-6 hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:bg-darkHover dark:hover:shadow-white">
-                                    <p class="text-sm text-gray-500 dark:text-white/60 mb-1">Jul 2021 – Mar 2022</p>
-                    
-                                    <h3 class="text-xl font-semibold text-gray-800 dark:text-white">
-                                        CodeFreaks, Lahore
-                                    </h3>
-                    
-                                    <p class="text-base italic text-gray-600 mt-1 dark:text-white/80">
-                                        Junior React Native Developer
-                                    </p>
-                                 <p class="mt-3 text-base text-gray-500 dark:text-white/60">
-                                        Designed and implemented smooth animations and innovative loading strategies
-                                  to enhance user experience, ensuring a responsive and visually engaging interface. Optimized performance and usability by improving interaction flow, and
-                                  delivering a polished, intuitive application experience.
-                                    </p>
-                                </li>
-                    
-                                <li class="border border-gray-300 dark:border-white/30 rounded-xl p-6 hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:bg-darkHover dark:hover:shadow-white">
-                                    <p class="text-sm text-gray-500 dark:text-white/60 mb-1">Jan 2021 – June 2021</p>
-                    
-                                    <h3 class="text-xl font-semibold text-gray-800 dark:text-white">
-                                        LearnToEarn, Mianwali
-                                    </h3>
-                    
-                                    <p class="text-base italic text-gray-600 mt-1 dark:text-white/80">
-                                       Junior Android Developer
-                                    </p>
-                                 <p class="mt-3 text-base text-gray-500 dark:text-white/60">
-                                        Developed and maintained Android applications, implementing user-friendly interfaces and core functionalities. Collaborated with the team to debug issues, optimize performance, and enhance app usability.
-                                    </p>
-                                </li>
-                    
-                            </ul>
-                        
-                 
+    /* ---------- Stats ---------- */
+    .te-stats {
+        display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+        margin-top: 40px; border: 1px solid var(--te-line); border-radius: 16px; overflow: hidden;
+    }
+    .te-stat { padding: 20px 22px; background: var(--te-card); }
+    .te-stat + .te-stat { border-left: 1px solid var(--te-line); }
+    .te-stat strong {
+        display: block; font-family: Ovo, serif; font-size: 34px; line-height: 1.1;
+        background: linear-gradient(to right, var(--te-accent), var(--te-accent-2));
+        -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .te-stat span { display: block; margin-top: 6px; font-size: 14px; line-height: 1.4; color: var(--te-muted); }
+
+    /* ---------- Sections ---------- */
+    .te-section { margin-top: 72px; scroll-margin-top: 120px; }
+    .te-section-title {
+        font-family: Ovo, serif; font-size: 28px; line-height: 1.3; color: var(--te-text);
+        padding-bottom: 14px; border-bottom: 1px solid var(--te-line);
+    }
+    .te-section-note { margin-top: 12px; font-size: 15px; line-height: 1.6; color: var(--te-muted); }
+
+    /* ---------- Position rows ---------- */
+    .te-item {
+        display: grid; grid-template-columns: 96px 1fr; gap: 24px;
+        padding: 26px 16px; margin: 0 -16px;
+        border-bottom: 1px solid var(--te-line); transition: background 0.2s;
+    }
+    .te-item:hover { background: var(--te-hover); }
+    .te-date { font-size: 14px; font-weight: 600; line-height: 1.5; color: var(--te-muted); padding-top: 3px; }
+    .te-role { display: block; font-size: 19px; font-weight: 600; line-height: 1.45; color: var(--te-text); }
+    .te-org { margin-top: 4px; font-size: 16px; line-height: 1.5; color: var(--te-soft); }
+    .te-meta { margin-top: 2px; font-size: 14px; line-height: 1.6; color: var(--te-muted); }
+
+    .te-courses { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+    .te-course {
+        display: inline-flex; align-items: center; gap: 8px;
+        padding: 6px 14px; border: 1px solid var(--te-line); border-radius: 9999px;
+        background: var(--te-card); font-size: 14px; line-height: 1.4; color: var(--te-text);
+    }
+    .te-course small { font-size: 12px; color: var(--te-muted); }
+
+    /* ---------- Course cards ---------- */
+    .te-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 24px; }
+    .te-card {
+        position: relative; padding: 20px 22px 20px 26px;
+        border: 1px solid var(--te-line); border-radius: 14px; background: var(--te-card);
+        transition: background 0.2s, transform 0.2s;
+    }
+    .te-card::before {
+        content: ""; position: absolute; left: 0; top: 18px; bottom: 18px; width: 3px; border-radius: 0 3px 3px 0;
+        background: linear-gradient(to bottom, var(--te-accent), var(--te-accent-2));
+    }
+    .te-card:hover { background: var(--te-hover); transform: translateY(-2px); }
+    .te-card h3 { font-size: 17px; font-weight: 600; line-height: 1.45; color: var(--te-text); }
+    .te-card p { margin-top: 6px; font-size: 14px; line-height: 1.6; color: var(--te-muted); }
+    .te-tag {
+        display: inline-block; margin-top: 12px; padding: 0 10px;
+        font-size: 12px; font-weight: 600; line-height: 22px; border-radius: 9999px;
+        color: #4b5563; background: #e5e7eb;
+    }
+    .dark .te-tag { color: #e9a6ff; background: rgba(184, 32, 230, 0.25); }
+
+    /* ---------- Link rows (guest lectures, mentoring) ---------- */
+    .te-link-row {
+        display: flex; align-items: center; justify-content: space-between; gap: 16px;
+        padding: 18px 16px; margin: 0 -16px; border-bottom: 1px solid var(--te-line);
+        transition: background 0.2s;
+    }
+    .te-link-row:hover { background: var(--te-hover); }
+    .te-link-row a.te-link-title {
+        display: block; font-size: 17px; font-weight: 600; line-height: 1.45;
+        color: var(--te-text) !important; text-decoration: none !important;
+    }
+    .te-link-row a.te-link-title:hover { color: #2563eb !important; }
+    .dark .te-link-row a.te-link-title:hover { color: #60a5fa !important; }
+    .te-link-row p { margin-top: 2px; font-size: 14px; line-height: 1.6; color: var(--te-muted); }
+    .te-arrow {
+        flex: none; display: inline-flex; align-items: center; justify-content: center;
+        width: 36px; height: 36px; border: 1px solid #d1d5db; border-radius: 9999px;
+        color: var(--te-text) !important; transition: border-color 0.2s, background 0.2s;
+    }
+    .dark .te-arrow { border-color: rgba(255, 255, 255, 0.3); }
+    .te-arrow:hover { border-color: #2563eb; background: #eff6ff; color: #2563eb !important; }
+    .dark .te-arrow:hover { background: #2a004a; color: #60a5fa !important; border-color: #60a5fa; }
+    .te-arrow svg { width: 16px; height: 16px; }
+
+    /* ---------- Interests ---------- */
+    .te-interests { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+    .te-interest {
+        padding: 8px 18px; border-radius: 9999px; font-size: 15px; line-height: 1.4;
+        color: var(--te-text); border: 1px solid #d1d5db; background: var(--te-card);
+    }
+    .dark .te-interest { border-color: rgba(255, 255, 255, 0.3); }
+
+    /* ---------- Mobile ---------- */
+    @media (max-width: 720px) {
+        .te-page { padding: 120px 18px 72px; }
+        .te-title { font-size: 38px; }
+        .te-intro { font-size: 16px; }
+        .te-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .te-stat:nth-child(3) { border-left: 0; }
+        .te-stat:nth-child(n+3) { border-top: 1px solid var(--te-line); }
+        .te-section { margin-top: 56px; }
+        .te-section-title { font-size: 23px; }
+        .te-item { grid-template-columns: 1fr; gap: 6px; padding: 22px 12px; margin: 0 -12px; }
+        .te-grid { grid-template-columns: 1fr; }
+        .te-link-row { margin: 0 -12px; padding: 16px 12px; }
+    }
+</style>
+
+<section id="teaching" class="te-page">
+    <div class="te-wrap">
+
+        <!-- ---------- Header ---------- -->
+        <p class="te-eyebrow">Teaching</p>
+        <h1 class="te-title">Teaching</h1>
+        <p class="te-intro">
+            I have designed and taught undergraduate computer science courses, from first-semester
+            programming to data structures and algorithms, and I give guest lectures on Python,
+            machine learning and artificial intelligence.
+        </p>
+
+        <div class="te-stats">
+            <div class="te-stat"><strong>5</strong><span>Undergraduate courses taught</span></div>
+            <div class="te-stat"><strong>2</strong><span>Universities</span></div>
+            <div class="te-stat"><strong>2</strong><span>Invited guest lectures</span></div>
+            <div class="te-stat"><strong>2023–25</strong><span>Years of teaching</span></div>
         </div>
+
+        <!-- ================================================================ -->
+        <!-- Teaching positions                                                -->
+        <!-- ================================================================ -->
+        <div id="positions" class="te-section">
+            <h2 class="te-section-title">Teaching Positions</h2>
+
+            <article class="te-item">
+                <div class="te-date">Sep 2024 – Jan 2025</div>
+                <div>
+                    <span class="te-role">Course Instructor (Undergraduate)</span>
+                    <p class="te-org">University of Engineering and Technology (UET)</p>
+                    <p class="te-meta">Lahore, Pakistan</p>
+                    <div class="te-courses">
+                        <span class="te-course">Application to Information and Communication Technology <small>1st semester</small></span>
+                    </div>
+                </div>
+            </article>
+
+            <article class="te-item">
+                <div class="te-date">Aug 2023 – Feb 2025</div>
+                <div>
+                    <span class="te-role">Course Designer and Instructor (Undergraduate)</span>
+                    <p class="te-org">Department of Computer Science, Superior University</p>
+                    <p class="te-meta">Lahore, Pakistan</p>
+                    <div class="te-courses">
+                        <span class="te-course">Programming Fundamentals <small>1st semester</small></span>
+                        <span class="te-course">Introduction to Logic <small>1st semester</small></span>
+                        <span class="te-course">Object-Oriented Programming <small>2nd semester</small></span>
+                        <span class="te-course">Data Structures and Algorithms <small>4th semester</small></span>
+                    </div>
+                </div>
+            </article>
+        </div>
+
+        <!-- ================================================================ -->
+        <!-- Courses taught                                                    -->
+        <!-- ================================================================ -->
+        <div id="courses" class="te-section">
+            <h2 class="te-section-title">Courses Taught</h2>
+            <div class="te-grid">
+                <div class="te-card">
+                    <h3>Programming Fundamentals</h3>
+                    <p>Undergraduate · 1st semester · Superior University</p>
+                    <span class="te-tag">Designed &amp; taught</span>
+                </div>
+                <div class="te-card">
+                    <h3>Object-Oriented Programming</h3>
+                    <p>Undergraduate · 2nd semester · Superior University</p>
+                    <span class="te-tag">Designed &amp; taught</span>
+                </div>
+                <div class="te-card">
+                    <h3>Data Structures and Algorithms</h3>
+                    <p>Undergraduate · 4th semester · Superior University</p>
+                    <span class="te-tag">Designed &amp; taught</span>
+                </div>
+                <div class="te-card">
+                    <h3>Introduction to Logic</h3>
+                    <p>Undergraduate · 1st semester · Superior University</p>
+                    <span class="te-tag">Designed &amp; taught</span>
+                </div>
+                <div class="te-card">
+                    <h3>Application to Information and Communication Technology</h3>
+                    <p>Undergraduate · 1st semester · UET Lahore</p>
+                    <span class="te-tag">Taught</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================================================================ -->
+        <!-- Guest lectures                                                    -->
+        <!-- ================================================================ -->
+        <div id="guest-lectures" class="te-section">
+            <h2 class="te-section-title">Guest Lectures</h2>
+
+            <div class="te-link-row">
+                <div>
+                    <a class="te-link-title" href="{{ '/talks/tevmlai/' | relative_url }}">Machine Learning &amp; AI: Concepts and Applications</a>
+                    <p>TEVTA Punjab, Lahore · November 2024</p>
+                </div>
+                <a class="te-arrow" href="{{ '/talks/tevmlai/' | relative_url }}" aria-label="Open talk details">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </a>
+            </div>
+
+            <div class="te-link-row">
+                <div>
+                    <a class="te-link-title" href="{{ '/talks/trvpython/' | relative_url }}">Python Programming Guest Talk</a>
+                    <p>TEVTA – Government College of Technology, Lahore · September 2024</p>
+                </div>
+                <a class="te-arrow" href="{{ '/talks/trvpython/' | relative_url }}" aria-label="Open talk details">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </a>
+            </div>
+        </div>
+
+        <!-- ================================================================ -->
+        <!-- Student mentoring                                                 -->
+        <!-- ================================================================ -->
+        <div id="mentoring" class="te-section">
+            <h2 class="te-section-title">Student Mentoring &amp; Judging</h2>
+
+            <div class="te-link-row">
+                <div>
+                    <a class="te-link-title" href="{{ '/talks/itecuet/' | relative_url }}">Judge – Project Exhibition, UET ITEC 2025</a>
+                    <p>Evaluated projects from 400+ computing students · February 2025</p>
+                </div>
+                <a class="te-arrow" href="{{ '/talks/itecuet/' | relative_url }}" aria-label="Open event details">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </a>
+            </div>
+
+            <div class="te-link-row">
+                <div>
+                    <a class="te-link-title" href="{{ '/talks/codex/' | relative_url }}">Student Team Mentor – CodeEx 2024</a>
+                    <p>Led the Superior University team at Namal University · April 2024</p>
+                </div>
+                <a class="te-arrow" href="{{ '/talks/codex/' | relative_url }}" aria-label="Open event details">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </a>
+            </div>
+        </div>
+
+        <!-- ================================================================ -->
+        <!-- Teaching interests (edit freely)                                  -->
+        <!-- ================================================================ -->
+        <div id="interests" class="te-section">
+            <h2 class="te-section-title">Teaching Interests</h2>
+            <p class="te-section-note">Courses I am interested in teaching, drawing on my research.</p>
+            <div class="te-interests">
+                <span class="te-interest">Programming &amp; OOP</span>
+                <span class="te-interest">Data Structures &amp; Algorithms</span>
+                <span class="te-interest">Machine Learning</span>
+                <span class="te-interest">Natural Language Processing</span>
+                <span class="te-interest">Social Network Analysis</span>
+                <span class="te-interest">Speech Processing</span>
+            </div>
+        </div>
+
     </div>
+</section>
