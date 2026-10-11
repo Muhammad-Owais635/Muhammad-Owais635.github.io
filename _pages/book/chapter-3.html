@@ -1,0 +1,156 @@
+---
+layout: aapage
+title: "Chapter 3: Activation Functions | From Neurons to Agents"
+permalink: /book/chapter-3/
+chapter: 3
+author_profile: false
+---
+
+{% include aachapter.html %}
+
+<div class="cr-page">
+    <div class="cr-wrap">
+
+        <!-- ================= SIDEBAR ================= -->
+        <aside class="cr-side" id="crSide" aria-label="Chapter navigation">
+            <button type="button" class="cr-side-close" data-cr-close aria-label="Close contents">&times;</button>
+            <a class="cr-side-book" href="{{ '/book/' | relative_url }}">
+                <span class="cr-mini" aria-hidden="true"></span>
+                <span><strong>From Neurons to Agents</strong><span>Muhammad Owais</span></span>
+            </a>
+            <h2>On this page</h2>
+            <ol class="cr-otp">
+                <li class="cr-l2"><a href="#s3-1"><span>3.1</span> Why Activation Functions Are Needed</a></li>
+                <li class="cr-l2"><a href="#s3-2"><span>3.2</span> Type of Activation Function</a></li>
+            </ol>
+            {% include aabookchapters.html %}
+        </aside>
+
+        <!-- ================= CHAPTER ================= -->
+        <article class="cr-article">
+            <div class="cr-mbar">
+                <button type="button" data-cr-open><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11M4.5 6h.01M4.5 12h.01M4.5 18h.01"/></svg> Contents</button>
+                <span id="crCur" data-default="Chapter 3">Chapter 3</span>
+            </div>
+
+            <nav class="cr-crumb" aria-label="Breadcrumb">
+                <a href="{{ '/book/' | relative_url }}">From Neurons to Agents</a><span>›</span><span>Part I: Deep Learning Foundations</span>
+            </nav>
+            <p class="cr-eyebrow">Chapter 03</p>
+            <h1 class="cr-h1">Activation Functions</h1>
+            <div class="cr-meta">
+                <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg> 6 min read</span>
+                <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11M4.5 6h.01M4.5 12h.01M4.5 18h.01"/></svg> 2 sections</span>
+                <span class="cr-draft">Draft</span>
+            </div>
+
+            <div class="cr-body">
+<h2 id="s3-1"><span class="cr-num">3.1</span>Why Activation Functions Are Needed</h2>
+<p>Each neuron in NN applies an activation function. Activation functions are needed because, without them, a neural network becomes <strong>linear</strong>, meaning the output is just a weighted sum of inputs and stacking multiple layers does not increase learning power—the whole network behaves like a single layer. <strong>Linear</strong> means the relationship between input and output is a straight-line relationship that cannot model curves or complex patterns. With activation functions, non-linearity is introduced, allowing the network to learn complex, curved, and real-world patterns such as images, speech, and language.</p>
+<h2 id="s3-2"><span class="cr-num">3.2</span>Type of Activation Function</h2>
+<h4>Linear Activation Function</h4>
+<p>A linear activation function is an activation function in which the output of a neuron is directly proportional to its input. It does not introduce any non-linearity into the model; instead, it simply passes the weighted sum of inputs through unchanged (or scaled). Because of this, a neural network using only linear activation functions behaves like a single-layer model, no matter how many layers it has.</p>
+<p><div class="cr-math"><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">a</span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">b</span></span></span></span></span></div></p>
+<p>(Usually <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">a</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span>and <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">b</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0</span></span></span></span>, so <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">x</span></span></span></span>)</p>
+<p>A linear activation function is <strong>used</strong> mainly in the <strong>output layer</strong> of regression models, where the task is to predict continuous values such as price, temperature, or weight. It is suitable when the relationship between input and output is approximately linear and there is no need to limit the output range.</p>
+<figure class="cr-fig"><img alt="Linear Activation Function" class="cr-zoom" height="416" loading="lazy" src="{{ '/images/book/ch03/image8.png' | relative_url }}" width="653"/></figure>
+<h4>Sigmoid Activation Function</h4>
+<p>A <strong>sigmoid activation function</strong> is a non-linear activation function that maps input values into a fixed range between 0 and 1. It is especially useful for modeling probabilities because its output can be interpreted as the likelihood of a particular class. The sigmoid function introduces non-linearity into the neural network, allowing it to learn complex patterns.</p>
+<p><div class="cr-math"><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.0908em;vertical-align:-0.7693em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord"><span class="mord mathnormal">e</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6973em;"><span style="top:-2.989em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">−</span><span class="mord mathnormal mtight">x</span></span></span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.7693em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></div></p>
+<p>The sigmoid activation function is <strong>used</strong> mainly in the <strong>output layer of binary classification</strong> models, where the output represents the probability of belonging to a positive class (0 or 1). It is also helpful when a smooth gradient is required and outputs need to be bounded between 0 and 1.</p>
+<figure class="cr-fig"><img alt="Sigmoid Function" class="cr-zoom" height="386" loading="lazy" src="{{ '/images/book/ch03/image9.png' | relative_url }}" width="596"/></figure>
+<p>However, the sigmoid function should <strong>not be used</strong> in hidden layers of deep neural networks in most modern applications. This is because it suffers from the <strong>vanishing gradient problem</strong>, where gradients become very small for large positive or negative input values, slowing down or stopping learning. It is also not suitable for multi-class classification (more than two classes), where functions like softmax are preferred.</p>
+<h4>Hyperbolic Tangent (Tanh)</h4>
+<p>The <strong>Hyperbolic Tangent (tanh) activation function</strong> is a non-linear activation function that maps input values into a range between −1 and +1. It is similar to the sigmoid function but is zero-centered, which helps neural networks converge faster during training by balancing positive and negative activations.</p>
+<p><div class="cr-math"><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop">tanh</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.2177em;vertical-align:-0.7693em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.4483em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathnormal">e</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.5904em;"><span style="top:-2.989em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">x</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord"><span class="mord mathnormal">e</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6973em;"><span style="top:-2.989em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">−</span><span class="mord mathnormal mtight">x</span></span></span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathnormal">e</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6644em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">x</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord"><span class="mord mathnormal">e</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7713em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">−</span><span class="mord mathnormal mtight">x</span></span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.7693em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></div></p>
+<p>The tanh activation function is <strong>used</strong> mainly in <strong>hidden layers</strong> of neural networks, especially when the data is centered around zero. Because its outputs include both negative and positive values, it often performs better than sigmoid in hidden layers and helps with gradient-based optimization in shallow to moderately deep networks.</p>
+<figure class="cr-fig"><img alt="Hyperbolic tangent, tanh(x)." class="cr-zoom" height="510" loading="lazy" src="{{ '/images/book/ch03/image10.png' | relative_url }}" width="850"/></figure>
+<p>However, the tanh function should <strong>not be used</strong> in very deep networks in most modern applications. Like the sigmoid function, it suffers from the <strong>vanishing gradient problem</strong> for very large or very small input values. It is also not suitable for output layers where probabilities are required (use sigmoid or softmax instead) or for regression tasks with unbounded outputs.</p>
+<h4>ReLU (Rectified Linear Unit)</h4>
+<p>The <strong>ReLU (Rectified Linear Unit) activation function</strong> is a non-linear activation function that outputs zero for negative input values and outputs the input itself for positive values. It is one of the most widely used activation functions in modern neural networks because it is simple, computationally efficient, and helps reduce the vanishing gradient problem.</p>
+<p><div class="cr-math"><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">ma</span><span class="mord mathnormal">x</span><span class="mopen">(</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">x</span><span class="mclose">)</span></span></span></span></span></div></p>
+<p>The ReLU activation function is <strong>used</strong> mainly in the <strong>hidden layers</strong> of deep neural networks, especially in convolutional neural networks (CNNs) and deep feedforward networks. It allows models to learn complex patterns efficiently and speeds up training due to its linear behavior for positive values.</p>
+<figure class="cr-fig"><img alt="ReLU Activation Function in Deep Learning" class="cr-zoom" height="554" loading="lazy" src="{{ '/images/book/ch03/image11.png' | relative_url }}" width="846"/></figure>
+<p>However, ReLU should <strong>not be used</strong> when many neurons may receive negative inputs all the time, as this can lead to the <strong>dying ReLU problem</strong>, where neurons stop learning because their output becomes permanently zero. It is also not ideal for output layers in regression tasks that require negative values or for probability outputs, where linear, sigmoid, or softmax functions are more appropriate.</p>
+<h4>Leaky ReLU</h4>
+<p>The <strong>Leaky ReLU activation function</strong> is a variant of the ReLU function designed to solve the <em>dying ReLU</em> problem. Instead of outputting zero for all negative input values, Leaky ReLU allows a small, non-zero gradient when the input is negative. This helps neurons continue learning even if they receive negative inputs.</p>
+<p><div class="cr-math"><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.4em;vertical-align:-0.95em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size3">{</span></span><span class="mord"><span class="mtable"><span class="col-align-c"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.45em;"><span style="top:-3.61em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="mpunct">,</span></span></span><span style="top:-2.41em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal">αx</span><span class="mpunct">,</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.95em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-c"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.45em;"><span style="top:-3.61em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"><span class="mord">if </span></span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord">0</span></span></span><span style="top:-2.41em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"><span class="mord">if </span></span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.95em;"><span></span></span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace"> </span></span></span></span></span></div>(where <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span></span></span></span>is a small constant, commonly 0.01)</p>
+<p>Leaky ReLU is <strong>used</strong> mainly in the <strong>hidden layers</strong> of deep neural networks when standard ReLU causes many neurons to become inactive. By allowing a small slope for negative values, it improves gradient flow and makes training more stable, especially in deep or complex models.</p>
+<figure class="cr-fig"><img alt="A plot of the leaky ReLU activation function with leak factor 1/10 and..." class="cr-zoom" height="537" loading="lazy" src="{{ '/images/book/ch03/image12.png' | relative_url }}" width="850"/></figure>
+<p>However, Leaky ReLU should <strong>not be used</strong> when strict sparsity (many exact zeros) is desired, since it always produces some output for negative inputs. It may also be less effective if the choice of <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span></span></span></span>is not appropriate, and in some cases other variants like Parametric ReLU (PReLU) or ELU may perform better.</p>
+<h4>Softmax Activation Function</h4>
+<p>The <strong>Softmax activation function</strong> is a non-linear activation function that converts a vector of real-valued inputs into a probability distribution. Each output value lies between 0 and 1, and the sum of all output values equals 1. This makes Softmax especially useful for multi-class classification problems, where the model must choose one class among many.</p>
+<p><div class="cr-math"><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.4715em;vertical-align:-1.1301em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3414em;"><span style="top:-2.3057em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mop"><span class="mop op-symbol small-op" style="position:relative;top:0em;">∑</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8043em;"><span style="top:-2.4003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">j</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.2029em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">n</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.4358em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">e</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6065em;"><span style="top:-3.0051em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathnormal mtight">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3281em;"><span style="top:-2.357em;margin-left:0em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">j</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2819em;"><span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathnormal">e</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6644em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathnormal mtight">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3281em;"><span style="top:-2.357em;margin-left:0em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.143em;"><span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.1301em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></div></p>
+<p>The Softmax activation function is <strong>used</strong> mainly in the <strong>output layer</strong> of <strong>multi-class classification</strong> neural networks, such as image classification or text classification tasks with more than two classes. It allows the network’s outputs to be interpreted as class probabilities, making it easy to select the most likely class.</p>
+<figure class="cr-fig"><img alt="What are Activation Functions in Neural Networks?" class="cr-zoom" height="602" loading="lazy" src="{{ '/images/book/ch03/image13.png' | relative_url }}" width="1226"/></figure>
+<p>However, Softmax should <strong>not be used</strong> in hidden layers because it forces outputs to compete with each other and can slow down learning. It is also not suitable for binary classification (where sigmoid is simpler and more efficient) or regression tasks, where continuous unbounded outputs are required.</p>
+<div class="cr-table"><table style="width:100%;">
+
+<thead>
+<tr>
+<th><strong>Activation Function</strong></th>
+<th><strong>Output Value Range</strong></th>
+<th><strong>When to Use</strong></th>
+<th><strong>When Not to Use</strong></th>
+<th><strong>Main Problems / Limitations</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Linear</strong></td>
+<td>(−∞,+∞)</td>
+<td>Output layer of regression models</td>
+<td>Hidden layers of deep networks</td>
+<td>No non-linearity; cannot learn complex patterns</td>
+</tr>
+<tr>
+<td><strong>Sigmoid</strong></td>
+<td>(0,1)</td>
+<td>Output layer for binary classification</td>
+<td>Hidden layers; multi-class output</td>
+<td>Vanishing gradient; slow learning</td>
+</tr>
+<tr>
+<td><strong>Tanh</strong></td>
+<td>(−1,1)</td>
+<td>Hidden layers with zero-centered data</td>
+<td>Very deep networks; probability output</td>
+<td>Vanishing gradient</td>
+</tr>
+<tr>
+<td><strong>ReLU</strong></td>
+<td>[0,+∞)</td>
+<td>Hidden layers in deep networks and CNNs</td>
+<td>Output layers needing probabilities</td>
+<td>Dying ReLU</td>
+</tr>
+<tr>
+<td><strong>Leaky ReLU</strong></td>
+<td>(−∞,+∞)</td>
+<td>Hidden layers when ReLU fails</td>
+<td>When exact zero outputs are needed</td>
+<td>Choice of slope ( \alpha )</td>
+</tr>
+<tr>
+<td><strong>Softmax</strong></td>
+<td>(0,1) and sum = 1</td>
+<td>Output layer for multi-class classification</td>
+<td>Hidden layers; regression</td>
+<td>Sensitive to large input values</td>
+</tr>
+</tbody>
+</table></div>
+            </div>
+
+            <nav class="cr-pn" aria-label="Chapters">
+                <a class="cr-prev" href="{{ '/book/chapter-2/' | relative_url }}"><small>← Previous · Chapter 2</small><strong>The Artificial Neuron and Neural Networks</strong></a>
+                <a class="cr-next" href="{{ '/book/chapter-4/' | relative_url }}"><small>Next · Chapter 4 →</small><strong>Loss Functions</strong></a>
+            </nav>
+            <div class="cr-fb">
+                <span>Spotted a mistake or have a suggestion for this chapter?</span>
+                <a href="mailto:owaiskhana635@gmail.com?subject=Feedback%20on%20Chapter%203%3A%20Activation%20Functions">Send feedback →</a>
+            </div>
+        </article>
+
+    </div>
+</div>

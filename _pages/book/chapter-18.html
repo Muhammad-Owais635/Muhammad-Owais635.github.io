@@ -1,0 +1,557 @@
+---
+layout: aapage
+title: "Chapter 18: Evaluating LLMs | From Neurons to Agents"
+permalink: /book/chapter-18/
+chapter: 18
+author_profile: false
+---
+
+{% include aachapter.html %}
+
+<div class="cr-page">
+    <div class="cr-wrap">
+
+        <!-- ================= SIDEBAR ================= -->
+        <aside class="cr-side" id="crSide" aria-label="Chapter navigation">
+            <button type="button" class="cr-side-close" data-cr-close aria-label="Close contents">&times;</button>
+            <a class="cr-side-book" href="{{ '/book/' | relative_url }}">
+                <span class="cr-mini" aria-hidden="true"></span>
+                <span><strong>From Neurons to Agents</strong><span>Muhammad Owais</span></span>
+            </a>
+            <h2>On this page</h2>
+            <ol class="cr-otp">
+                <li class="cr-l2"><a href="#s18-1"><span>18.1</span> Rule-based metrics</a></li>
+                <li class="cr-l3"><a href="#s18-1-1"><span>18.1.1</span> BLEU (BiLingual Evaluation Understudy)</a></li>
+                <li class="cr-l3"><a href="#s18-1-2"><span>18.1.2</span> ROUGE (Recall-Oriented Understudy for Gisting Evaluation)</a></li>
+                <li class="cr-l3"><a href="#s18-1-3"><span>18.1.3</span> METEOR (Metric for Evaluation of Translation with Explicit Ordering)</a></li>
+                <li class="cr-l2"><a href="#s18-2"><span>18.2</span> LaaJ (LLM-as-a-Judge)</a></li>
+                <li class="cr-l2"><a href="#s18-3"><span>18.3</span> Variations of LaaJ (LLM-as-a-Judge)</a></li>
+                <li class="cr-l2"><a href="#s18-4"><span>18.4</span> Biases</a></li>
+                <li class="cr-l2"><a href="#s18-5"><span>18.5</span> Best practice</a></li>
+                <li class="cr-l2"><a href="#s18-6"><span>18.6</span> Factuality</a></li>
+                <li class="cr-l2"><a href="#s18-7"><span>18.7</span> Hallucination Analysis</a></li>
+                <li class="cr-l2"><a href="#s18-8"><span>18.8</span> Pareto frontier</a></li>
+                <li class="cr-l2"><a href="#s18-9"><span>18.9</span> Diffusion in LLMs</a></li>
+                <li class="cr-l2"><a href="#s18-10"><span>18.10</span> How to stay up-to-date with NLP advances</a></li>
+            </ol>
+            {% include aabookchapters.html %}
+        </aside>
+
+        <!-- ================= CHAPTER ================= -->
+        <article class="cr-article">
+            <div class="cr-mbar">
+                <button type="button" data-cr-open><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11M4.5 6h.01M4.5 12h.01M4.5 18h.01"/></svg> Contents</button>
+                <span id="crCur" data-default="Chapter 18">Chapter 18</span>
+            </div>
+
+            <nav class="cr-crumb" aria-label="Breadcrumb">
+                <a href="{{ '/book/' | relative_url }}">From Neurons to Agents</a><span>›</span><span>Part II: Transformers and Large Language Models</span>
+            </nav>
+            <p class="cr-eyebrow">Chapter 18</p>
+            <h1 class="cr-h1">Evaluating LLMs</h1>
+            <div class="cr-meta">
+                <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg> 6 min read</span>
+                <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11M4.5 6h.01M4.5 12h.01M4.5 18h.01"/></svg> 10 sections</span>
+                <span class="cr-draft">Draft</span>
+            </div>
+
+            <div class="cr-body">
+<h2 id="s18-1"><span class="cr-num">18.1</span>Rule-based metrics</h2>
+<h3 id="s18-1-1"><span class="cr-num">18.1.1</span>BLEU (BiLingual Evaluation Understudy)</h3>
+<p>BLEU evaluates how similar a machine-generated text is to one or more reference texts, mainly using n-gram precision.</p>
+<p>It checks: How many words/phrases in the output also appear in the reference.</p>
+<p><div class="cr-math"><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord text"><span class="mord">BLEU</span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">BP</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:3.0954em;vertical-align:-1.2671em;"></span><span class="mop">exp</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size4">(</span></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.8283em;"><span style="top:-1.8829em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">n</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.05em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span><span style="top:-4.3em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.10903em;">N</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.2671em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">n</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">⁡</span><span class="mord"><span class="mord mathnormal">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">n</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size4">)</span></span></span></span></span></span></span></div><strong>Where:</strong></p>
+<ul>
+<li>
+<p><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">n</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span><strong>= modified n-gram precision</strong></p>
+</li>
+<li>
+<p><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">n</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span><strong>= weight (usually equal)</strong></p>
+</li>
+<li>
+<p><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">BP</span></span></span></span><strong>= brevity penalty (penalizes very short outputs)</strong></p>
+</li>
+</ul>
+<h3 id="s18-1-2"><span class="cr-num">18.1.2</span>ROUGE (Recall-Oriented Understudy for Gisting Evaluation)</h3>
+<p>ROUGE focuses on recall, i.e., how much of the reference text is covered by the generated text.</p>
+<h4>Commonly used in, Summarization and Text generation evaluation</h4>
+<p><div class="cr-math"><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord text"><span class="mord">ROUGE-N</span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.363em;vertical-align:-0.936em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.427em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mrel">∣</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord text"><span class="mord">Reference </span></span><span class="mord mathnormal">n</span><span class="mord text"><span class="mord">-grams</span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">∣</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mrel">∣</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord text"><span class="mord">Overlapping </span></span><span class="mord mathnormal">n</span><span class="mord text"><span class="mord">-grams</span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">∣</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.936em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></div></p>
+<h4>Set-based notation</h4>
+<p><div class="cr-math"><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord text"><span class="mord">ROUGE-N</span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:3.1083em;vertical-align:-1.2361em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.8722em;"><span style="top:-2.11em;"><span class="pstrut" style="height:3.0448em;"></span><span class="mord"><span class="mrel">∣</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord"><span class="mord mathnormal">G</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.0448em;"><span style="top:-2.3987em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight">reference</span></span></span></span></span><span style="top:-3.2198em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mopen mtight">(</span><span class="mord mathnormal mtight">n</span><span class="mclose mtight">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.3013em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">∣</span></span></span><span style="top:-3.2748em;"><span class="pstrut" style="height:3.0448em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.8722em;"><span class="pstrut" style="height:3.0448em;"></span><span class="mord"><span class="mrel">∣</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord"><span class="mord mathnormal">G</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.0448em;"><span style="top:-2.3987em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight">generated</span></span></span></span></span><span style="top:-3.2198em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mopen mtight">(</span><span class="mord mathnormal mtight">n</span><span class="mclose mtight">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.4374em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∩</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord"><span class="mord mathnormal">G</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.0448em;"><span style="top:-2.3987em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight">reference</span></span></span></span></span><span style="top:-3.2198em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mopen mtight">(</span><span class="mord mathnormal mtight">n</span><span class="mclose mtight">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.3013em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">∣</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.2361em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></div></p>
+<p><strong>Where</strong> <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.888em;"></span><span class="mord"><span class="mord mathnormal">G</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.888em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mopen mtight">(</span><span class="mord mathnormal mtight">n</span><span class="mclose mtight">)</span></span></span></span></span></span></span></span></span></span></span></span><strong>denotes the set of</strong> <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span><strong>-grams.</strong></p>
+<h3 id="s18-1-3"><span class="cr-num">18.1.3</span>METEOR (Metric for Evaluation of Translation with Explicit Ordering)</h3>
+<h4>METEOR evaluates translation quality by considering</h4>
+<ul>
+<li>
+<p><strong>Exact word matches</strong></p>
+</li>
+<li>
+<p><strong>Stem matches</strong></p>
+</li>
+<li>
+<p><strong>Synonym matches</strong></p>
+</li>
+<li>
+<p><strong>Word order</strong></p>
+</li>
+</ul>
+<p><div class="cr-math"><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord text"><span class="mord">METEOR</span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">F</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">m</span><span class="mord mathnormal mtight">e</span><span class="mord mathnormal mtight">an</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mord mathnormal">e</span><span class="mord mathnormal">na</span><span class="mord mathnormal">lt</span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mclose">)</span></span></span></span></span></div></p>
+<p><div class="cr-math"><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">F</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">m</span><span class="mord mathnormal mtight">e</span><span class="mord mathnormal mtight">an</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.1297em;vertical-align:-0.7693em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3603em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord">9</span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">10</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.7693em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></div></p>
+<ul>
+<li>
+<p><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span></span></span></span><strong>= Precision</strong></p>
+</li>
+<li>
+<p><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span></span></span></span><strong>= Recall</strong></p>
+</li>
+<li>
+<p><strong>Penalty = fragmentation penalty for word order</strong></p>
+</li>
+</ul>
+<h2 id="s18-2"><span class="cr-num">18.2</span>LaaJ (LLM-as-a-Judge)</h2>
+<h4>Use LLM to rate the quality of the response</h4>
+<figure class="cr-fig"><img alt="A diagram of a judge AI-generated content may be incorrect." class="cr-zoom" height="619" loading="lazy" src="{{ '/images/book/ch18/image18.png' | relative_url }}" width="1600"/></figure>
+<ul>
+<li>
+<p><strong>No need for reference/label</strong></p>
+</li>
+<li>
+<p><strong>Interpretability via rationales</strong></p>
+</li>
+</ul>
+<figure class="cr-fig"><img alt="A screenshot of a message AI-generated content may be incorrect." class="cr-zoom" height="412" loading="lazy" src="{{ '/images/book/ch18/image19.png' | relative_url }}" width="1600"/></figure>
+<h2 id="s18-3"><span class="cr-num">18.3</span>Variations of LaaJ (LLM-as-a-Judge)</h2>
+<figure class="cr-fig"><img alt="A screenshot of a survey AI-generated content may be incorrect." class="cr-zoom" height="782" loading="lazy" src="{{ '/images/book/ch18/image20.png' | relative_url }}" width="912"/><img alt="A screenshot of a question AI-generated content may be incorrect." class="cr-zoom" height="868" loading="lazy" src="{{ '/images/book/ch18/image21.png' | relative_url }}" width="894"/></figure>
+<h2 id="s18-4"><span class="cr-num">18.4</span>Biases</h2>
+<h4>a) Position Bias</h4>
+<p>The model gives higher importance to items appearing earlier (or later) in a list, even when all items are equally good.</p>
+<h4>Remedy</h4>
+<ul>
+<li>
+<p><strong>Take the average: Evaluate the same content in different orders and average the scores.</strong></p>
+</li>
+<li>
+<p><strong>Tweak position embeddings: Reduce the model’s sensitivity to order so position does not dominate judgment.</strong></p>
+</li>
+</ul>
+<h4>b) Verbosity Bias</h4>
+<p>The model tends to prefer longer answers, assuming they are better, even if they contain unnecessary or repeated information.</p>
+<h4>Remedy</h4>
+<ul>
+<li>
+<p><strong>Provide explicit length guidelines (e.g., “be concise”).</strong></p>
+</li>
+<li>
+<p><strong>Use few-shot examples showing good short answers.</strong></p>
+</li>
+<li>
+<p><strong>Apply a penalty on output length to discourage unnecessary verbosity.</strong></p>
+</li>
+</ul>
+<h4>c) Self-Enhancement Bias</h4>
+<p>The model favors its own generated answers or similar styles, judging them as better than others.</p>
+<h4>Remedy</h4>
+<ul>
+<li>
+<p><strong>Do not let the model act as both generator and judge (🤖 ≠ ⚖).</strong></p>
+</li>
+<li>
+<p><strong>Use separate evaluation models or human evaluators.</strong></p>
+</li>
+</ul>
+<h2 id="s18-5"><span class="cr-num">18.5</span>Best practice</h2>
+<ul>
+<li>
+<p><strong>Crisp Evaluation Guidelines are clear, simple, and unambiguous rules used to evaluate model outputs consistently and fairly, while minimizing bias and randomness.</strong></p>
+</li>
+<li>
+<p><strong>Use a binary scale: Prefer simple scales (e.g., correct / incorrect) over complex multi-level scoring to reduce ambiguity.</strong></p>
+</li>
+<li>
+<p><strong>Write rationale before the score: Force the model to explain its reasoning first, then give a score. This improves consistency and reduces bias.</strong></p>
+</li>
+<li>
+<p><strong>Calibrate with human judgments: Regularly compare model scores with human evaluations to align model behavior with real expectations.</strong></p>
+</li>
+<li>
+<p><strong>Use low temperature: A low temperature setting reduces randomness and ensures Stable scores, Better reproducibility and More consistent evaluations</strong></p>
+</li>
+</ul>
+<figure class="cr-fig"><img alt="A diagram of a judge AI-generated content may be incorrect." class="cr-zoom" height="599" loading="lazy" src="{{ '/images/book/ch18/image22.png' | relative_url }}" width="1600"/></figure>
+<h2 id="s18-6"><span class="cr-num">18.6</span>Factuality</h2>
+<p>Factuality means how correct and truthful a model’s output is with respect to real-world facts or given source data.</p>
+<p>In simple words: Does the answer state facts that are true and supported by evidence?</p>
+<h4>Step 1: Generate the Answer</h4>
+<p>Example answer: “Tokyo is the capital of Japan and has a population of 50 million.”</p>
+<h4>Step 2: Decompose into Atomic Facts</h4>
+<h4>Split the answer into independent factual claims</h4>
+<ul>
+<li>
+<p><strong>Tokyo is the capital of Japan.</strong></p>
+</li>
+<li>
+<p><strong>Tokyo has a population of 50 million.</strong></p>
+</li>
+</ul>
+<h4>Each fact must be</h4>
+<ul>
+<li>
+<p><strong>Checkable</strong></p>
+</li>
+<li>
+<p><strong>Independent</strong></p>
+</li>
+<li>
+<p><strong>Atomic (cannot be split further)</strong></p>
+</li>
+</ul>
+<h4>Step 3: Verify Each Fact</h4>
+<h4>Each fact is checked against</h4>
+<ul>
+<li>
+<p><strong>Ground truth</strong></p>
+</li>
+<li>
+<p><strong>Retrieved documents</strong></p>
+</li>
+<li>
+<p><strong>Trusted sources</strong></p>
+</li>
+</ul>
+<div class="cr-table"><table>
+
+<thead>
+<tr>
+<th><strong>Fact</strong></th>
+<th><strong>True / False</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tokyo is the capital of Japan</td>
+<td>True</td>
+</tr>
+<tr>
+<td>Tokyo population is 50 million</td>
+<td>False</td>
+</tr>
+</tbody>
+</table></div>
+<h4>Step 4: Compute Factuality Score</h4>
+<p><div class="cr-math"><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:2.0574em;vertical-align:-0.686em;"></span><span class="mord"><span class="mord text"><span class="mord">Factuality Score</span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3714em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"><span class="mord">Total number of extracted factual statements</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"><span class="mord">Number of factually correct statements</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></span></div>Example:</p>
+<p><div class="cr-math"><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord text"><span class="mord">Factuality</span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.0074em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">2</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0.5</span></span></span></span></span></div><img alt="A diagram of teddy bears AI-generated content may be incorrect." class="cr-zoom" height="738" loading="lazy" src="{{ '/images/book/ch18/image23.png' | relative_url }}" width="1600"/></p>
+<h2 id="s18-7"><span class="cr-num">18.7</span>Hallucination Analysis</h2>
+<p>A hallucination occurs when a Large Language Model generates confident but incorrect, fabricated, or unverifiable information that is not grounded in the input, training data, or real-world facts.</p>
+<p><strong><em>Example:</em></strong><br/>
+<strong>Asking an LLM for a non-existent research paper and it produces a fake title, authors, and DOI.</strong></p>
+<h4>Causes of Hallucinations</h4>
+<h4>Training Data Limitations</h4>
+<ul>
+<li>
+<p><strong>Incomplete, outdated, or noisy datasets</strong></p>
+</li>
+<li>
+<p><strong>Missing domain-specific knowledge</strong></p>
+</li>
+<li>
+<p><strong>Overrepresentation of patterns instead of facts</strong></p>
+</li>
+</ul>
+<h4>Next-Token Prediction Objective</h4>
+<ul>
+<li>
+<p><strong>LLMs optimize:</strong></p>
+</li>
+</ul>
+<p><div class="cr-math"><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">t</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">∣</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mrel mtight">:</span><span class="mord mathnormal mtight">t</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2083em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span></div></p>
+<ul>
+<li>
+<p><strong>They aim for plausibility, not truth</strong></p>
+</li>
+</ul>
+<h4>Lack of Grounding</h4>
+<ul>
+<li>
+<p><strong>No access to:</strong></p>
+
+<ul>
+<li>
+<p><strong>Databases</strong></p>
+</li>
+<li>
+<p><strong>APIs</strong></p>
+</li>
+<li>
+<p><strong>Real-time sources</strong></p>
+</li>
+</ul></li>
+<li>
+<p><strong>Purely parametric memory</strong></p>
+</li>
+</ul>
+<h4>Prompt Ambiguity</h4>
+<ul>
+<li>
+<p><strong>Vague or underspecified prompts</strong></p>
+</li>
+<li>
+<p><strong>Missing constraints or context</strong></p>
+</li>
+</ul>
+<h4>Overgeneralization</h4>
+<ul>
+<li>
+<p><strong>Applying known patterns to unseen or edge cases</strong></p>
+</li>
+</ul>
+<h4>Decoding Strategy Issues</h4>
+<ul>
+<li>
+<p><strong>High temperature or top-p sampling</strong></p>
+</li>
+<li>
+<p><strong>Aggressive creativity</strong></p>
+</li>
+</ul>
+<h4>Fine-Tuning Errors</h4>
+<ul>
+<li>
+<p><strong>Poor-quality instruction data</strong></p>
+</li>
+<li>
+<p><strong>Reinforcing wrong answers during RLHF</strong></p>
+</li>
+</ul>
+<h4>Detection Methods</h4>
+<h4>Human Evaluation</h4>
+<ul>
+<li>
+<p><strong>Expert fact-checking</strong></p>
+</li>
+<li>
+<p><strong>Cross-verification with trusted sources</strong></p>
+</li>
+</ul>
+<h4>Self-Consistency Checks</h4>
+<ul>
+<li>
+<p><strong>Ask the model the same question multiple times</strong></p>
+</li>
+<li>
+<p><strong>Compare outputs for contradictions</strong></p>
+</li>
+<li>
+<p>High variance → potential hallucination</p>
+</li>
+</ul>
+<h4>External Knowledge Verification</h4>
+<ul>
+<li>
+<p><strong>Cross-check with:</strong></p>
+
+<ul>
+<li>
+<p><strong>Knowledge graphs</strong></p>
+</li>
+<li>
+<p><strong>Search engines</strong></p>
+</li>
+<li>
+<p><strong>Databases (Wikipedia, PubMed, etc.)</strong></p>
+</li>
+</ul></li>
+</ul>
+<h4>Confidence–Uncertainty Mismatch</h4>
+<ul>
+<li>
+<p><strong>Very confident tone with no citations</strong></p>
+</li>
+<li>
+<p><strong>Over-specific details without sources</strong></p>
+</li>
+</ul>
+<h4>Entropy / Log-Probability Analysis</h4>
+<ul>
+<li>
+<p><strong>Low confidence tokens (high entropy)</strong></p>
+</li>
+<li>
+<p><strong>Sudden probability drops in generation</strong></p>
+</li>
+</ul>
+<h4>Adversarial Questioning</h4>
+<ul>
+<li>
+<p><strong>Ask follow-ups like:</strong></p>
+
+<ul>
+<li>
+<p><strong>“Provide sources”</strong></p>
+</li>
+<li>
+<p><strong>“Explain your reasoning”</strong></p>
+</li>
+<li>
+<p><strong>“Verify this claim”</strong></p>
+</li>
+</ul></li>
+</ul>
+<h4>Automated Hallucination Classifiers</h4>
+<ul>
+<li>
+<p><strong>Models trained to label outputs as:</strong></p>
+
+<ul>
+<li>
+<p><strong>Factual</strong></p>
+</li>
+<li>
+<p><strong>Unsupported</strong></p>
+</li>
+<li>
+<p><strong>Hallucinated</strong></p>
+</li>
+</ul></li>
+<li>
+<p><strong>Examples: factuality classifiers, NLI-based checks.</strong></p>
+</li>
+</ul>
+<h4>Common issues</h4>
+<h4>Modeling</h4>
+<ul>
+<li>
+<p><strong>Weak reasoning, grounding capabilities</strong></p>
+</li>
+<li>
+<p><strong>Too much going on in the context window</strong></p>
+</li>
+<li>
+<p><strong>Tool modeling isn't right</strong></p>
+</li>
+</ul>
+<h4>Tool</h4>
+<ul>
+<li>
+<p><strong>Tool itself has a problem</strong></p>
+</li>
+<li>
+<p><strong>Output of the tool isn't interpretable</strong></p>
+</li>
+</ul>
+<h2 id="s18-8"><span class="cr-num">18.8</span>Pareto frontier</h2>
+<p>The Pareto frontier (or Pareto front) is a concept from multi-objective optimization that represents the set of best possible trade-offs between two or more conflicting objectives.</p>
+<p>Possible trade-offs.</p>
+<ul>
+<li>
+<p><strong>quality vs. cost/latency</strong></p>
+</li>
+<li>
+<p><strong>quality vs. safety</strong></p>
+</li>
+<li>
+<p><strong>quality vs. context length</strong></p>
+</li>
+</ul>
+<h2 id="s18-9"><span class="cr-num">18.9</span>Diffusion in LLMs</h2>
+<p>Diffusion in LLMs refers to using diffusion-based generative modeling—a technique originally popular in image generation—to generate or refine text by gradually denoising it over multiple steps, instead of predicting the next token in a single left-to-right pass.</p>
+<p>In short: text is generated by iteratively improving a noisy representation, not token-by-token autoregression.</p>
+<h4>Traditional LLM vs Diffusion-based LLM</h4>
+<h4>Autoregressive LLMs (GPT-style)</h4>
+<ul>
+<li>
+<p><strong>Generate text one token at a time</strong></p>
+</li>
+<li>
+<p><strong>Strict left-to-right order</strong></p>
+</li>
+<li>
+<p><strong>Errors can propagate forward</strong></p>
+</li>
+</ul>
+<h4>Diffusion-based LLMs</h4>
+<ul>
+<li>
+<p><strong>Start with noise</strong></p>
+</li>
+<li>
+<p><strong>Iteratively denoise the whole sequence</strong></p>
+</li>
+<li>
+<p><strong>Can revise all tokens at once</strong></p>
+</li>
+</ul>
+<h4>How Diffusion Works (Intuition)</h4>
+<ul>
+<li>
+<p><strong>Start with a clean text</strong></p>
+</li>
+<li>
+<p><strong>Gradually add noise during training</strong></p>
+</li>
+<li>
+<p><strong>Train a model to remove noise step by step</strong></p>
+</li>
+<li>
+<p><strong>At inference:</strong></p>
+
+<ul>
+<li>
+<p><strong>Start from pure noise</strong></p>
+</li>
+<li>
+<p><strong>Repeatedly denoise until readable text emerges</strong></p>
+</li>
+</ul></li>
+</ul>
+<figure class="cr-fig"><img alt="A screenshot of a computer AI-generated content may be incorrect." class="cr-zoom" height="677" loading="lazy" src="{{ '/images/book/ch18/image24.png' | relative_url }}" width="1600"/></figure>
+<h2 id="s18-10"><span class="cr-num">18.10</span>How to stay up-to-date with NLP advances</h2>
+<h4>Papers</h4>
+<ul>
+<li>
+<p><strong>arXiv &gt; Computer Science &gt; Computation and Language</strong></p>
+</li>
+<li>
+<p><strong>General ML (NeurIPS, ICML, ICLR) and NLP (ACL, EMNLP) venues</strong></p>
+</li>
+</ul>
+<h4>Code</h4>
+<ul>
+<li>
+<p><strong>Authors’ GitHub repositories linked in their papers</strong></p>
+</li>
+<li>
+<p><strong>Hugging Face's "trending papers": browse state-of-the-art datasets/methods</strong></p>
+</li>
+</ul>
+<h4>Miscellaneous</h4>
+<ul>
+<li>
+<p><strong>Twitter (academics + industry leaders)</strong></p>
+</li>
+<li>
+<p><strong>YouTube theoretical (Two Minute Papers, Yannic Kilcher) and practical (Google</strong></p>
+</li>
+<li>
+<p><strong>Developers, HuggingFace, Andrej Karpathy)</strong></p>
+</li>
+<li>
+<p><strong>Company/academia technical papers + blogs (Amazon Science, Anthropic,</strong></p>
+</li>
+<li>
+<p><strong>Apple ML, Google DeepMind, Meta AI, Microsoft AI, OpenAI, Stanford NLP, ...)</strong></p>
+</li>
+</ul>
+            </div>
+
+            <nav class="cr-pn" aria-label="Chapters">
+                <a class="cr-prev" href="{{ '/book/chapter-17/' | relative_url }}"><small>← Previous · Chapter 17</small><strong>Agentic LLMs: RAG, Tools and Agents</strong></a>
+                <a class="cr-next" href="{{ '/book/chapter-19/' | relative_url }}"><small>Next · Chapter 19 →</small><strong>LLM Safety, Security and Vulnerabilities</strong></a>
+            </nav>
+            <div class="cr-fb">
+                <span>Spotted a mistake or have a suggestion for this chapter?</span>
+                <a href="mailto:owaiskhana635@gmail.com?subject=Feedback%20on%20Chapter%2018%3A%20Evaluating%20LLMs">Send feedback →</a>
+            </div>
+        </article>
+
+    </div>
+</div>

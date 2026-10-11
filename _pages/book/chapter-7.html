@@ -1,0 +1,146 @@
+---
+layout: aapage
+title: "Chapter 7: Regularization | From Neurons to Agents"
+permalink: /book/chapter-7/
+chapter: 7
+author_profile: false
+---
+
+{% include aachapter.html %}
+
+<div class="cr-page">
+    <div class="cr-wrap">
+
+        <!-- ================= SIDEBAR ================= -->
+        <aside class="cr-side" id="crSide" aria-label="Chapter navigation">
+            <button type="button" class="cr-side-close" data-cr-close aria-label="Close contents">&times;</button>
+            <a class="cr-side-book" href="{{ '/book/' | relative_url }}">
+                <span class="cr-mini" aria-hidden="true"></span>
+                <span><strong>From Neurons to Agents</strong><span>Muhammad Owais</span></span>
+            </a>
+            <h2>On this page</h2>
+            <ol class="cr-otp">
+                <li class="cr-l2"><a href="#s7-1"><span>7.1</span> What Is Regularization?</a></li>
+                <li class="cr-l3"><a href="#s7-1-1"><span>7.1.1</span> Ridge Regularization (L2 Regularization)</a></li>
+                <li class="cr-l3"><a href="#s7-1-2"><span>7.1.2</span> L1 Regularization (Lasso)</a></li>
+                <li class="cr-l3"><a href="#s7-1-3"><span>7.1.3</span> Elastic Net</a></li>
+                <li class="cr-l3"><a href="#s7-1-4"><span>7.1.4</span> Dropout Regularization</a></li>
+                <li class="cr-l3"><a href="#s7-1-5"><span>7.1.5</span> Early Stopping</a></li>
+                <li class="cr-l3"><a href="#s7-1-6"><span>7.1.6</span> Data-Based Regularization</a></li>
+            </ol>
+            {% include aabookchapters.html %}
+        </aside>
+
+        <!-- ================= CHAPTER ================= -->
+        <article class="cr-article">
+            <div class="cr-mbar">
+                <button type="button" data-cr-open><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11M4.5 6h.01M4.5 12h.01M4.5 18h.01"/></svg> Contents</button>
+                <span id="crCur" data-default="Chapter 7">Chapter 7</span>
+            </div>
+
+            <nav class="cr-crumb" aria-label="Breadcrumb">
+                <a href="{{ '/book/' | relative_url }}">From Neurons to Agents</a><span>›</span><span>Part I: Deep Learning Foundations</span>
+            </nav>
+            <p class="cr-eyebrow">Chapter 07</p>
+            <h1 class="cr-h1">Regularization</h1>
+            <div class="cr-meta">
+                <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg> 4 min read</span>
+                <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11M4.5 6h.01M4.5 12h.01M4.5 18h.01"/></svg> 1 sections</span>
+                <span class="cr-draft">Draft</span>
+            </div>
+
+            <div class="cr-body">
+<h2 id="s7-1"><span class="cr-num">7.1</span>What Is Regularization?</h2>
+<p><strong>Regularization</strong> is a technique used to prevent <strong>overfitting</strong> by adding a <strong>penalty term</strong> to the loss function that discourages overly complex models. It works by limiting the size of model parameters (weights), which helps the model focus on the most important patterns in the data instead of memorizing noise.</p>
+<p>Common types of regularization include <strong>L1 regularization (Lasso)</strong>, which can drive some weights to zero and perform feature selection, and <strong>L2 regularization (Ridge)</strong>, which reduces large weights smoothly. By controlling model complexity, regularization improves the model’s ability to generalize to unseen data.</p>
+<h3 id="s7-1-1"><span class="cr-num">7.1.1</span>Ridge Regularization (L2 Regularization)</h3>
+<p>It is a technique used to reduce <strong>overfitting</strong> by adding a penalty based on the <strong>square of the weights</strong> to the loss function. This penalty discourages the model from assigning very large values to weights, helping it learn smoother and more general patterns instead of memorizing the training data.</p>
+<p><div class="cr-math"><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9694em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord text"><span class="mord">Loss</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight">ridge</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord text"><span class="mord">Loss</span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1.6em;vertical-align:-0.55em;"></span><span class="mord mathnormal">λ</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mop op-symbol large-op" style="position:relative;top:0em;">∑</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></span></span></div></p>
+<p>Here, <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">λ</span></span></span></span>is the <strong>regularization parameter</strong> that controls the strength of the penalty. A larger <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">λ</span></span></span></span>forces weights to be smaller, increasing bias but reducing variance, while a smaller <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">λ</span></span></span></span>allows the model more flexibility. Ridge regularization improves generalization but does <strong>not</strong> set weights exactly to zero.</p>
+<h3 id="s7-1-2"><span class="cr-num">7.1.2</span>L1 Regularization (Lasso)</h3>
+<p>It is a technique used to reduce <strong>overfitting</strong> by adding a penalty equal to the <strong>absolute values of the weights</strong> to the loss function. This encourages the model to shrink less important weights toward zero, and in many cases, it sets them <strong>exactly to zero</strong>, effectively performing <strong>feature selection</strong>.</p>
+<p><div class="cr-math"><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord text"><span class="mord">Loss</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight">lasso</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord text"><span class="mord">Loss</span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1.6em;vertical-align:-0.55em;"></span><span class="mord mathnormal">λ</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mop op-symbol large-op" style="position:relative;top:0em;">∑</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">∣</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">∣</span></span></span></span></span></div></p>
+<p>Here, <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">λ</span></span></span></span>is the <strong>regularization parameter</strong> that controls the strength of the penalty. A larger <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">λ</span></span></span></span>increases sparsity by forcing more weights to zero (higher bias, lower variance), while a smaller <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">λ</span></span></span></span>allows the model to remain more flexible. L1 regularization is especially useful when many input features are irrelevant.</p>
+<h3 id="s7-1-3"><span class="cr-num">7.1.3</span>Elastic Net</h3>
+<p><strong>Elastic Net Regularization</strong> is a technique that combines the strengths of <strong>L1 (Lasso)</strong> and <strong>L2 (Ridge)</strong> regularization to reduce <strong>overfitting</strong>. It adds both the absolute value and the squared value of the weights as penalties, helping the model handle correlated features while also performing feature selection.</p>
+<p><div class="cr-math"><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord text"><span class="mord">Loss</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight">Elastic Net</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord text"><span class="mord">Loss</span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1.6em;vertical-align:-0.55em;"></span><span class="mord"><span class="mord mathnormal">λ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mop op-symbol large-op" style="position:relative;top:0em;">∑</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">∣</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">∣</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.6em;vertical-align:-0.55em;"></span><span class="mord">+</span><span class="mord"><span class="mord mathnormal">λ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mop op-symbol large-op" style="position:relative;top:0em;">∑</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></span></span></div></p>
+<p>Here, <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">λ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>controls the <strong>L1 penalty</strong> (sparsity and feature selection) and <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">λ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>controls the <strong>L2 penalty</strong> (weight shrinkage and stability). Elastic Net is especially useful when there are <strong>many features</strong> and <strong>strong correlations</strong> among them, where Lasso alone may fail.</p>
+<h3 id="s7-1-4"><span class="cr-num">7.1.4</span>Dropout Regularization</h3>
+<p><strong>Dropout</strong> is a regularization technique used in neural networks to reduce <strong>overfitting</strong>. During training, it <strong>randomly deactivates (drops)</strong> a fraction of neurons in a layer for each iteration. This prevents the network from becoming too dependent on specific neurons and forces it to learn more robust and generalized features.</p>
+<p>The <strong>dropout rate</strong> (for example, 0.5) determines the percentage of neurons that are turned off during training. Dropout is applied <strong>only during training</strong>, not during testing or inference. By reducing co-adaptation among neurons, dropout improves generalization and helps the model perform better on unseen data.</p>
+<h3 id="s7-1-5"><span class="cr-num">7.1.5</span>Early Stopping</h3>
+<p><strong>Early stopping</strong> is a regularization technique used to prevent <strong>overfitting</strong> during model training. While training a model, both training loss and validation loss are monitored. Initially, both losses decrease, but after some point, the validation loss may start increasing even though training loss continues to decrease. Early stopping stops the training process at this point to avoid learning noise from the training data.</p>
+<p>In simple terms, early stopping helps the model <strong>stop learning at the right time</strong>, improving generalization and reducing unnecessary training.</p>
+<h3 id="s7-1-6"><span class="cr-num">7.1.6</span>Data-Based Regularization</h3>
+<p><strong>Data-based regularization</strong> refers to techniques that reduce <strong>overfitting by modifying or improving the training data itself</strong>, rather than changing the model or loss function. The main idea is to expose the model to more diverse and representative data so it learns general patterns instead of memorizing specific examples.</p>
+<p>Common examples include <strong>data augmentation</strong> (such as rotating, flipping, or adding noise to images), <strong>adding noise to inputs</strong>, and <strong>shuffling data</strong>. These methods effectively increase the size and diversity of the dataset, helping the model generalize better without increasing model complexity.</p>
+<div class="cr-table"><table>
+
+<thead>
+<tr>
+<th><strong>Regularization Method</strong></th>
+<th><strong>Type</strong></th>
+<th><strong>Key Idea</strong></th>
+<th><strong>Main Effect</strong></th>
+<th><strong>When to Use</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Ridge (L2)</strong></td>
+<td>Weight-based</td>
+<td>Penalizes large weights using square</td>
+<td>Reduces overfitting, stable learning</td>
+<td>When all features are useful</td>
+</tr>
+<tr>
+<td><strong>Lasso (L1)</strong></td>
+<td>Weight-based</td>
+<td>Penalizes absolute weight values</td>
+<td>feature selection by shrinking some weights exactly to zero.</td>
+<td>unstable when features are highly correlated.</td>
+</tr>
+<tr>
+<td><strong>Elastic Net</strong></td>
+<td>Weight-based</td>
+<td>Combines L1 and L2 penalties</td>
+<td>Combines feature selection and stability</td>
+<td>Requires tuning multiple hyperparameters</td>
+</tr>
+<tr>
+<td><strong>Dropout</strong></td>
+<td>Model-based</td>
+<td>Randomly drops neurons during training</td>
+<td>Strong regularization for deep nets</td>
+<td>Deep neural networks</td>
+</tr>
+<tr>
+<td><strong>Early Stopping</strong></td>
+<td>Training-based</td>
+<td>Stops training when validation loss increases</td>
+<td>Prevents over-training</td>
+<td>When validation set is available</td>
+</tr>
+<tr>
+<td><strong>Data-Based Regularization</strong></td>
+<td>Data-based</td>
+<td>Increases data diversity</td>
+<td>Better generalization</td>
+<td>Small datasets</td>
+</tr>
+</tbody>
+</table></div>
+            </div>
+
+            <nav class="cr-pn" aria-label="Chapters">
+                <a class="cr-prev" href="{{ '/book/chapter-6/' | relative_url }}"><small>← Previous · Chapter 6</small><strong>The Training Process: Epochs, Batches and Learning Rate</strong></a>
+                <a class="cr-next" href="{{ '/book/chapter-8/' | relative_url }}"><small>Next · Chapter 8 →</small><strong>Convolutional Neural Networks (CNNs)</strong></a>
+            </nav>
+            <div class="cr-fb">
+                <span>Spotted a mistake or have a suggestion for this chapter?</span>
+                <a href="mailto:owaiskhana635@gmail.com?subject=Feedback%20on%20Chapter%207%3A%20Regularization">Send feedback →</a>
+            </div>
+        </article>
+
+    </div>
+</div>

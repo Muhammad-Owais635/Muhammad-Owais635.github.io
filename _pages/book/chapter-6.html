@@ -1,0 +1,164 @@
+---
+layout: aapage
+title: "Chapter 6: The Training Process: Epochs, Batches and Learning Rate | From Neurons to Agents"
+permalink: /book/chapter-6/
+chapter: 6
+author_profile: false
+---
+
+{% include aachapter.html %}
+
+<div class="cr-page">
+    <div class="cr-wrap">
+
+        <!-- ================= SIDEBAR ================= -->
+        <aside class="cr-side" id="crSide" aria-label="Chapter navigation">
+            <button type="button" class="cr-side-close" data-cr-close aria-label="Close contents">&times;</button>
+            <a class="cr-side-book" href="{{ '/book/' | relative_url }}">
+                <span class="cr-mini" aria-hidden="true"></span>
+                <span><strong>From Neurons to Agents</strong><span>Muhammad Owais</span></span>
+            </a>
+            <h2>On this page</h2>
+            <ol class="cr-otp">
+                <li class="cr-l2"><a href="#s6-1"><span>6.1</span> What Is an Epoch?</a></li>
+                <li class="cr-l2"><a href="#s6-2"><span>6.2</span> What Is Batch Size?</a></li>
+                <li class="cr-l2"><a href="#s6-3"><span>6.3</span> What Is an Iteration?</a></li>
+                <li class="cr-l2"><a href="#s6-4"><span>6.4</span> Learning Rate</a></li>
+                <li class="cr-l2"><a href="#s6-5"><span>6.5</span> Bias and Variance</a></li>
+                <li class="cr-l2"><a href="#s6-6"><span>6.6</span> Overfitting and Underfitting</a></li>
+            </ol>
+            {% include aabookchapters.html %}
+        </aside>
+
+        <!-- ================= CHAPTER ================= -->
+        <article class="cr-article">
+            <div class="cr-mbar">
+                <button type="button" data-cr-open><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11M4.5 6h.01M4.5 12h.01M4.5 18h.01"/></svg> Contents</button>
+                <span id="crCur" data-default="Chapter 6">Chapter 6</span>
+            </div>
+
+            <nav class="cr-crumb" aria-label="Breadcrumb">
+                <a href="{{ '/book/' | relative_url }}">From Neurons to Agents</a><span>›</span><span>Part I: Deep Learning Foundations</span>
+            </nav>
+            <p class="cr-eyebrow">Chapter 06</p>
+            <h1 class="cr-h1">The Training Process: Epochs, Batches and Learning Rate</h1>
+            <div class="cr-meta">
+                <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg> 3 min read</span>
+                <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11M4.5 6h.01M4.5 12h.01M4.5 18h.01"/></svg> 6 sections</span>
+                <span class="cr-draft">Draft</span>
+            </div>
+
+            <div class="cr-body">
+<p><strong>6.1 Parameters</strong> are the values that a model learns automatically during training from the data. They directly affect the model’s predictions and are updated using backpropagation and gradient descent.<br/>
+<strong>Example:</strong> weights and biases (<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">b</span></span></span></span>) in a neural network.</p>
+<p><strong>6.2 Hyperparameters</strong> are the values that are set before training and control how the learning process happens. They are not learned from data and must be chosen or tuned by the user.<br/>
+<strong>Example:</strong> learning rate (<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">η</span></span></span></span>), number of hidden layers, number of neurons, batch size, and number of epochs.</p>
+<h2 id="s6-1"><span class="cr-num">6.1</span>What Is an Epoch?</h2>
+<p>An <strong>epoch</strong> means, the model has seen <strong>every training sample once</strong></p>
+<p><strong>Example:</strong> Dataset size = <strong>1,000 samples</strong></p>
+<div class="cr-table"><table>
+
+<thead>
+<tr>
+<th><strong>Epoch</strong></th>
+<th><strong>What Happens</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Model sees all 1,000 samples</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Model sees 10,000 samples</td>
+</tr>
+<tr>
+<td>100</td>
+<td>Model sees 100,000 samples</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="s6-2"><span class="cr-num">6.2</span>What Is Batch Size?</h2>
+<p><strong>Batch size</strong> = number of samples used <strong>before one weight update</strong></p>
+<p><em>Example:</em> When the dataset contains 1,000 samples and the batch size is 100, the data is divided into 10 mini-batches. During training, the model processes each batch separately, and after completing the forward and backward pass for one batch, it updates the weights once. This means Batch 1 leads to one update, Batch 2 leads to another update, and this continues until Batch 10, resulting in 10 weight updates in one epoch.</p>
+<p><em>Epoch vs Batch Size</em></p>
+<div class="cr-table"><table>
+
+<thead>
+<tr>
+<th><strong>Batch Size</strong></th>
+<th><strong>Updates per Epoch</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 (SGD)</td>
+<td>1000</td>
+</tr>
+<tr>
+<td>32</td>
+<td>~32</td>
+</tr>
+<tr>
+<td>128</td>
+<td>~8</td>
+</tr>
+<tr>
+<td>1000 (Batch GD)</td>
+<td>1</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="s6-3"><span class="cr-num">6.3</span>What Is an Iteration?</h2>
+<p>An <strong>iteration</strong> refers to one complete weight update of the model during training. In other words, every time the model processes a batch of data and updates its weights, one iteration is completed.</p>
+<p><strong>Example:</strong><br/>
+If a dataset has 1,000 samples and the batch size is 100, the data is divided into 10 batches. Each batch causes one weight update, so 1 epoch contains 10 iterations.</p>
+<h2 id="s6-4"><span class="cr-num">6.4</span>Learning Rate</h2>
+<p>The <strong>learning rate</strong> is a small value that controls how much the model’s weights are updated during training; it decides the step size in gradient descent. For example, common learning rate values are 0.1 (fast but risky), 0.01 (most commonly used), and 0.001 (slow but stable).</p>
+<div class="cr-table"><table>
+
+<thead>
+<tr>
+<th><strong>Optimizer</strong></th>
+<th><strong>Common LR</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SGD</td>
+<td>0.01</td>
+</tr>
+<tr>
+<td>Adam</td>
+<td>0.001</td>
+</tr>
+<tr>
+<td>RMSprop</td>
+<td>0.001</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="s6-5"><span class="cr-num">6.5</span>Bias and Variance</h2>
+<p><strong>Bias</strong> refers to the error caused by a model being <strong>too simple</strong> and making strong assumptions about the data. A high-bias model cannot capture complex patterns, so it consistently makes similar mistakes across different datasets.</p>
+<p><strong>Variance</strong> refers to the error caused by a model being <strong>too complex</strong> and highly sensitive to the training data. A high-variance model learns noise and small fluctuations in the data, which leads to large changes in predictions when the input data changes.</p>
+<h2 id="s6-6"><span class="cr-num">6.6</span>Overfitting and Underfitting</h2>
+<p><strong>Underfitting</strong> occurs when a model is too simple to capture the underlying patterns in the data. It performs poorly on both the training data and the test data because it fails to learn important relationships. Underfitting is linked to <strong>high bias and low variance</strong>.</p>
+<p><em>Example</em><strong>:</strong> using a straight line to fit highly curved data or training for too few epochs.</p>
+<p><strong>Overfitting</strong> occurs when a model learns the training data too well, including noise and random fluctuations. As a result, it performs very well on training data but poorly on unseen test data.<br/>
+<em>Example:</em> a very complex model trained for too many epochs that memorizes the training samples instead of learning general patterns. Overfitting is linked to <strong>low bias and high variance.</strong></p>
+<figure class="cr-fig"><img alt="Understanding the Bias-Variance Tradeoff" class="cr-zoom" height="323" loading="lazy" src="{{ '/images/book/ch06/image15.png' | relative_url }}" width="830"/></figure>
+            </div>
+
+            <nav class="cr-pn" aria-label="Chapters">
+                <a class="cr-prev" href="{{ '/book/chapter-5/' | relative_url }}"><small>← Previous · Chapter 5</small><strong>Gradient Descent and Optimization</strong></a>
+                <a class="cr-next" href="{{ '/book/chapter-7/' | relative_url }}"><small>Next · Chapter 7 →</small><strong>Regularization</strong></a>
+            </nav>
+            <div class="cr-fb">
+                <span>Spotted a mistake or have a suggestion for this chapter?</span>
+                <a href="mailto:owaiskhana635@gmail.com?subject=Feedback%20on%20Chapter%206%3A%20The%20Training%20Process:%20Epochs,%20Batches%20and%20Learning%20Rate">Send feedback →</a>
+            </div>
+        </article>
+
+    </div>
+</div>

@@ -1,0 +1,855 @@
+---
+layout: aapage
+title: "Chapter 17: Agentic LLMs: RAG, Tools and Agents | From Neurons to Agents"
+permalink: /book/chapter-17/
+chapter: 17
+author_profile: false
+---
+
+{% include aachapter.html %}
+
+<div class="cr-page">
+    <div class="cr-wrap">
+
+        <!-- ================= SIDEBAR ================= -->
+        <aside class="cr-side" id="crSide" aria-label="Chapter navigation">
+            <button type="button" class="cr-side-close" data-cr-close aria-label="Close contents">&times;</button>
+            <a class="cr-side-book" href="{{ '/book/' | relative_url }}">
+                <span class="cr-mini" aria-hidden="true"></span>
+                <span><strong>From Neurons to Agents</strong><span>Muhammad Owais</span></span>
+            </a>
+            <h2>On this page</h2>
+            <ol class="cr-otp">
+                <li class="cr-l2"><a href="#s17-1"><span>17.1</span> Retrieval-Augmented Generation</a></li>
+                <li class="cr-l3"><a href="#s17-1-1"><span>17.1.1</span> Retrieve</a></li>
+                <li class="cr-l2"><a href="#s17-2"><span>17.2</span> How documents are prepared (important)</a></li>
+                <li class="cr-l2"><a href="#s17-3"><span>17.3</span> Retrieval overview</a></li>
+                <li class="cr-l3"><a href="#s17-3-1"><span>17.3.1</span> Mitigate Discrepancy in Nature of Embeddings</a></li>
+                <li class="cr-l3"><a href="#s17-3-2"><span>17.3.2</span> Contextualize Document Chunks</a></li>
+                <li class="cr-l2"><a href="#s17-4"><span>17.4</span> Tool calling</a></li>
+                <li class="cr-l3"><a href="#s17-4-1"><span>17.4.1</span> Teach a Model to Use a Tool</a></li>
+                <li class="cr-l3"><a href="#s17-4-2"><span>17.4.2</span> Examples of Common Use Cases</a></li>
+                <li class="cr-l3"><a href="#s17-4-3"><span>17.4.3</span> Benefits</a></li>
+                <li class="cr-l3"><a href="#s17-4-4"><span>17.4.4</span> Tool Selection</a></li>
+                <li class="cr-l3"><a href="#s17-4-5"><span>17.4.5</span> Standardization: MCP (Model Context Protocol)</a></li>
+                <li class="cr-l2"><a href="#s17-5"><span>17.5</span> Agents</a></li>
+                <li class="cr-l3"><a href="#s17-5-1"><span>17.5.1</span> ReAct</a></li>
+                <li class="cr-l2"><a href="#s17-6"><span>17.6</span> Standardization: A2A (Agent-to-Agent)</a></li>
+                <li class="cr-l3"><a href="#s17-6-1"><span>17.6.1</span> Risks</a></li>
+                <li class="cr-l2"><a href="#s17-7"><span>17.7</span> Advanced RAG</a></li>
+            </ol>
+            {% include aabookchapters.html %}
+        </aside>
+
+        <!-- ================= CHAPTER ================= -->
+        <article class="cr-article">
+            <div class="cr-mbar">
+                <button type="button" data-cr-open><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11M4.5 6h.01M4.5 12h.01M4.5 18h.01"/></svg> Contents</button>
+                <span id="crCur" data-default="Chapter 17">Chapter 17</span>
+            </div>
+
+            <nav class="cr-crumb" aria-label="Breadcrumb">
+                <a href="{{ '/book/' | relative_url }}">From Neurons to Agents</a><span>›</span><span>Part II: Transformers and Large Language Models</span>
+            </nav>
+            <p class="cr-eyebrow">Chapter 17</p>
+            <h1 class="cr-h1">Agentic LLMs: RAG, Tools and Agents</h1>
+            <div class="cr-meta">
+                <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg> 10 min read</span>
+                <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11M4.5 6h.01M4.5 12h.01M4.5 18h.01"/></svg> 7 sections</span>
+                <span class="cr-draft">Draft</span>
+            </div>
+
+            <div class="cr-body">
+<h2 id="s17-1"><span class="cr-num">17.1</span>Retrieval-Augmented Generation</h2>
+<p>Retrieval-Augmented Generation (RAG) is an AI approach that combines information retrieval with text generation so a language model can give more accurate, up-to-date, and grounded answers.</p>
+<h4>Why do we need RAG?</h4>
+<h4>A normal LLM (like GPT) has problems</h4>
+<ul>
+<li>
+<p><strong>Knowledge is frozen at training time</strong></p>
+</li>
+<li>
+<p><strong>Can hallucinate facts</strong></p>
+</li>
+<li>
+<p><strong>Cannot access private or domain-specific data</strong></p>
+</li>
+<li>
+<p><strong>Long documents don’t fit fully in context</strong></p>
+</li>
+</ul>
+<p>RAG solves this by letting the model “look up” information before answering.</p>
+<h4>Simple intuition (human analogy)</h4>
+<h4>Think like a student in an exam</h4>
+<ul>
+<li>
+<p><strong>Without RAG → Answer from memory only</strong></p>
+</li>
+<li>
+<p><strong>With RAG → First open book → read relevant pages → then answer</strong></p>
+</li>
+<li>
+<p><strong>So: RAG = Search first, then generate</strong></p>
+</li>
+</ul>
+<h4>Formal definition</h4>
+<p>Retrieval-Augmented Generation is a framework where a language model retrieves relevant external documents from a knowledge source and then uses them as context to generate a response.</p>
+<h4>Core components of RAG</h4>
+<h4>Knowledge Source</h4>
+<h4>This can be</h4>
+<ul>
+<li>
+<p><strong>PDFs</strong></p>
+</li>
+<li>
+<p><strong>Research papers</strong></p>
+</li>
+<li>
+<p><strong>Web pages</strong></p>
+</li>
+<li>
+<p><strong>Databases</strong></p>
+</li>
+<li>
+<p><strong>Tweets / social media data</strong></p>
+</li>
+<li>
+<p><strong>Internal company documents</strong></p>
+</li>
+</ul>
+<h4>Retriever (Search Engine)</h4>
+<p>The retriever finds relevant chunks for a query.</p>
+<h4>Common methods</h4>
+<ul>
+<li>
+<p><strong>Vector search (most popular)</strong></p>
+</li>
+<li>
+<p><strong>BM25 (keyword-based)</strong></p>
+</li>
+<li>
+<p><strong>Hybrid (BM25 + vectors)</strong></p>
+</li>
+</ul>
+<h4>Uses embeddings</h4>
+<pre class="cr-code"><code>Query → embedding → similarity search</code></pre>
+<h4>Generator (LLM)</h4>
+<h4>The generator</h4>
+<ul>
+<li>
+<p><strong>Takes query + retrieved documents</strong></p>
+</li>
+<li>
+<p><strong>Produces a final answer</strong></p>
+</li>
+</ul>
+<figure class="cr-fig"><img alt="A diagram of a document AI-generated content may be incorrect." class="cr-zoom" height="1024" loading="lazy" src="{{ '/images/book/ch17/image8.png' | relative_url }}" width="1536"/></figure>
+<h4>Example 1</h4>
+<p>User question: “What are the limitations of BERT in long document classification?”</p>
+<h4>With RAG</h4>
+<h3 id="s17-1-1"><span class="cr-num">17.1.1</span>Retrieve</h3>
+<ul>
+<li>
+<p><strong>Research papers on BERT</strong></p>
+</li>
+<li>
+<p><strong>Longformer, BigBird comparisons</strong></p>
+</li>
+</ul>
+<ol start="2" type="1">
+<li>
+<p><strong>Feed retrieved text to LLM</strong></p>
+</li>
+<li>
+<p><strong>Generate a grounded answer</strong></p>
+</li>
+</ol>
+<h2 id="s17-2"><span class="cr-num">17.2</span>How documents are prepared (important)</h2>
+<h4>Step 1: Chunking</h4>
+<h4>Large documents → small chunks (e.g., 300–500 tokens)</h4>
+<h4>Step 2: Embedding</h4>
+<h4>Each chunk converted to a vector</h4>
+<pre class="cr-code"><code>text → embedding model → vector</code></pre>
+<h4>Step 3: Store in Vector DB</h4>
+<ul>
+<li>
+<p>FAISS</p>
+</li>
+<li>
+<p>Pinecone</p>
+</li>
+<li>
+<p>Weaviate</p>
+</li>
+<li>
+<p>Chrom</p>
+</li>
+</ul>
+<h4>Pseudo-code example (conceptual)</h4>
+<pre class="cr-code"><code>query = "What is RAG?"
+query_vector = embed(query)
+docs = vector_db.search(query_vector, top_k=5)
+context = concatenate(docs)
+answer = LLM.generate(prompt = context + query)</code></pre>
+<h2 id="s17-3"><span class="cr-num">17.3</span>Retrieval overview</h2>
+<h4>Step 1 – Candidate Retrieval (in RAG)</h4>
+<p>Select a small set of potentially relevant documents (candidates) from a large knowledge base that are most likely to help answer the user query.</p>
+<p>Key idea: <em>It is better to retrieve “possibly useful” documents than to miss an important one.</em></p>
+<p>This step only retrieves candidates.</p>
+<h4>Method 1: Semantic Search (Embeddings-based Similarity)</h4>
+<p>Documents and queries are converted into dense vectors (embeddings).<br/>
+Similarity is computed using:</p>
+<ul>
+<li>
+<p><strong>Cosine similarity</strong></p>
+</li>
+<li>
+<p><strong>Dot product</strong></p>
+</li>
+<li>
+<p><strong>Euclidean distance</strong></p>
+</li>
+</ul>
+<h4>How it works</h4>
+<ul>
+<li>
+<p><strong>Convert query → vector</strong></p>
+</li>
+<li>
+<p><strong>Convert document chunks → vectors</strong></p>
+</li>
+<li>
+<p><strong>Retrieve top-k closest vectors</strong></p>
+</li>
+</ul>
+<figure class="cr-fig"><img alt="A diagram of a computer code AI-generated content may be incorrect." class="cr-zoom" height="554" loading="lazy" src="{{ '/images/book/ch17/image9.png' | relative_url }}" width="1600"/></figure>
+<h4>Method 2: Keyword Search (BM25)</h4>
+<h4>A lexical retrieval method based on</h4>
+<ul>
+<li>
+<p><strong>Term frequency</strong></p>
+</li>
+<li>
+<p><strong>Inverse document frequency</strong></p>
+</li>
+<li>
+<p><strong>Document length normalization</strong></p>
+</li>
+</ul>
+<h4>How it works</h4>
+<p>Documents are ranked by keyword overlap with the query.</p>
+<h4>Method 3: Hybrid Search (Semantic + BM25)</h4>
+<p>Combines semantic similarity and keyword matching into a single ranking.</p>
+<h4>Typical scoring</h4>
+<pre class="cr-code"><code>Final Score = α × SemanticScore + (1 − α) × BM25Score</code></pre>
+<h4>Improvements applied before or during retrieval</h4>
+<h3 id="s17-3-1"><span class="cr-num">17.3.1</span>Mitigate Discrepancy in Nature of Embeddings</h3>
+<h4>Problem</h4>
+<ul>
+<li>
+<p><strong>Query embeddings ≠ Document embeddings</strong></p>
+</li>
+<li>
+<p><strong>Queries are short</strong></p>
+</li>
+<li>
+<p><strong>Documents are long and descriptive</strong></p>
+</li>
+<li>
+<p><strong>This mismatch reduces similarity accuracy.</strong></p>
+</li>
+</ul>
+<p>Solution: Make query and document embeddings more comparable.</p>
+<h3 id="s17-3-2"><span class="cr-num">17.3.2</span>Contextualize Document Chunks</h3>
+<p>Problem: Documents are split into chunks → loss of context.</p>
+<p>Solution: Add surrounding context or metadata.</p>
+<h4>Step 2 – Ranking (Re-ranking in RAG)</h4>
+<p>Assign a final relevance score to retrieved candidates using a more powerful model, and select the best chunks to pass to the LLM.</p>
+<p><em>Step-1 retrieves many “possibly relevant” chunks; Step-2 precisely orders them.</em></p>
+<h4>Why Re-ranking Is Needed</h4>
+<ul>
+<li>
+<p><strong>Initial retrieval favors speed</strong></p>
+</li>
+<li>
+<p><strong>Re-ranking favors accuracy</strong></p>
+</li>
+<li>
+<p><strong>Embedding similarity alone is not enough</strong></p>
+</li>
+</ul>
+<h4>Example</h4>
+<ul>
+<li>
+<p><strong>Chunk A: semantically similar but vague</strong></p>
+</li>
+<li>
+<p><strong>Chunk B: exact answer but less semantic overlap</strong></p>
+</li>
+</ul>
+<h4>Re-ranker promotes Chunk B</h4>
+<h4>A re-ranker is a cross-encoder or interaction model that jointly processes</h4>
+<pre class="cr-code"><code>(Query, Document Chunk) → Relevance Score</code></pre>
+<h4>Typical models</h4>
+<ul>
+<li>
+<p><strong>BERT cross-encoders</strong></p>
+</li>
+<li>
+<p><strong>MonoT5</strong></p>
+</li>
+<li>
+<p><strong>LLM-based scoring</strong></p>
+</li>
+<li>
+<p><strong>Instruction-tuned rankers</strong></p>
+</li>
+</ul>
+<h4>How Re-ranking Works (Setup)</h4>
+<ul>
+<li>
+<p><strong>Retrieve top-N chunks (e.g., N=50)</strong></p>
+</li>
+<li>
+<p><strong>For each chunk:</strong></p>
+</li>
+<li>
+<p><strong>score_i = Ranker(query, chunk_i)</strong></p>
+</li>
+<li>
+<p><strong>Sort by score</strong></p>
+</li>
+<li>
+<p><strong>Select top-k (e.g., k=5)</strong></p>
+</li>
+</ul>
+<blockquote class="cr-note">
+<p><img alt="A diagram of a user prompt AI-generated content may be incorrect." class="cr-zoom" height="618" loading="lazy" src="{{ '/images/book/ch17/image10.png' | relative_url }}" width="1600"/></p>
+</blockquote>
+<h4>Quantifying Retrieval &amp; Ranking Performance</h4>
+<p>Measure how well retrieved and ranked chunks match ground-truth relevance.</p>
+<h4>Setup: Relevance Evaluation</h4>
+<h4>For a query</h4>
+<ul>
+<li>
+<p><strong>We have retrieved k chunks</strong></p>
+</li>
+<li>
+<p><strong>Each chunk is labeled:</strong></p>
+</li>
+</ul>
+<ul>
+<li>
+<p><strong>Relevant (1)</strong></p>
+</li>
+<li>
+<p><strong>Not relevant (0)</strong></p>
+</li>
+<li>
+<p><strong>Or graded relevance (0–3)</strong></p>
+</li>
+</ul>
+<h4>Example relevance labels</h4>
+<pre class="cr-code"><code>[3, 2, 0, 1, 0]</code></pre>
+<h4>Precision@k</h4>
+<h4>It measures how many retrieved chunks are relevant</h4>
+<p><div class="cr-math"><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord text"><span class="mord">Precision@k</span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.113em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.427em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03148em;">k</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mrel">∣</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mopen">{</span><span class="mord text"><span class="mord">relevant items in top </span></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mclose">}</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">∣</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></div><strong>Example Top-5 chunks → 3 relevant</strong></p>
+<p><div class="cr-math"><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mord">@5</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.0074em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">5</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">3</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0.6</span></span></span></span></span></div><strong>High precision = less noise</strong></p>
+<h4>Recall@k</h4>
+<h4>It measures how many of all relevant chunks were retrieved</h4>
+<p><div class="cr-math"><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord text"><span class="mord">Recall@k</span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.363em;vertical-align:-0.936em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.427em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mrel">∣</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mopen">{</span><span class="mord text"><span class="mord">all relevant items</span></span><span class="mclose">}</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">∣</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mrel">∣</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mopen">{</span><span class="mord text"><span class="mord">relevant items in top </span></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mclose">}</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">∣</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.936em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></div></p>
+<h4>Example</h4>
+<h4>Total relevant chunks = 6 Retrieved relevant = 3</h4>
+<p><div class="cr-math"><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="mord">@5</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.0074em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">6</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">3</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0.5</span></span></span></span></span></div> <strong>High recall = fewer misses<br/>
+RAG favors high recall early</strong></p>
+<h4>Reciprocal Rank@k (RR@k)</h4>
+<h4>It measures how early the first relevant chunk appears</h4>
+<p><div class="cr-math"><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord text"><span class="mord">RR@k</span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.0074em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"><span class="mord">rank of first relevant result</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></div></p>
+<h4>Example First relevant chunk at rank 2</h4>
+<p><div class="cr-math"><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">RR</span><span class="mord">@</span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.0074em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">2</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0.5</span></span></span></span></span></div></p>
+<h4>If at rank 1</h4>
+<p><div class="cr-math"><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">RR</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1.0</span></span></span></span></span></div></p>
+<h4>Normalized Discounted Cumulative Gain@k (NDCG@k)</h4>
+<h4>It measures quality of ranking with graded relevance</h4>
+<h4>Rewards</h4>
+<ul>
+<li>
+<p><strong>Higher relevance</strong></p>
+</li>
+<li>
+<p><strong>Higher position</strong></p>
+</li>
+</ul>
+<h4>Step 1: DCG@k</h4>
+<p>Measures the usefulness of retrieved results by rewarding highly relevant items placed at top ranks and penalizing relevant items that appear lower in the ranking.</p>
+<p><div class="cr-math"><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">D</span><span class="mord mathnormal">CG</span><span class="mord">@</span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:3.1138em;vertical-align:-1.2777em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.8361em;"><span style="top:-1.8723em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.05em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span><span style="top:-4.3em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.2777em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.5261em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord"><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.207em;"><span style="top:-2.4559em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2441em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal">i</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord">1</span><span class="mclose">)</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">re</span><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.01968em;">l</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3281em;"><span style="top:-2.357em;margin-left:-0.0197em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.143em;"><span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.936em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></div></p>
+<h4>Step 2: IDCG@k (Ideal DCG)</h4>
+<p>Represents the maximum possible DCG obtained when results are perfectly ranked by relevance, used as a normalization reference.</p>
+<h4>Step 3: NDCG@k</h4>
+<p>Normalizes DCG by dividing it by IDCG, producing a score between 0 and 1 that reflects how close the ranking is to the ideal order.</p>
+<p><div class="cr-math"><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mord mathnormal" style="margin-right:0.02778em;">D</span><span class="mord mathnormal">CG</span><span class="mord">@</span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.0574em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3714em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07847em;">I</span><span class="mord mathnormal" style="margin-right:0.02778em;">D</span><span class="mord mathnormal">CG</span><span class="mord">@</span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">D</span><span class="mord mathnormal">CG</span><span class="mord">@</span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></div></p>
+<p><em>Examp</em><strong>le</strong></p>
+<h4>Relevance labels (top-5)</h4>
+<pre class="cr-code"><code>[3, 2, 0, 1, 0]</code></pre>
+<ul>
+<li>
+<p><strong>Higher score for putting 3 at rank 1</strong></p>
+</li>
+<li>
+<p><strong>Penalizes relevant chunks placed lower</strong></p>
+</li>
+</ul>
+<p>NDCG ∈ [0, 1]</p>
+<h2 id="s17-4"><span class="cr-num">17.4</span>Tool calling</h2>
+<p>Tool calling allows a language model to invoke external tools (APIs, functions, services, or software) while solving a task, instead of relying only on its internal knowledge.</p>
+<p>Tool calling enables autonomous systems to complete complex, real-world tasks by dynamically accessing and acting upon external resources.</p>
+<h4>Why Tool Calling Is Needed</h4>
+<h4>LLMs by themselves</h4>
+<ul>
+<li>
+<p><strong>Cannot browse the web</strong></p>
+</li>
+<li>
+<p><strong>Cannot run code</strong></p>
+</li>
+<li>
+<p><strong>Cannot send emails</strong></p>
+</li>
+<li>
+<p><strong>Have a knowledge cutoff</strong></p>
+</li>
+<li>
+<p><strong>Cannot access private or live data</strong></p>
+</li>
+</ul>
+<p>Tool calling extends the LLM’s capabilities beyond text generation.</p>
+<h4>How Tool Calling Works (High-Level Flow)</h4>
+<ul>
+<li>
+<p><strong>User gives a task</strong></p>
+</li>
+<li>
+<p><strong>LLM decides:</strong></p>
+
+<ul>
+<li>
+<p><strong>Can I answer directly?</strong></p>
+</li>
+<li>
+<p><strong>Do I need a tool?</strong></p>
+</li>
+</ul></li>
+<li>
+<p><strong>If needed:</strong></p>
+
+<ul>
+<li>
+<p><strong>LLM selects the correct tool</strong></p>
+</li>
+<li>
+<p><strong>Provides structured input</strong></p>
+</li>
+</ul></li>
+<li>
+<p><strong>Tool executes and returns output</strong></p>
+</li>
+<li>
+<p><strong>LLM uses the output to continue reasoning or respond</strong></p>
+</li>
+</ul>
+<pre class="cr-code"><code>User → LLM → Tool → Result → LLM → Final Output</code></pre>
+<h3 id="s17-4-1"><span class="cr-num">17.4.1</span>Teach a Model to Use a Tool</h3>
+<h4>The model must learn</h4>
+<ul>
+<li>
+<p><strong>When to use a tool</strong></p>
+</li>
+<li>
+<p><strong>Which tool to use</strong></p>
+</li>
+<li>
+<p><strong>How to format inputs</strong></p>
+</li>
+<li>
+<p><strong>How to interpret outputs</strong></p>
+</li>
+</ul>
+<h4>Method 1: Teaching via Training</h4>
+<h4>The model is trained on examples where</h4>
+<ul>
+<li>
+<p><strong>Provide the model with a user request as input.</strong></p>
+</li>
+<li>
+<p><strong>Provide the correct tool call (tool name + arguments) as the target output.</strong></p>
+</li>
+<li>
+<p><strong>The model predicts a tool call.</strong></p>
+</li>
+<li>
+<p><strong>Compare the model’s prediction with the ground-truth tool call.</strong></p>
+</li>
+<li>
+<p><strong>Compute loss and update model weights.</strong></p>
+</li>
+<li>
+<p><strong>Repeat over many examples until the model learns when and how to call tools correctly.</strong></p>
+</li>
+</ul>
+<h4>Example (training sample)</h4>
+<pre class="cr-code"><code>User: What is 23 × 47?
+Model: CALL calculator(23,47)
+Tool Output: 1081
+Model: The result is 1081.</code></pre>
+<h4>Method 2: Teaching via Prompting</h4>
+<p>The model is not retrained.<br/>
+Instead, tools are described in the system prompt.</p>
+<h4>Example prompt instruction</h4>
+<pre class="cr-code"><code>You can use the following tools:
+- calculator(a, b)
+- search(query)
+Use them when needed.</code></pre>
+<h3 id="s17-4-2"><span class="cr-num">17.4.2</span>Examples of Common Use Cases</h3>
+<h4>Information Retrieval</h4>
+<p>Used when the model needs external or updated information.</p>
+<h4>Examples</h4>
+<ul>
+<li>
+<p><strong>Web search</strong></p>
+</li>
+<li>
+<p><strong>Database queries</strong></p>
+</li>
+<li>
+<p><strong>Weather APIs</strong></p>
+</li>
+<li>
+<p><strong>Stock price trackers</strong></p>
+</li>
+<li>
+<p><strong>Searching a codebase</strong></p>
+</li>
+</ul>
+<h4>Computation</h4>
+<p>Used for precise or large-scale calculations.</p>
+<h4>Examples</h4>
+<ul>
+<li>
+<p><strong>Calculator</strong></p>
+</li>
+<li>
+<p><strong>Python code execution</strong></p>
+</li>
+<li>
+<p><strong>Data analysis scripts</strong></p>
+</li>
+</ul>
+<h4>Action (Real-World Interaction)</h4>
+<p>Used when the model must do something, not just answer.</p>
+<h4>Examples</h4>
+<ul>
+<li>
+<p><strong>Send emails</strong></p>
+</li>
+<li>
+<p><strong>Send messages</strong></p>
+</li>
+<li>
+<p><strong>Schedule meetings</strong></p>
+</li>
+<li>
+<p><strong>Update files</strong></p>
+</li>
+<li>
+<p><strong>Control software actions</strong></p>
+</li>
+</ul>
+<h3 id="s17-4-3"><span class="cr-num">17.4.3</span>Benefits</h3>
+<ul>
+<li>
+<p><strong>LLMs become far more useful</strong></p>
+</li>
+<li>
+<p><strong>Can interact with real-world systems</strong></p>
+</li>
+<li>
+<p><strong>Solve tasks beyond language</strong></p>
+</li>
+<li>
+<p><strong>Overcome knowledge cutoff</strong></p>
+</li>
+<li>
+<p><strong>Enable autonomous agents</strong></p>
+</li>
+</ul>
+<h4>Challenges</h4>
+<ul>
+<li>
+<p><strong>More tools → lower accuracy</strong></p>
+
+<ul>
+<li>
+<p><strong>Tool selection becomes harder</strong></p>
+</li>
+</ul></li>
+<li>
+<p><strong>Finite context length</strong></p>
+
+<ul>
+<li>
+<p><strong>Cannot describe unlimited tools</strong></p>
+</li>
+</ul></li>
+<li>
+<p><strong>Tool definition overhead</strong></p>
+
+<ul>
+<li>
+<p><strong>Each tool needs schema, documentation, testing</strong></p>
+</li>
+</ul></li>
+</ul>
+<h3 id="s17-4-4"><span class="cr-num">17.4.4</span>Tool Selection</h3>
+<h4>Goal</h4>
+<ul>
+<li>
+<p><strong>Reduce latency</strong></p>
+</li>
+<li>
+<p><strong>Improve accuracy</strong></p>
+</li>
+</ul>
+<h4>Problem: If many tools exist, the model</h4>
+<ul>
+<li>
+<p><strong>Takes longer to decide</strong></p>
+</li>
+<li>
+<p><strong>Makes more mistakes</strong></p>
+</li>
+</ul>
+<h4>Solution</h4>
+<ul>
+<li>
+<p><strong>Narrow tool availability per task</strong></p>
+</li>
+<li>
+<p><strong>Use routing models</strong></p>
+</li>
+<li>
+<p><strong>Tool ranking and filtering</strong></p>
+</li>
+</ul>
+<h3 id="s17-4-5"><span class="cr-num">17.4.5</span>Standardization: MCP (Model Context Protocol)</h3>
+<p>A standard protocol that defines how tools and data sources connect to LLMs. Connect tools and data to LLMs in a consistent, reusable, standardized way.</p>
+<figure class="cr-fig"><img alt="A yellow square with black text AI-generated content may be incorrect." class="cr-zoom" height="445" loading="lazy" src="{{ '/images/book/ch17/image13.png' | relative_url }}" width="1600"/></figure>
+<h4>What MCP Standardizes</h4>
+<ul>
+<li>
+<p><strong>Tool interfaces</strong></p>
+</li>
+<li>
+<p><strong>Input/output schemas</strong></p>
+</li>
+<li>
+<p><strong>Authentication</strong></p>
+</li>
+<li>
+<p><strong>Context injection</strong></p>
+</li>
+</ul>
+<figure class="cr-fig"><img alt="A diagram of a computer hardware business AI-generated content may be incorrect." class="cr-zoom" height="648" loading="lazy" src="{{ '/images/book/ch17/image14.png' | relative_url }}" width="1600"/><img alt="A diagram of a book process AI-generated content may be incorrect." class="cr-zoom" height="739" loading="lazy" src="{{ '/images/book/ch17/image15.png' | relative_url }}" width="1600"/></figure>
+<h2 id="s17-5"><span class="cr-num">17.5</span>Agents</h2>
+<p>An agent is a system that autonomously pursues goals and completes tasks on a user's behalf.</p>
+<h4>An agent is an AI system that can</h4>
+<ul>
+<li>
+<p><strong>Reason about a goal</strong></p>
+</li>
+<li>
+<p><strong>Decide actions</strong></p>
+</li>
+<li>
+<p><strong>Use tools</strong></p>
+</li>
+<li>
+<p><strong>Observe results</strong></p>
+</li>
+<li>
+<p><strong>Iterate until the goal is achieved</strong></p>
+</li>
+</ul>
+<figure class="cr-fig"><img alt="A diagram of a diagram AI-generated content may be incorrect." class="cr-zoom" height="218" loading="lazy" src="{{ '/images/book/ch17/image16.png' | relative_url }}" width="1600"/></figure>
+<pre class="cr-code"><code>Goal → Reason → Act → Observe → Reason → Act → ... → Done</code></pre>
+<h3 id="s17-5-1"><span class="cr-num">17.5.1</span>ReAct</h3>
+<h4>ReAct = Reason + Act</h4>
+<p>ReAct is a framework that interleaves reasoning and action, rather than separating them.</p>
+<p>The model explicitly reasons about what to do before taking an action, and then reasons again after seeing the result.</p>
+<figure class="cr-fig"><img alt="Empowering Language Models to Reason and Act" class="cr-zoom" height="394" loading="lazy" src="{{ '/images/book/ch17/image17.jpg' | relative_url }}" width="804"/></figure>
+<h4>ReAct Process (Step by Step)</h4>
+<h4>Each iteration has three key elements</h4>
+<ul>
+<li>
+<p><strong>Thought (Reasoning) (</strong>What do I need to do next?)</p>
+</li>
+<li>
+<p><strong>Action (</strong>Call a tool<strong>)</strong></p>
+</li>
+</ul>
+<ul>
+<li>
+<p><strong>Observation (</strong>Tool result<strong>)</strong></p>
+</li>
+</ul>
+<p>Then the cycle repeats.</p>
+<h4>Example: ReAct in Action</h4>
+<h4>Goal: “What is the current weather in Tokyo, and should I carry an umbrella?”</h4>
+<h4>Step 1: Reason</h4>
+<pre class="cr-code"><code>Thought: I need current weather data for Tokyo. This requires a weather API.</code></pre>
+<h4>Step 2: Act</h4>
+<pre class="cr-code"><code>Action: call weather_api(city="Tokyo")</code></pre>
+<h4>Step 3: Observe</h4>
+<pre class="cr-code"><code>Observation: Rain, 80% chance, temperature 18°C</code></pre>
+<h4>Step 4: Reason again</h4>
+<pre class="cr-code"><code>Thought: It is raining with high probability. I should recommend an umbrella.</code></pre>
+<h4>Step 5: Final Answer</h4>
+<pre class="cr-code"><code>“It’s raining in Tokyo with an 80% chance of rain. You should carry an umbrella.”</code></pre>
+<h4>ReAct vs Traditional Tool Calling</h4>
+<div class="cr-table"><table>
+
+<thead>
+<tr>
+<th><strong>Aspect</strong></th>
+<th><strong>Tool Calling</strong></th>
+<th><strong>ReAct</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Reasoning</strong></td>
+<td><strong>Implicit</strong></td>
+<td><strong>Explicit</strong></td>
+</tr>
+<tr>
+<td><strong>Actions</strong></td>
+<td><strong>One-shot</strong></td>
+<td><strong>Iterative</strong></td>
+</tr>
+<tr>
+<td><strong>Adaptation</strong></td>
+<td><strong>Limited</strong></td>
+<td><strong>Strong</strong></td>
+</tr>
+<tr>
+<td><strong>Error recovery</strong></td>
+<td><strong>Poor</strong></td>
+<td><strong>Good</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="s17-6"><span class="cr-num">17.6</span>Standardization: A2A (Agent-to-Agent)</h2>
+<p>A2A = Agent2Agent refers to a system where multiple AI agents communicate and collaborate to solve a task, instead of a single agent doing everything.</p>
+<p>Think of it as a team of specialized agents working together.</p>
+<h4>In A2A systems</h4>
+<ul>
+<li>
+<p><strong>Each agent has a role (specialization)</strong></p>
+</li>
+<li>
+<p><strong>Agents exchange messages</strong></p>
+</li>
+<li>
+<p><strong>Agents delegate subtasks</strong></p>
+</li>
+<li>
+<p><strong>A final result emerges from coordination</strong></p>
+</li>
+</ul>
+<pre class="cr-code"><code>User Goal
+↓
+Coordinator Agent
+↓
+┌───────────┬───────────┬───────────┐
+│ Research │ Analysis │ Action │
+│ Agent │ Agent │ Agent │
+└───────────┴───────────┴───────────┘
+↓
+Agent-to-Agent Communication
+↓
+Final Response</code></pre>
+<h4>A2A Communication Process</h4>
+<ul>
+<li>
+<p><strong>Coordinator agent receives the task</strong></p>
+</li>
+<li>
+<p><strong>Task is decomposed into subtasks</strong></p>
+</li>
+<li>
+<p><strong>Subtasks are assigned to specialized agents</strong></p>
+</li>
+<li>
+<p><strong>Agents communicate results to each other</strong></p>
+</li>
+<li>
+<p><strong>Coordinator integrates outputs</strong></p>
+</li>
+<li>
+<p><strong>Final answer is produced</strong></p>
+</li>
+</ul>
+<h3 id="s17-6-1"><span class="cr-num">17.6.1</span>Risks</h3>
+<ul>
+<li>
+<p><strong>Agents can cause real-world harm if misused.</strong></p>
+</li>
+<li>
+<p><strong>Example: data exfiltration, where sensitive data is accessed or leaked without permission.</strong></p>
+</li>
+</ul>
+<h4>Remediations</h4>
+<ul>
+<li>
+<p><strong>Training steps: Teach models safe behavior during training.</strong></p>
+</li>
+<li>
+<p><strong>Inference safeguards: Apply safety checks while the model is running.</strong></p>
+</li>
+<li>
+<p><strong>Benchmarks: Use evaluation tools such as Agent-SafetyBench to test and measure agent safety.</strong></p>
+
+</li>
+</ul>
+<h2 id="s17-7"><span class="cr-num">17.7</span>Advanced RAG</h2>
+<h4>Since you’re into agentic AI &amp; explainability, note</h4>
+<ul>
+<li>
+<p><strong><em>Multi-hop RAG</em> (iterative retrieval)</strong></p>
+</li>
+<li>
+<p><strong><em>Self-reflective RAG</em></strong></p>
+</li>
+<li>
+<p><strong><em>Explainable RAG (</em>why a doc was retrieved)</strong></p>
+</li>
+<li>
+<p><strong><em>Temporal RAG</em> (time-aware retrieval)</strong></p>
+</li>
+<li>
+<p><strong><em>Agentic RAG</em> (agents decide when &amp; what to retrieve)</strong></p>
+</li>
+</ul>
+            </div>
+
+            <nav class="cr-pn" aria-label="Chapters">
+                <a class="cr-prev" href="{{ '/book/chapter-16/' | relative_url }}"><small>← Previous · Chapter 16</small><strong>Reasoning in LLMs</strong></a>
+                <a class="cr-next" href="{{ '/book/chapter-18/' | relative_url }}"><small>Next · Chapter 18 →</small><strong>Evaluating LLMs</strong></a>
+            </nav>
+            <div class="cr-fb">
+                <span>Spotted a mistake or have a suggestion for this chapter?</span>
+                <a href="mailto:owaiskhana635@gmail.com?subject=Feedback%20on%20Chapter%2017%3A%20Agentic%20LLMs:%20RAG,%20Tools%20and%20Agents">Send feedback →</a>
+            </div>
+        </article>
+
+    </div>
+</div>

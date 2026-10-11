@@ -1,0 +1,1501 @@
+---
+layout: aapage
+title: "Chapter 12: The Transformer Architecture | From Neurons to Agents"
+permalink: /book/chapter-12/
+chapter: 12
+author_profile: false
+---
+
+{% include aachapter.html %}
+
+<div class="cr-page">
+    <div class="cr-wrap">
+
+        <!-- ================= SIDEBAR ================= -->
+        <aside class="cr-side" id="crSide" aria-label="Chapter navigation">
+            <button type="button" class="cr-side-close" data-cr-close aria-label="Close contents">&times;</button>
+            <a class="cr-side-book" href="{{ '/book/' | relative_url }}">
+                <span class="cr-mini" aria-hidden="true"></span>
+                <span><strong>From Neurons to Agents</strong><span>Muhammad Owais</span></span>
+            </a>
+            <h2>On this page</h2>
+            <ol class="cr-otp">
+                <li class="cr-l2"><a href="#s12-1"><span>12.1</span> Why Attention Was Needed</a></li>
+                <li class="cr-l2"><a href="#s12-2"><span>12.2</span> Intuition: Human Attention</a></li>
+                <li class="cr-l2"><a href="#s12-3"><span>12.3</span> What Is Attention?</a></li>
+                <li class="cr-l2"><a href="#s12-4"><span>12.4</span> Example: “Money Bank Grows, River Bank Flows”</a></li>
+                <li class="cr-l2"><a href="#s12-5"><span>12.5</span> What is Multi-Head Attention?</a></li>
+                <li class="cr-l2"><a href="#s12-6"><span>12.6</span> Positional Encoding</a></li>
+                <li class="cr-l3"><a href="#s12-6-1"><span>12.6.1</span> Sinusoidal positional encoding (used in original Transformer)</a></li>
+                <li class="cr-l2"><a href="#s12-7"><span>12.7</span> What is normalization in Transformers?</a></li>
+                <li class="cr-l3"><a href="#s12-7-1"><span>12.7.1</span> What is Layer Normalization?</a></li>
+                <li class="cr-l3"><a href="#s12-7-2"><span>12.7.2</span> Why Transformers use LayerNorm (not BatchNorm)</a></li>
+                <li class="cr-l2"><a href="#s12-8"><span>12.8</span> Transformer Encoder</a></li>
+                <li class="cr-l3"><a href="#s12-8-1"><span>12.8.1</span> Input Embedding</a></li>
+                <li class="cr-l3"><a href="#s12-8-2"><span>12.8.2</span> Positional Encoding</a></li>
+                <li class="cr-l3"><a href="#s12-8-3"><span>12.8.3</span> Multi-Head Self-Attention</a></li>
+                <li class="cr-l3"><a href="#s12-8-4"><span>12.8.4</span> Query, Key, Value creation</a></li>
+                <li class="cr-l3"><a href="#s12-8-5"><span>12.8.5</span> Scaled Dot-Product Attention (Self attention)</a></li>
+                <li class="cr-l3"><a href="#s12-8-6"><span>12.8.6</span> Multi-Head Attention</a></li>
+                <li class="cr-l3"><a href="#s12-8-7"><span>12.8.7</span> Add &amp; Layer Normalization (after Attention)</a></li>
+                <li class="cr-l3"><a href="#s12-8-8"><span>12.8.8</span> Feed-Forward Network (FFN)</a></li>
+                <li class="cr-l3"><a href="#s12-8-9"><span>12.8.9</span> Add &amp; Layer Normalization (after FFN)</a></li>
+                <li class="cr-l3"><a href="#s12-8-10"><span>12.8.10</span> Stacking Encoder Layers</a></li>
+                <li class="cr-l2"><a href="#s12-9"><span>12.9</span> Masked attention</a></li>
+                <li class="cr-l2"><a href="#s12-10"><span>12.10</span> Transformer Decoder</a></li>
+                <li class="cr-l2"><a href="#s12-11"><span>12.11</span> Pre-training</a></li>
+                <li class="cr-l2"><a href="#s12-12"><span>12.12</span> Fine-tuning</a></li>
+                <li class="cr-l3"><a href="#s12-12-1"><span>12.12.1</span> BERT architecture</a></li>
+                <li class="cr-l3"><a href="#s12-12-2"><span>12.12.2</span> GPT architecture</a></li>
+                <li class="cr-l2"><a href="#s12-13"><span>12.13</span> Evaluation Metrics (NLP)</a></li>
+            </ol>
+            {% include aabookchapters.html %}
+        </aside>
+
+        <!-- ================= CHAPTER ================= -->
+        <article class="cr-article">
+            <div class="cr-mbar">
+                <button type="button" data-cr-open><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11M4.5 6h.01M4.5 12h.01M4.5 18h.01"/></svg> Contents</button>
+                <span id="crCur" data-default="Chapter 12">Chapter 12</span>
+            </div>
+
+            <nav class="cr-crumb" aria-label="Breadcrumb">
+                <a href="{{ '/book/' | relative_url }}">From Neurons to Agents</a><span>›</span><span>Part II: Transformers and Large Language Models</span>
+            </nav>
+            <p class="cr-eyebrow">Chapter 12</p>
+            <h1 class="cr-h1">The Transformer Architecture</h1>
+            <div class="cr-meta">
+                <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg> 27 min read</span>
+                <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11M4.5 6h.01M4.5 12h.01M4.5 18h.01"/></svg> 13 sections</span>
+                <span class="cr-draft">Draft</span>
+            </div>
+
+            <div class="cr-body">
+<p>The Transformer is an attention-based neural network architecture composed of stacked encoder and decoder layers that model global dependencies in sequences through self-attention and feed-forward networks, eliminating the need for recurrent or convolutional structures.</p>
+<figure class="cr-fig"><img alt="Encoders and Decoders in Transformer Models" class="cr-zoom" height="1064" loading="lazy" src="{{ '/images/book/ch12/image1.png' | relative_url }}" width="732"/></figure>
+<h2 id="s12-1"><span class="cr-num">12.1</span>Why Attention Was Needed</h2>
+<p>Limitations of RNN/LSTM/GRU are that they process tokens sequentially, Forget long-range dependencies and Slow training. <strong>Attention</strong> allows the model to focus on relevant parts of the input directly.</p>
+<h2 id="s12-2"><span class="cr-num">12.2</span>Intuition: Human Attention</h2>
+<p><em>“He saw the man with a telescope.”</em></p>
+<p>This sentence is ambiguous, and attention helps resolve it.</p>
+<p><em>Two possible meanings: <strong>Meaning 1 (most common)</strong></em></p>
+<p>He used the telescope to see the man</p>
+<p>Attention focuses on “he” ↔︎ “telescope”</p>
+<h4>Meaning 2</h4>
+<p>He saw a man who had a telescope</p>
+<p>Attention focuses on “man” ↔︎ “telescope”</p>
+<h2 id="s12-3"><span class="cr-num">12.3</span>What Is Attention?</h2>
+<p>Self-attention is a mechanism that lets each word look at all other words in the same sentence and decide which ones matter most to its meaning.</p>
+<p>Each word asks: <em>“Which other words should I pay attention to?”</em></p>
+<p>Traditional models read words one by one. Transformers read all words at once, and self-attention tells them how words relate to each other.</p>
+<figure class="cr-fig"><img alt="A diagram of a process AI-generated content may be incorrect." class="cr-zoom" height="519" loading="lazy" src="{{ '/images/book/ch12/image2.png' | relative_url }}" width="1600"/></figure>
+<h2 id="s12-4"><span class="cr-num">12.4</span>Example: “Money Bank Grows, River Bank Flows”</h2>
+<p>We are taking Money, Flow, and Bank words only for understanding.</p>
+<div class="cr-table"><table>
+
+<thead>
+<tr>
+<th>Vector</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Query (Q)</td>
+<td>What this word is looking for</td>
+</tr>
+<tr>
+<td>Key (K)</td>
+<td>What each word offers</td>
+</tr>
+<tr>
+<td>Value (V)</td>
+<td>The information to pass along</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Step 1:</strong> Dummy embeddings (simple numbers)</p>
+<pre class="cr-code"><code>Money = [1, 0]
+Bank = [0, 1]
+Flow = [1, 1]</code></pre>
+<p><strong>Step 2:</strong> Dummy projection matrices</p>
+<pre class="cr-code"><code>WQ = [[1, 0],
+[0, 1]]
+WK = [[1, 1],
+[0, 1]]
+WV = [[1, 0],
+[1, 1]]</code></pre>
+<h4>Step 3: Compute Q, K, V</h4>
+<p>In a Transformer, Query (Q), Key (K), and Value (V) vectors are computed by applying three different learned linear transformations from the same data to the input word embeddings.</p>
+<p>Money</p>
+<pre class="cr-code"><code>Q_money = [1, 0]
+K_money = [1, 1]
+V_money = [1, 1]</code></pre>
+<p>Bank</p>
+<pre class="cr-code"><code>Q_bank = [0, 1]
+K_bank = [0, 1]
+V_bank = [1, 1]</code></pre>
+<p>Flow</p>
+<pre class="cr-code"><code>Q_flow = [1, 1]
+K_flow = [1, 2]
+V_flow = [2, 1]</code></pre>
+<h4>Step 4: Attention for Bank (THIS IS THE KEY)</h4>
+<p>Compute similarity scores (Q · K)</p>
+<pre class="cr-code"><code>S11 = Q_money ↔︎ K_money = [1,0] · [1,1] = 1
+S12 = Q_money ↔︎ K_bank = [1,0] · [0,1] = 0
+S13 = Q_money ↔︎ K_flow = [1,0] · [1,2] = 1
+S21 = Q_bank ↔︎ K_money = [0, 1] · [1,1] = 1
+S22 = Q_bank ↔︎ K_bank = [0, 1] · [0,1] = 1
+S23 = Q_bank ↔︎ K_flow = [0, 1] · [1,2] = 2
+S31 = Q_flow ↔︎ K_money = [1, 1] · [1,1] = 2
+S32 = Q_flow ↔︎ K_bank = [1, 1] · [0,1] = 1
+S33 = Q_flow ↔︎ K_flow = [1, 1] · [1,2] = 3</code></pre>
+<h4>Step 5: Softmax (normalize)</h4>
+<p><div class="cr-math"><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">softmax</span></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.4632em;vertical-align:-1.1218em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3414em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mop"><span class="mop op-symbol small-op" style="position:relative;top:0em;">∑</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.5029em;"><span style="top:-2.4003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">j</span></span></span></span><span style="top:-3.2029em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.4358em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">e</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6065em;"><span style="top:-3.0051em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathnormal mtight">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3281em;"><span style="top:-2.357em;margin-left:0em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">j</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2819em;"><span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathnormal">e</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6644em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathnormal mtight">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3281em;"><span style="top:-2.357em;margin-left:0em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.143em;"><span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.1218em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></div></p>
+<pre class="cr-code"><code> w11 = 2.718 / 6.436 ≈ 0.422
+ w12 = 1 / 6.436 ≈ 0.155
+ w13 = 2.718 / 6.436 ≈ 0.422
+ w21 ≈ 0.212
+ w22 ≈ 0.212
+ w23 ≈ 0.576
+ w31 ≈ 0.245
+ w32 ≈ 0.090
+ w33 ≈ 0.665</code></pre>
+<h4>Step 6: Weighted sum of Value vectors</h4>
+<p>For simplicity we assume all weights equal to 1.</p>
+<pre class="cr-code"><code>y_money = w11* V_money + w12*V_bank + w13*V_bank = [0.999, 0.999]
+y_bank = w21* V_money + w22*V_bank + w23*V_bank = [0.12, 0.15]
+y_flow = w31* V_money + w32*V_bank + w33*V_bank = [0.19, 0.14]</code></pre>
+<p>The output vector <strong>y_bank</strong> is context-aware and changes depending on the surrounding words.<br/>
+When the word <em>bank</em> appears with <em>money</em>, its output vector becomes more aware of financial meaning.<br/>
+When the same word <em>bank</em> appears with <em>river</em> or <em>flow</em>, its output vector becomes more aware of the geographical meaning.</p>
+<p>Thus, the same word <strong>bank</strong> produces different context-aware output vectors in different sentences because self-attention incorporates information from related words.</p>
+<figure class="cr-fig"><img alt="Attention is all you need: Self Attention Clearly explained!" class="cr-zoom" height="556" loading="lazy" src="{{ '/images/book/ch12/image3.png' | relative_url }}" width="1001"/></figure>
+<h2 id="s12-5"><span class="cr-num">12.5</span>What is Multi-Head Attention?</h2>
+<p>Multi-Head Attention means running self-attention multiple times in parallel, each time with different learned projections, and then combining the results.</p>
+<p>Instead of using one way to look at relationships between words, the model uses <strong>multiple perspectives (heads).</strong></p>
+<h4>Why Multi-Head Attention is needed</h4>
+<p>A single attention head can focus on only one type of relationship.</p>
+<p>Multi-head attention allows the model to learn:</p>
+<ul>
+<li>
+<p>syntactic relations (subject–verb)</p>
+</li>
+<li>
+<p>semantic relations (meaning)</p>
+</li>
+<li>
+<p>positional relations</p>
+</li>
+<li>
+<p>long-range dependencies at the same time</p>
+</li>
+</ul>
+<figure class="cr-fig"><img alt="A diagram of a diagram AI-generated content may be incorrect." class="cr-zoom" height="673" loading="lazy" src="{{ '/images/book/ch12/image4.png' | relative_url }}" width="1600"/></figure>
+<ul>
+<li>
+<p>Each word is represented as an embedding vector:<br/>
+<strong>X = [x_money, x_bank]</strong></p>
+</li>
+<li>
+<p>For each attention head <em>h</em>, separate projection matrices are learned:<br/>
+<strong>WQₕ, WKₕ, WVₕ</strong></p>
+</li>
+<li>
+<p>Queries, Keys, and Values are computed for each head:<br/>
+<strong>Qₕ = XWQₕ , Kₕ = XWKₕ , Vₕ = XWVₕ</strong></p>
+</li>
+<li>
+<p>Each head attends to the same input words but learns different relationships.</p>
+</li>
+<li>
+<p>Each head produces an attention output:<br/>
+<strong>head₁, head₂, …, headₕ</strong></p>
+</li>
+<li>
+<p>Outputs from all heads are concatenated:<br/>
+<strong>Concat(head₁, head₂, …, headₕ)</strong></p>
+</li>
+<li>
+<p>The concatenated vector is linearly projected using <strong>WO</strong>.</p>
+</li>
+<li>
+<p>Final output is obtained as:<br/>
+<strong>Y = Concat(head₁, …, headₕ) · WO</strong></p>
+</li>
+</ul>
+<h2 id="s12-6"><span class="cr-num">12.6</span>Positional Encoding</h2>
+<p>Transformers process all words in parallel, so they do NOT know word order by default.</p>
+<p>Example (without position):</p>
+<ul>
+<li><p>“dog bites man”</p></li>
+<li><p>“man bites dog”</p></li>
+</ul>
+<p>Both look identical to a Transformer unless we add position information. <strong>Positional encoding</strong> tells the model <em>where</em> each word is in the sentence.</p>
+<p>Positional encoding is a vector added to each word embedding to encode its <strong>position in the sequence</strong>. With positional encoding attention can learn <strong>order,</strong> learn <strong>distance and</strong> can distinguish <strong>subject vs object</strong>.</p>
+<p>Final input to the Transformer = <strong>Word embedding + Positional encoding</strong></p>
+<h4>How it works (simple view)</h4>
+<p>For each position <em>pos</em> in the sentence, we create a <strong>position vector</strong>:</p>
+<pre class="cr-code"><code>x_input = word_embedding + position_embedding</code></pre>
+<p>So: Same word at different positions → different final vectors</p>
+<h4>Example (easy numbers)</h4>
+<p><strong>Sentence:</strong> “Money bank grows.”</p>
+<p>Word embeddings (simplified):</p>
+<pre class="cr-code"><code>Money = [1.0, 0.5]
+Bank = [0.8, 0.3]
+Grows = [0.6, 0.9]</code></pre>
+<p>Positional encodings:</p>
+<pre class="cr-code"><code>Position 0 = [0.0, 1.0]
+Position 1 = [0.5, 0.5]
+Position 2 = [1.0, 0.0]</code></pre>
+<p>Final inputs:</p>
+<pre class="cr-code"><code>Money → [1.0, 0.5] + [0.0, 1.0] = [1.0, 1.5]
+Bank → [0.8, 0.3] + [0.5, 0.5] = [1.3, 0.8]
+Grows → [0.6, 0.9] + [1.0, 0.0] = [1.6, 0.9]</code></pre>
+<h3 id="s12-6-1"><span class="cr-num">12.6.1</span>Sinusoidal positional encoding (used in original Transformer)</h3>
+<p>Instead of learning position vectors, the original Transformer uses <strong>fixed sine and cosine functions</strong>:</p>
+<p><div class="cr-math"><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.854em;vertical-align:-0.704em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">PE</span><span class="mopen">(</span><span class="mord mathnormal">p</span><span class="mord mathnormal">os</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">2</span><span class="mord mathnormal">i</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mop">sin</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size2">(</span></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.1076em;"><span style="top:-2.296em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1000</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.814em;"><span style="top:-2.989em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span><span class="mord mathnormal mtight">i</span><span class="mord mtight">/</span><span class="mord mathnormal mtight">d</span></span></span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal">p</span><span class="mord mathnormal">os</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.704em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size2">)</span></span></span></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">PE</span><span class="mopen">(</span><span class="mord mathnormal">p</span><span class="mord mathnormal">os</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">2</span><span class="mord mathnormal">i</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mop">cos</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size2">(</span></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.1076em;"><span style="top:-2.296em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1000</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.814em;"><span style="top:-2.989em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span><span class="mord mathnormal mtight">i</span><span class="mord mtight">/</span><span class="mord mathnormal mtight">d</span></span></span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal">p</span><span class="mord mathnormal">os</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.704em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size2">)</span></span></span></span></span></span></span></span></div></p>
+<p>It is unique for each position, allows the model to generalize to longer sequences, and encodes the relative distance between words</p>
+<p>Nearby positions → similar encodings</p>
+<div class="cr-table"><table>
+
+<thead>
+<tr>
+<th><strong>Type</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Learned</td>
+<td>Position vectors learned during training</td>
+</tr>
+<tr>
+<td>Sinusoidal</td>
+<td>Fixed mathematical functions</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="s12-7"><span class="cr-num">12.7</span>What is normalization in Transformers?</h2>
+<p><strong>Normalization (Layer Normalization)</strong> is used to <strong>stabilize and speed up training</strong> by keeping values in a reasonable range. It makes the model easier to train and prevents exploding or vanishing values.</p>
+<pre class="cr-code"><code>Input
+↓
+Self-Attention
+↓
+Add (Residual Connection)
+↓
+Layer Normalization</code></pre>
+<p>and again after the Feed-Forward Network.</p>
+<h3 id="s12-7-1"><span class="cr-num">12.7.1</span>What is Layer Normalization?</h3>
+<p>Layer Normalization normalizes each token’s feature vector independently.</p>
+<p>For a vector x:</p>
+<p><div class="cr-math"><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">LayerNorm</span></span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.9463em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.2603em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">σ</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord mathnormal">μ</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.05556em;">γ</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.05278em;">β</span></span></span></span></span></div></p>
+<p>Where:</p>
+<ul>
+<li><p>μ = mean of the vector</p></li>
+<li><p>σ = standard deviation</p></li>
+<li><p>γ, β = learnable parameters</p></li>
+</ul>
+<h4>Simple example</h4>
+<p>Input vector:</p>
+<pre class="cr-code"><code>x = [2, 4, 6]</code></pre>
+<p>Mean:</p>
+<pre class="cr-code"><code>μ = (2 + 4 + 6)/3 = 4</code></pre>
+<p>Std:</p>
+<pre class="cr-code"><code>σ = sqrt(((2−4)² + (4−4)² + (6−4)²)/3) ≈ 1.63</code></pre>
+<p>Normalized:</p>
+<pre class="cr-code"><code>[(2−4)/1.63, (4−4)/1.63, (6−4)/1.63]
+≈ [−1.23, 0, 1.23]</code></pre>
+<h3 id="s12-7-2"><span class="cr-num">12.7.2</span>Why Transformers use LayerNorm (not BatchNorm)</h3>
+<div class="cr-table"><table>
+
+<thead>
+<tr>
+<th><strong>BatchNorm</strong></th>
+<th><strong>LayerNorm</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Depends on batch size</td>
+<td>Works with any batch size</td>
+</tr>
+<tr>
+<td>Not good for sequences</td>
+<td>Ideal for NLP</td>
+</tr>
+<tr>
+<td>Normalizes across batch</td>
+<td>Normalizes across features</td>
+</tr>
+</tbody>
+</table></div>
+<p>Normalization helps self-attention by keeping Q·K values stable, prevents very large attention scores, improves gradient flow and makes deep Transformers trainable</p>
+<h2 id="s12-8"><span class="cr-num">12.8</span>Transformer Encoder</h2>
+<p>The Transformer encoder transforms input tokens into deep, context-aware representations using self-attention, positional encoding, feed-forward layers, and normalization.</p>
+<figure class="cr-fig"><img alt="The Transformer encoder structure." class="cr-zoom" height="595" loading="lazy" src="{{ '/images/book/ch12/image5.png' | relative_url }}" width="327"/></figure>
+<p><em>Example sentence “Money bank grows”</em></p>
+<p>Inputs (Tokens)</p>
+<pre class="cr-code"><code>[Money, Bank, Grows]</code></pre>
+<h3 id="s12-8-1"><span class="cr-num">12.8.1</span>Input Embedding</h3>
+<blockquote class="cr-note">
+<p>Converts words into dense numerical vectors that capture basic meaning.</p>
+<p>Each word → embedding vector:</p>
+<p><div class="cr-math"><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:3.6em;vertical-align:-1.55em;"></span><span class="minner"><span class="mopen"><span class="delimsizing mult"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.05em;"><span style="top:-4.05em;"><span class="pstrut" style="height:5.6em;"></span><span style="width:0.667em;height:3.600em;"><svg xmlns="http://www.w3.org/2000/svg" width="0.667em" height="3.600em" viewBox="0 0 667 3600"><path d="M403 1759 V84 H666 V0 H319 V1759 v0 v1759 h347 v-84
+H403z M403 1759 V0 H319 V1759 v0 v1759 h84z"/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.55em;"><span></span></span></span></span></span></span><span class="mord"><span class="mtable"><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-r"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.05em;"><span style="top:-4.21em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">m</span><span class="mord mathnormal mtight">o</span><span class="mord mathnormal mtight">n</span><span class="mord mathnormal mtight" style="margin-right:0.03588em;">ey</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span></span></span><span style="top:-3.01em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">bank</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span><span style="top:-1.81em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">g</span><span class="mord mathnormal mtight">ro</span><span class="mord mathnormal mtight" style="margin-right:0.02691em;">w</span><span class="mord mathnormal mtight">s</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.55em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span></span></span><span class="mclose"><span class="delimsizing mult"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.05em;"><span style="top:-4.05em;"><span class="pstrut" style="height:5.6em;"></span><span style="width:0.667em;height:3.600em;"><svg xmlns="http://www.w3.org/2000/svg" width="0.667em" height="3.600em" viewBox="0 0 667 3600"><path d="M347 1759 V0 H0 V84 H263 V1759 v0 v1759 H0 v84 H347z
+M347 1759 V0 H263 V1759 v0 v1759 h84z"/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.55em;"><span></span></span></span></span></span></span></span></span></span></span></span></div>These embeddings are <strong>learned from training data</strong>.</p>
+</blockquote>
+<h3 id="s12-8-2"><span class="cr-num">12.8.2</span>Positional Encoding</h3>
+<blockquote class="cr-note">
+<p>Adds word-order information so the model knows the position of each word.</p>
+<p><div class="cr-math"><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9925em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.9925em;"><span style="top:-2.9925em;margin-right:0.05em;"><span class="pstrut" style="height:2.5795em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8278em;"><span style="top:-2.931em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">PE</span></span></span></span></span></div>Now each vector contains:</p>
+</blockquote>
+<ul>
+<li>
+<blockquote class="cr-note">
+<p>word meaning</p>
+</blockquote>
+</li>
+<li>
+<blockquote class="cr-note">
+<p>position in the sentence</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="s12-8-3"><span class="cr-num">12.8.3</span>Multi-Head Self-Attention</h3>
+<blockquote class="cr-note">
+<p>Allows each word to attend to all other words and gather relevant context.</p>
+</blockquote>
+<h3 id="s12-8-4"><span class="cr-num">12.8.4</span>Query, Key, Value creation</h3>
+<blockquote class="cr-note">
+<p>Projects are embedded into three spaces to decide <em>what to look for</em>, <em>what to match</em>, and <em>what information to pass</em>.</p>
+<p><div class="cr-math"><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">Q</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.2786em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.9925em;"><span style="top:-2.9925em;margin-right:0.05em;"><span class="pstrut" style="height:2.5795em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8278em;"><span style="top:-2.931em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">W</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">Q</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span></span></span></span></span></div></p>
+<p><div class="cr-math"><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">K</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.1425em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.9925em;"><span style="top:-2.9925em;margin-right:0.05em;"><span class="pstrut" style="height:2.5795em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8278em;"><span style="top:-2.931em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">W</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.07153em;">K</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span></div></p>
+<p><div class="cr-math"><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">V</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.1425em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.9925em;"><span style="top:-2.9925em;margin-right:0.05em;"><span class="pstrut" style="height:2.5795em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8278em;"><span style="top:-2.931em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">W</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.22222em;">V</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span></div></p>
+</blockquote>
+<h3 id="s12-8-5"><span class="cr-num">12.8.5</span>Scaled Dot-Product Attention (Self attention)</h3>
+<p>Computes how strongly each word should attend to other words.</p>
+<blockquote class="cr-note">
+<p><div class="cr-math"><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">Attention</span></span><span class="mopen">(</span><span class="mord mathnormal">Q</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">K</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">V</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.4684em;vertical-align:-0.95em;"></span><span class="mord text"><span class="mord">softmax</span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size3">(</span></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.5183em;"><span style="top:-2.2528em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord sqrt"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8572em;"><span class="svg-align" style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord" style="padding-left:0.833em;"><span class="mord"><span class="mord mathnormal">d</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span><span style="top:-2.8172em;"><span class="pstrut" style="height:3em;"></span><span class="hide-tail" style="min-width:0.853em;height:1.08em;"><svg xmlns="http://www.w3.org/2000/svg" width="400em" height="1.08em" viewBox="0 0 400000 1080" preserveAspectRatio="xMinYMin slice"><path d="M95,702
+c-2.7,0,-7.17,-2.7,-13.5,-8c-5.8,-5.3,-9.5,-10,-9.5,-14
+c0,-2,0.3,-3.3,1,-4c1.3,-2.7,23.83,-20.7,67.5,-54
+c44.2,-33.3,65.8,-50.3,66.5,-51c1.3,-1.3,3,-2,5,-2c4.7,0,8.7,3.3,12,10
+s173,378,173,378c0.7,0,35.3,-71,104,-213c68.7,-142,137.5,-285,206.5,-429
+c69,-144,104.5,-217.7,106.5,-221
+l0 -0
+c5.3,-9.3,12,-14,20,-14
+H400000v40H845.2724
+s-225.272,467,-225.272,467s-235,486,-235,486c-2.7,4.7,-9,7,-19,7
+c-6,0,-10,-1,-12,-3s-194,-422,-194,-422s-65,47,-65,47z
+M834 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.1828em;"><span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal">Q</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07153em;">K</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8413em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">T</span></span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.93em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size3">)</span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">V</span></span></span></span></span></div>This produces <strong>attention-weighted representations</strong>.</p>
+</blockquote>
+<h3 id="s12-8-6"><span class="cr-num">12.8.6</span>Multi-Head Attention</h3>
+<p>Runs self-attention multiple times in parallel to capture different relationships.</p>
+<blockquote class="cr-note">
+<p><div class="cr-math"><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord text"><span class="mord">MultiHead</span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">Concat</span></span><span class="mopen">(</span><span class="mord"><span class="mord text"><span class="mord">head</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="minner">…</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord text"><span class="mord">head</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">h</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">W</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.02778em;">O</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span></div></p>
+<p>Each head focuses on a different aspect of meaning or syntax.</p>
+</blockquote>
+<h3 id="s12-8-7"><span class="cr-num">12.8.7</span>Add &amp; Layer Normalization (after Attention)</h3>
+<p>Preserves original information and stabilizes training. It add results from multihead attention and X calculated after positional encoding and then apply layer normalization on it.</p>
+<p><div class="cr-math"><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07153em;">Z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0715em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.2425em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">LayerNorm</span></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.9925em;"><span style="top:-2.9925em;margin-right:0.05em;"><span class="pstrut" style="height:2.5795em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8278em;"><span style="top:-2.931em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1.2425em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">MultiHead</span></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.9925em;"><span style="top:-2.9925em;margin-right:0.05em;"><span class="pstrut" style="height:2.5795em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8278em;"><span style="top:-2.931em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><span class="mclose">))</span></span></span></span></span></div></p>
+<h3 id="s12-8-8"><span class="cr-num">12.8.8</span>Feed-Forward Network (FFN)</h3>
+<p>The Feed-Forward Network in a Transformer encoder is a position-wise neural network that applies nonlinear transformations to each token independently, refining the contextual information produced by self-attention. Applies a non-linear transformation to each word independently to enrich representations.</p>
+<p><div class="cr-math"><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">FFN</span></span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop">max</span><span class="mopen">(</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">x</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">W</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal">b</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">W</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">b</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span></div></p>
+<h3 id="s12-8-9"><span class="cr-num">12.8.9</span>Add &amp; Layer Normalization (after FFN)</h3>
+<p>Combines transformed features with previous information and normalizes them.</p>
+<p><div class="cr-math"><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07153em;">Z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0715em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">LayerNorm</span></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07153em;">Z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0715em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">FFN</span></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07153em;">Z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0715em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">))</span></span></span></span></span></div></p>
+<h3 id="s12-8-10"><span class="cr-num">12.8.10</span>Stacking Encoder Layers</h3>
+<p>Repeats the encoder block multiple times to build deep contextual understanding.</p>
+<p><div class="cr-math"><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord text"><span class="mord">EncoderOutput</span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.2425em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord text"><span class="mord">Encoder</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.10903em;">N</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="minner">…</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord text"><span class="mord">Encoder</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.9925em;"><span style="top:-2.9925em;margin-right:0.05em;"><span class="pstrut" style="height:2.5795em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8278em;"><span style="top:-2.931em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><span class="mclose">))</span></span></span></span></span></div></p>
+<figure class="cr-fig"><img alt="The Illustrated Transformer – Jay Alammar – Visualizing machine learning one concept at a time." class="cr-zoom" height="398" loading="lazy" src="{{ '/images/book/ch12/image6.png' | relative_url }}" width="612"/></figure>
+<h2 id="s12-9"><span class="cr-num">12.9</span>Masked attention</h2>
+<p>In decoding, the model generates tokens one by one.</p>
+<p>Example target sentence: "I love transformers"</p>
+<p>When predicting:</p>
+<ul>
+<li>
+<p>"love" → model should <strong>not see</strong> "transformers"</p>
+</li>
+<li>
+<p>"transformers" → model should see "I" and "love"</p>
+</li>
+</ul>
+<p>Without masking, the model could “cheat” by looking at future words during training.So masked attention enforces<em>: A token can only attend to itself and previous tokens.</em></p>
+<h2 id="s12-10"><span class="cr-num">12.10</span>Transformer Decoder</h2>
+<p>A Transformer decoder is the part of a Transformer model that generates the output sequence step by step, using both previously generated output tokens and the encoded representation of the input sequence.</p>
+<p>In simple words:</p>
+<p><em>The Transformer decoder predicts the next word by looking at what it has already generated and by selectively focusing on the most relevant parts of the input sentence.</em></p>
+<h4>What the Transformer decoder does</h4>
+<p>At each time step, the decoder:</p>
+<ul>
+<li>
+<p>Remembers past outputs (but not future ones)</p>
+</li>
+<li>
+<p>Consults the input sentence via the encoder</p>
+</li>
+<li>
+<p>Transforms this information to predict the next token</p>
+</li>
+<li>
+<p>This makes the decoder <strong>autoregressive</strong> (outputs are generated one after another).</p>
+</li>
+</ul>
+<figure class="cr-fig"><img alt="Intro to Transformers: The Decoder Block" class="cr-zoom" height="708" loading="lazy" src="{{ '/images/book/ch12/image7.png' | relative_url }}" width="248"/></figure>
+<p>Each decoder layer consists of three operations, applied in order:</p>
+<ol type="1">
+<li><p><strong>Masked self-attention</strong><br/>
+Allows each output token to attend only to <strong>earlier output tokens</strong>, ensuring the model does not see future words.</p></li>
+<li><p><strong>Cross-attention (encoder–decoder attention)</strong><br/>
+Allows the decoder to attend to the <strong>encoder’s output</strong>, so generation is conditioned on the input sequence.</p></li>
+<li><p><strong>Feed-forward network (FFN)</strong><br/>
+Applies nonlinear transformations to refine the token representations.</p></li>
+</ol>
+<p>Each operation uses <strong>residual connections</strong> and <strong>layer normalization</strong> for stable training.</p>
+<p><strong>12.10.1 Example:</strong> I love transformers</p>
+<h4>Assume</h4>
+<ul>
+<li>
+<p>Vocabulary size = V</p>
+</li>
+<li>
+<p>Embedding dimension = d_model = 4 (small for understanding)</p>
+</li>
+<li>
+<p>Sequence length = 3</p>
+</li>
+</ul>
+<h4>STEP 1: Create embeddings (your step)</h4>
+<p><em>Tokens</em></p>
+<pre class="cr-code"><code>["I", "love", "transformers"]</code></pre>
+<p><em>Embedding lookup</em></p>
+<p>Each word is mapped to a dense vector using an embedding matrix <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7224em;vertical-align:-0.0391em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8491em;"></span><span class="mord"><span class="mord mathbb">R</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.22222em;">V</span><span class="mbin mtight">×</span><span class="mord mtight"><span class="mord mathnormal mtight">d</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3448em;"><span style="top:-2.3488em;margin-left:0em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">m</span><span class="mord mathnormal mtight">o</span><span class="mord mathnormal mtight">d</span><span class="mord mathnormal mtight">e</span><span class="mord mathnormal mtight" style="margin-right:0.01968em;">l</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.1512em;"><span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span>.</p>
+<p><div class="cr-math"><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">3</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">]</span></span></span></span></span></div></p>
+<p>Example embeddings (illustrative):</p>
+<pre class="cr-code"><code>x₁ = embedding("I") = [0.10, 0.20, 0.30, 0.40]
+x₂ = embedding("love") = [0.50, 0.60, 0.10, 0.20]
+x₃ = embedding("transformers") = [0.90, 0.10, 0.40, 0.70]</code></pre>
+<h4>Each xᵢ</h4>
+<ul>
+<li>
+<p>Encodes semantic meaning of the word</p>
+</li>
+<li>
+<p>Has no position information</p>
+</li>
+<li>
+<p>Does not yet know about other words</p>
+</li>
+</ul>
+<p>So far:“These vectors only know what the word is, not where it is or what surrounds it.”</p>
+<h4>STEP 2: Add positional encoding</h4>
+<p><em>Transformers need position information.</em></p>
+<p><div class="cr-math"><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9694em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.0785em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">p</span><span class="mord mathnormal mtight">os</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span></span></span></span></span></div></p>
+<p>Assume positional encodings:</p>
+<pre class="cr-code"><code>p₁ = [0.01, 0.00, 0.01, 0.00]
+p₂ = [0.02, 0.01, 0.00, 0.01]
+p₃ = [0.03, 0.02, 0.01, 0.00]</code></pre>
+<h4>After addition</h4>
+<pre class="cr-code"><code>x₁' = [0.11, 0.20, 0.31, 0.40]
+x₂' = [0.52, 0.61, 0.10, 0.21]
+x₃' = [0.93, 0.12, 0.41, 0.70]</code></pre>
+<p>Meaning now each vector now knows:</p>
+<ul>
+<li><p><strong>Word meaning</strong></p></li>
+<li><p><strong>Its position in the sequence</strong></p></li>
+</ul>
+<h4>STEP 3: Create Query, Key, Value vectors (Masked Self-Attention)</h4>
+<p><em>We apply three linear layers:</em></p>
+<p><div class="cr-math"><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">Q</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.9694em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.0785em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">p</span><span class="mord mathnormal mtight">os</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">W</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">Q</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">K</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.9694em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.0785em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">p</span><span class="mord mathnormal mtight">os</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">W</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.07153em;">K</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">V</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.9694em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.0785em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">p</span><span class="mord mathnormal mtight">os</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">W</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.22222em;">V</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span></div></p>
+<p>Each token produces <strong>three vectors</strong>.</p>
+<h4>Example for token &quot;love&quot;</h4>
+<pre class="cr-code"><code>q₂ = [0.6, 0.2]
+k₂ = [0.4, 0.9]
+v₂ = [0.7, 0.1]</code></pre>
+<h4>Meaning of Q, K, V</h4>
+<ul>
+<li><p><strong>Query (Q)</strong> → what this token is looking for</p></li>
+<li><p><strong>Key (K)</strong> → what this token offers</p></li>
+<li><p><strong>Value (V)</strong> → information to pass if attended to</p></li>
+</ul>
+<h4>STEP 4: Compute attention scores</h4>
+<p>This produces a score matrix:</p>
+<pre class="cr-code"><code>I love transformers
+I s11 s12 s13
+love s21 s22 s23
+trans s31 s32 s33</code></pre>
+<h4>STEP 5: Apply causal (look-ahead) mask</h4>
+<p>Decoder must not see future tokens.</p>
+<pre class="cr-code"><code>I love transformers
+I 0 -∞ -∞
+love 0 0 -∞
+trans 0 0 0</code></pre>
+<p>Meaning:</p>
+<ul>
+<li>
+<p>Token 1 can only attend to token 1</p>
+</li>
+<li>
+<p>Token 2 → tokens 1 &amp; 2</p>
+</li>
+<li>
+<p>Token 3 → tokens 1, 2 &amp; 3</p>
+</li>
+</ul>
+<p>Apply mask: <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0044em;vertical-align:-0.31em;"></span><span class="mord text"><span class="mord">masked_scores</span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="mord text"><span class="mord">scores</span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord text"><span class="mord">mask</span></span><span class="mord text"><span class="mord">.</span></span></span></span></span> So Masked values become −∞.</p>
+<h4>STEP 6: Softmax → attention weights</h4>
+<p><div class="cr-math"><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7167em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0037em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mpunct mtight">,</span><span class="mord mathnormal mtight" style="margin-right:0.05724em;">j</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">softmax</span></span><span class="mopen">(</span><span class="mord text"><span class="mord">masked scores</span></span><span class="mclose">)</span></span></span></span></span></div>Example for "love":</p>
+<pre class="cr-code"><code>α₂ = [0.7, 0.3, 0.0]</code></pre>
+<p>Meaning:</p>
+<ul>
+<li>
+<p>70% attention to "I"</p>
+</li>
+<li>
+<p>30% to itself</p>
+</li>
+<li><pre class="cr-code"><code>0% to "transformers"</code></pre></li>
+</ul>
+<p>So future tokens get zero attention weight.</p>
+<h4>STEP 7: Weighted sum of Value vectors</h4>
+<p><div class="cr-math"><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.044em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.7638em;vertical-align:-1.4138em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.35em;"><span style="top:-1.8723em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">j</span></span></span></span><span style="top:-3.05em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span><span style="top:-4.3em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.4138em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0037em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mpunct mtight">,</span><span class="mord mathnormal mtight" style="margin-right:0.05724em;">j</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">v</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">j</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span></span></span></span></span></div>For "love":</p>
+<pre class="cr-code"><code>z₂ = 0.7·v₁ + 0.3·v₂</code></pre>
+<p>What z₂ represents</p>
+<ul>
+<li>
+<p>A context-aware representation</p>
+</li>
+<li>
+<p>Knows:</p>
+
+<ul>
+<li>
+<p>Meaning of "love"</p>
+</li>
+<li>
+<p>Relation to "I"</p>
+</li>
+<li>
+<p>Cannot see "transformers"</p>
+</li>
+</ul></li>
+</ul>
+<h4>STEP 8: Add &amp; Layer Normalization</h4>
+<p><div class="cr-math"><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">h</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.0361em;vertical-align:-0.2861em;"></span><span class="mord text"><span class="mord">LayerNorm</span></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.0785em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">p</span><span class="mord mathnormal mtight">os</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">Z</span><span class="mclose">)</span></span></span></span></span></div></p>
+<p>Meaning: Keeps original token info, Adds contextual info and Stabilizes training</p>
+<h4>STEP 9: Cross-Attention (decoder ↔︎ encoder)</h4>
+<p><em>Now the decoder looks at the encoder output.</em></p>
+<h4>Inputs</h4>
+<ul>
+<li>
+<p><strong>Query</strong> → decoder hidden states</p>
+</li>
+<li>
+<p><strong>Key, Value</strong> → encoder outputs</p>
+</li>
+</ul>
+<p>Same attention formula, but the Decoder asks questions and the encoder answers. Cross attention allows the decoder to attend to encoder outputs by using decoder states as queries and encoder states as keys and values, enabling the model to align and condition output tokens on the input sequence.</p>
+<h4>Output vectors now encode</h4>
+<ul>
+<li>
+<p>Past output context</p>
+</li>
+<li>
+<p>Input sentence relevance</p>
+</li>
+</ul>
+<h4>STEP 10: Feed-Forward Network (FFN)</h4>
+<p>For each token independently:</p>
+<p><div class="cr-math"><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">FFN</span></span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">GELU</span></span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">W</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal">b</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">W</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">b</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span></div></p>
+<p>It Learns complex nonlinear transformations and refines representation</p>
+<h4>STEP 11: Final linear layer + softmax</h4>
+<p><div class="cr-math"><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">t</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2083em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">softmax</span></span><span class="mopen">(</span><span class="mord mathnormal">h</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">W</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">o</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span></div>Output:</p>
+<pre class="cr-code"><code>P("transformers") = 0.72
+P("you") = 0.10
+P("it") = 0.05
+...</code></pre>
+<h4>Training</h4>
+<ul>
+<li>
+<p>Encoder and decoder run in parallel</p>
+</li>
+<li>
+<p>Cross-attention links them</p>
+</li>
+</ul>
+<h4>Inference</h4>
+<ul>
+<li>
+<p>Encoder runs once</p>
+</li>
+<li>
+<p>Decoder repeatedly queries encoder outputs</p>
+</li>
+</ul>
+<h4>Code to train Transformer from scratch</h4>
+<pre class="cr-code"><code><span class="kn">import</span><span class="w"> </span><span class="nn">tensorflow</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">tf</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tensorflow.keras</span><span class="w"> </span><span class="kn">import</span> <span class="n">layers</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="c1"># -------- Scaled Dot-Product Attention --------</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">scaled_dot_product_attention</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">V</span><span class="p">):</span>
+<span class="n">dk</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">K</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<span class="n">scores</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">transpose_b</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">/</span> <span class="n">tf</span><span class="o">.</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">dk</span><span class="p">)</span>
+<span class="n">weights</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">scores</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">weights</span><span class="p">,</span> <span class="n">V</span><span class="p">)</span>
+<span class="k">return</span> <span class="n">output</span>
+<span class="c1"># -------- Multi-Head Attention --------</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">MultiHeadAttention</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">Layer</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d_model</span><span class="p">,</span> <span class="n">num_heads</span><span class="p">):</span>
+<span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">num_heads</span> <span class="o">=</span> <span class="n">num_heads</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">d_model</span> <span class="o">=</span> <span class="n">d_model</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">depth</span> <span class="o">=</span> <span class="n">d_model</span> <span class="o">//</span> <span class="n">num_heads</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">WQ</span> <span class="o">=</span> <span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">d_model</span><span class="p">)</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">WK</span> <span class="o">=</span> <span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">d_model</span><span class="p">)</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">WV</span> <span class="o">=</span> <span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">d_model</span><span class="p">)</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">WO</span> <span class="o">=</span> <span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">d_model</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">split_heads</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">):</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_heads</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">depth</span><span class="p">))</span>
+<span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">perm</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+<span class="n">batch_size</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">x</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">Q</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">split_heads</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">WQ</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">batch_size</span><span class="p">)</span>
+<span class="n">K</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">split_heads</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">WK</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">batch_size</span><span class="p">)</span>
+<span class="n">V</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">split_heads</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">WV</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">batch_size</span><span class="p">)</span>
+<span class="n">attention</span> <span class="o">=</span> <span class="n">scaled_dot_product_attention</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">V</span><span class="p">)</span>
+<span class="n">attention</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">attention</span><span class="p">,</span> <span class="n">perm</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="n">concat</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">attention</span><span class="p">,</span> <span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">d_model</span><span class="p">))</span>
+<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">WO</span><span class="p">(</span><span class="n">concat</span><span class="p">)</span>
+<span class="c1"># -------- Feed Forward Network --------</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">feed_forward</span><span class="p">(</span><span class="n">d_model</span><span class="p">,</span> <span class="n">dff</span><span class="p">):</span>
+<span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Sequential</span><span class="p">([</span>
+<span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">dff</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s2">"relu"</span><span class="p">),</span>
+<span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">d_model</span><span class="p">)</span>
+<span class="p">])</span>
+<span class="c1"># -------- Encoder Layer --------</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">EncoderLayer</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">Layer</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d_model</span><span class="p">,</span> <span class="n">num_heads</span><span class="p">,</span> <span class="n">dff</span><span class="p">):</span>
+<span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">mha</span> <span class="o">=</span> <span class="n">MultiHeadAttention</span><span class="p">(</span><span class="n">d_model</span><span class="p">,</span> <span class="n">num_heads</span><span class="p">)</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">ffn</span> <span class="o">=</span> <span class="n">feed_forward</span><span class="p">(</span><span class="n">d_model</span><span class="p">,</span> <span class="n">dff</span><span class="p">)</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">norm1</span> <span class="o">=</span> <span class="n">layers</span><span class="o">.</span><span class="n">LayerNormalization</span><span class="p">()</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">norm2</span> <span class="o">=</span> <span class="n">layers</span><span class="o">.</span><span class="n">LayerNormalization</span><span class="p">()</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+<span class="n">attn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mha</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">norm1</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">attn</span><span class="p">)</span>
+<span class="n">ffn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ffn</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">norm2</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">ffn</span><span class="p">)</span>
+<span class="c1"># -------- Transformer Model --------</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Transformer</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vocab_size</span><span class="p">,</span> <span class="n">d_model</span><span class="p">,</span> <span class="n">num_heads</span><span class="p">,</span> <span class="n">dff</span><span class="p">):</span>
+<span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">embedding</span> <span class="o">=</span> <span class="n">layers</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span><span class="n">vocab_size</span><span class="p">,</span> <span class="n">d_model</span><span class="p">)</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">encoder</span> <span class="o">=</span> <span class="n">EncoderLayer</span><span class="p">(</span><span class="n">d_model</span><span class="p">,</span> <span class="n">num_heads</span><span class="p">,</span> <span class="n">dff</span><span class="p">)</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">pool</span> <span class="o">=</span> <span class="n">layers</span><span class="o">.</span><span class="n">GlobalAveragePooling1D</span><span class="p">()</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">fc</span> <span class="o">=</span> <span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s2">"sigmoid"</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+<span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">embedding</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">encoder</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pool</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fc</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="c1"># -------- Create Model --------</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">Transformer</span><span class="p">(</span>
+<span class="n">vocab_size</span><span class="o">=</span><span class="mi">5000</span><span class="p">,</span>
+<span class="n">d_model</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span>
+<span class="n">num_heads</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+<span class="n">dff</span><span class="o">=</span><span class="mi">128</span>
+<span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
+<span class="n">optimizer</span><span class="o">=</span><span class="s2">"adam"</span><span class="p">,</span>
+<span class="n">loss</span><span class="o">=</span><span class="s2">"binary_crossentropy"</span><span class="p">,</span>
+<span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s2">"accuracy"</span><span class="p">]</span>
+<span class="p">)</span>
+<span class="c1"># -------- Dummy Training Data --------</span>
+<span class="n">X_train</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5000</span><span class="p">,</span> <span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">20</span><span class="p">))</span>
+<span class="n">y_train</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="c1"># -------- Train --------</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span>
+<span class="c1"># -------- Save Model --------</span>
+<span class="n">model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">"transformer_model"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Model saved successfully!"</span><span class="p">)</span>
+<span class="c1"># =========================</span>
+<span class="c1"># LOAD MODEL LATER</span>
+<span class="c1"># =========================</span>
+<span class="n">loaded_model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span>
+<span class="s2">"transformer_model"</span><span class="p">,</span>
+<span class="n">custom_objects</span><span class="o">=</span><span class="p">{</span>
+<span class="s2">"Transformer"</span><span class="p">:</span> <span class="n">Transformer</span><span class="p">,</span>
+<span class="s2">"EncoderLayer"</span><span class="p">:</span> <span class="n">EncoderLayer</span><span class="p">,</span>
+<span class="s2">"MultiHeadAttention"</span><span class="p">:</span> <span class="n">MultiHeadAttention</span>
+<span class="p">}</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Model loaded successfully!"</span><span class="p">)</span>
+<span class="c1"># -------- Predict --------</span>
+<span class="n">test_sentence</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">12</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">89</span><span class="p">,</span> <span class="mi">203</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+<span class="n">prediction</span> <span class="o">=</span> <span class="n">loaded_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test_sentence</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Prediction:"</span><span class="p">,</span> <span class="n">prediction</span><span class="p">)</span></code></pre>
+<h2 id="s12-11"><span class="cr-num">12.11</span>Pre-training</h2>
+<p>Pretraining is the first training phase where a model learns general knowledge and patterns from a very large dataset, usually without a specific task in mind.</p>
+<p>OR</p>
+<p>Pretraining teaches the model the basics of language—grammar, meaning, and structure—by exposing it to massive amounts of text.</p>
+<p>Typical pretraining objectives</p>
+<ul>
+<li>
+<p>Next-token prediction (GPT)</p>
+</li>
+<li>
+<p>Masked language modeling (BERT)</p>
+</li>
+</ul>
+<h2 id="s12-12"><span class="cr-num">12.12</span>Fine-tuning</h2>
+<p>Fine-tuning is the second training phase where a pretrained model is adapted to a specific task using a smaller, labeled dataset. Fine-tuning teaches the model how to apply what it already knows to a particular job.</p>
+<p>How it works</p>
+<ul>
+<li>
+<p>Starts from a <strong>pretrained model</strong></p>
+</li>
+<li>
+<p>Trained on <strong>task-specific data</strong></p>
+</li>
+<li>
+<p>Updates:</p>
+
+<ul>
+<li>
+<p>All parameters (full fine-tuning), or</p>
+</li>
+<li>
+<p>A small subset (parameter-efficient tuning)</p>
+</li>
+</ul></li>
+</ul>
+<p><strong>Example</strong> Adapting a pretrained language model to Sentiment analysis, Question answering or Translation.</p>
+<h3 id="s12-12-1"><span class="cr-num">12.12.1</span>BERT architecture</h3>
+<p>BERT (Bidirectional Encoder Representations from Transformers) is a Transformer encoder-based model designed to understand language by looking at context from both left and right simultaneously. Used for:</p>
+<ul>
+<li>
+<p>Text classification</p>
+</li>
+<li>
+<p>Question answering</p>
+</li>
+<li>
+<p>Named entity recognition</p>
+</li>
+<li>
+<p>Sentence similarity</p>
+</li>
+</ul>
+<p><strong>BERT</strong> → <em>Understand text → Encoder only→ Sees future tokens during training → Not autoregressive</em></p>
+<h4>MLM (Masked Language Modeling)</h4>
+<p>MLM is a training objective where some words in a sentence are masked, and the model learns to predict the missing words using surrounding context.</p>
+<h4>NSP (Next Sentence Prediction)</h4>
+<p>NSP is a training task where the model learns to predict whether one sentence logically follows another sentence in the original text.</p>
+<figure class="cr-fig"><img alt="A diagram of a software coding process AI-generated content may be incorrect." class="cr-zoom" height="1662" loading="lazy" src="{{ '/images/book/ch12/image8.png' | relative_url }}" width="1342"/></figure>
+<p>Model.</p>
+<ul>
+<li>
+<p>L Layers.</p>
+</li>
+<li>
+<p>H Hidden layer size aka dimension of embeddings.</p>
+</li>
+<li>
+<p>A Attention heads operating in parallel</p>
+</li>
+</ul>
+<h4>Input representation</h4>
+<pre class="cr-code"><code>BERT input embedding = Token Embedding + Segment Embedding + Positional Embedding</code></pre>
+<p>Example input:</p>
+<pre class="cr-code"><code>[CLS] I love transformers [SEP]</code></pre>
+<p><em><strong>[CLS]</strong></em> is a special token added at the very beginning of the input sequence. It does not represent a real word. Its purpose is to store information about the entire sentence. <em><strong>[CLS]</strong></em> gets its own embedding vector. It participates in self-attention like every other token. It attends to all tokens and all tokens attend to it</p>
+<p><em><strong>[SEP]</strong></em> is used at the end of every sentence sequence BERT has no recurrence, so it needs explicit sentence boundaries. It tells the model where one sentence ends, and another begins and helps attention understand sentence structure.</p>
+<ul>
+<li><p><strong>[CLS] vector</strong> → used as output representation</p></li>
+<li><p><strong>[SEP] vector</strong> → used as a boundary marker, usually not used directly</p></li>
+</ul>
+<h4>Encoder layers (core of BERT)</h4>
+<p><em>BERT consists of</em> stacked Transformer encoder layers.</p>
+<p>Each encoder layer contains:</p>
+<ul>
+<li>
+<p>Bidirectional self-attention</p>
+</li>
+<li>
+<p>Feed-Forward Network (FFN)</p>
+</li>
+<li>
+<p>Residual connections + LayerNorm</p>
+</li>
+</ul>
+<p>Every word attends to <strong>all other words</strong> (left + right).</p>
+<h4>Bidirectional self-attention</h4>
+<p>Bidirectional self-attention is a mechanism where each token in a sequence can attend to all other tokens on both its left and right, allowing the model to capture full context for understanding each word.</p>
+<p>Example:</p>
+<ol type="a">
+<li>
+<p><strong>Input</strong>: Sequence of token embeddings, e.g.</p>
+</li>
+</ol>
+<pre class="cr-code"><code>"I love transformers" → [x₁, x₂, x₃]</code></pre>
+<ol start="2" type="a">
+<li>
+<p>Create Queries (Q), Keys (K), Values (V)</p>
+</li>
+</ol>
+<pre class="cr-code"><code>Q = X W_Q, K = X W_K, V = X W_V</code></pre>
+<ol start="3" type="a">
+<li>
+<p>Compute attention scores:</p>
+</li>
+</ol>
+<pre class="cr-code"><code>score_{i,j} = (Q_i · K_j) / sqrt(d_k)</code></pre>
+<p>Every token compares itself with all tokens in the sequence</p>
+<ol start="4" type="a">
+<li>
+<p>Softmax to get attention weights:</p>
+</li>
+</ol>
+<pre class="cr-code"><code>α_{i,j} = softmax(score_{i,j})</code></pre>
+<ol start="5" type="a">
+<li>
+<p>Weighted sum of values:</p>
+</li>
+</ol>
+<pre class="cr-code"><code>z_i = Σ_j α_{i,j} V_j</code></pre>
+<p>Each token now contains information from all tokens (both left and right)</p>
+<p><em>Why bidirectional?</em></p>
+<p>Some words need context from both sides:</p>
+<pre class="cr-code"><code>"bank" in "I went to the bank to deposit money"</code></pre>
+<ul>
+<li>
+<p>Left context: "I went to the"</p>
+</li>
+<li>
+<p>Right context: "to deposit money"</p>
+</li>
+</ul>
+<p>→ Only bidirectional attention captures the full meaning.</p>
+<h4>Pretraining objectives of BERT</h4>
+<p><em>Masked Language Modeling (MLM)</em></p>
+<ul>
+<li>
+<p>Random words are masked: I love [MASK]</p>
+</li>
+<li>
+<p>Model predicts: transformers</p>
+</li>
+</ul>
+<blockquote class="cr-note">
+<p>Learns <strong>bidirectional context</strong></p>
+</blockquote>
+<h4>Output of BERT</h4>
+<ul>
+<li>
+<p>Token-level embeddings → NER, POS tagging</p>
+</li>
+<li>
+<p>[CLS] embedding → classification tasks</p>
+</li>
+</ul>
+<h4>Code to Finetune BERT</h4>
+<pre class="cr-code"><code><span class="c1"># Install if needed:</span>
+<span class="c1"># pip install transformers datasets torch scikit-learn</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_dataset</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">transformers</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+<span class="n">BertTokenizerFast</span><span class="p">,</span>
+<span class="n">BertForSequenceClassification</span><span class="p">,</span>
+<span class="n">Trainer</span><span class="p">,</span>
+<span class="n">TrainingArguments</span><span class="p">,</span>
+<span class="n">pipeline</span>
+<span class="p">)</span>
+<span class="c1"># --------------------------------------------</span>
+<span class="c1"># 1. LOAD DATASET (CSV)</span>
+<span class="c1"># CSV format:</span>
+<span class="c1"># text,label</span>
+<span class="c1"># I love this movie,1</span>
+<span class="c1"># This is bad,0</span>
+<span class="c1"># --------------------------------------------</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span>
+<span class="s2">"csv"</span><span class="p">,</span>
+<span class="n">data_files</span><span class="o">=</span><span class="p">{</span>
+<span class="s2">"train"</span><span class="p">:</span> <span class="s2">"train.csv"</span><span class="p">,</span>
+<span class="s2">"test"</span><span class="p">:</span> <span class="s2">"test.csv"</span>
+<span class="p">}</span>
+<span class="p">)</span>
+<span class="c1"># --------------------------------------------</span>
+<span class="c1"># 2. LOAD TOKENIZER</span>
+<span class="c1"># --------------------------------------------</span>
+<span class="n">tokenizer</span> <span class="o">=</span> <span class="n">BertTokenizerFast</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">"bert-base-uncased"</span><span class="p">)</span>
+<span class="c1"># --------------------------------------------</span>
+<span class="c1"># 3. TOKENIZATION</span>
+<span class="c1"># --------------------------------------------</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">tokenize</span><span class="p">(</span><span class="n">batch</span><span class="p">):</span>
+<span class="k">return</span> <span class="n">tokenizer</span><span class="p">(</span>
+<span class="n">batch</span><span class="p">[</span><span class="s2">"text"</span><span class="p">],</span>
+<span class="n">padding</span><span class="o">=</span><span class="s2">"max_length"</span><span class="p">,</span>
+<span class="n">truncation</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="n">max_length</span><span class="o">=</span><span class="mi">128</span>
+<span class="p">)</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">tokenize</span><span class="p">,</span> <span class="n">batched</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">rename_column</span><span class="p">(</span><span class="s2">"label"</span><span class="p">,</span> <span class="s2">"labels"</span><span class="p">)</span>
+<span class="n">dataset</span><span class="o">.</span><span class="n">set_format</span><span class="p">(</span>
+<span class="nb">type</span><span class="o">=</span><span class="s2">"torch"</span><span class="p">,</span>
+<span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">"input_ids"</span><span class="p">,</span> <span class="s2">"attention_mask"</span><span class="p">,</span> <span class="s2">"labels"</span><span class="p">]</span>
+<span class="p">)</span>
+<span class="c1"># --------------------------------------------</span>
+<span class="c1"># 4. LOAD BERT MODEL</span>
+<span class="c1"># --------------------------------------------</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">BertForSequenceClassification</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span>
+<span class="s2">"bert-base-uncased"</span><span class="p">,</span>
+<span class="n">num_labels</span><span class="o">=</span><span class="mi">2</span>
+<span class="p">)</span>
+<span class="c1"># --------------------------------------------</span>
+<span class="c1"># 5. TRAINING CONFIG</span>
+<span class="c1"># --------------------------------------------</span>
+<span class="n">training_args</span> <span class="o">=</span> <span class="n">TrainingArguments</span><span class="p">(</span>
+<span class="n">output_dir</span><span class="o">=</span><span class="s2">"./bert_results"</span><span class="p">,</span>
+<span class="n">evaluation_strategy</span><span class="o">=</span><span class="s2">"epoch"</span><span class="p">,</span>
+<span class="n">save_strategy</span><span class="o">=</span><span class="s2">"epoch"</span><span class="p">,</span>
+<span class="n">learning_rate</span><span class="o">=</span><span class="mf">2e-5</span><span class="p">,</span>
+<span class="n">per_device_train_batch_size</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span>
+<span class="n">per_device_eval_batch_size</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span>
+<span class="n">num_train_epochs</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+<span class="n">weight_decay</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span>
+<span class="n">logging_dir</span><span class="o">=</span><span class="s2">"./logs"</span><span class="p">,</span>
+<span class="n">logging_steps</span><span class="o">=</span><span class="mi">50</span>
+<span class="p">)</span>
+<span class="c1"># --------------------------------------------</span>
+<span class="c1"># 6. TRAINER</span>
+<span class="c1"># --------------------------------------------</span>
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span>
+<span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+<span class="n">args</span><span class="o">=</span><span class="n">training_args</span><span class="p">,</span>
+<span class="n">train_dataset</span><span class="o">=</span><span class="n">dataset</span><span class="p">[</span><span class="s2">"train"</span><span class="p">],</span>
+<span class="n">eval_dataset</span><span class="o">=</span><span class="n">dataset</span><span class="p">[</span><span class="s2">"test"</span><span class="p">],</span>
+<span class="n">tokenizer</span><span class="o">=</span><span class="n">tokenizer</span>
+<span class="p">)</span>
+<span class="c1"># --------------------------------------------</span>
+<span class="c1"># 7. TRAIN</span>
+<span class="c1"># --------------------------------------------</span>
+<span class="n">trainer</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+<span class="c1"># --------------------------------------------</span>
+<span class="c1"># 8. SAVE MODEL &amp; TOKENIZER</span>
+<span class="c1"># --------------------------------------------</span>
+<span class="n">model</span><span class="o">.</span><span class="n">save_pretrained</span><span class="p">(</span><span class="s2">"bert_finetuned"</span><span class="p">)</span>
+<span class="n">tokenizer</span><span class="o">.</span><span class="n">save_pretrained</span><span class="p">(</span><span class="s2">"bert_finetuned"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Model saved successfully!"</span><span class="p">)</span>
+<span class="c1"># --------------------------------------------</span>
+<span class="c1"># 9. LOAD &amp; PREDICT</span>
+<span class="c1"># --------------------------------------------</span>
+<span class="n">classifier</span> <span class="o">=</span> <span class="n">pipeline</span><span class="p">(</span>
+<span class="s2">"text-classification"</span><span class="p">,</span>
+<span class="n">model</span><span class="o">=</span><span class="s2">"bert_finetuned"</span><span class="p">,</span>
+<span class="n">tokenizer</span><span class="o">=</span><span class="s2">"bert_finetuned"</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">classifier</span><span class="p">(</span><span class="s2">"I really love this product!"</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">classifier</span><span class="p">(</span><span class="s2">"This is the worst experience ever."</span><span class="p">))</span></code></pre>
+<h3 id="s12-12-2"><span class="cr-num">12.12.2</span>GPT architecture</h3>
+<p>GPT (Generative Pre-trained Transformer) is a Transformer decoder-based model designed to generate language by predicting the next token using only past context. Used for:</p>
+<ul>
+<li>
+<p>Text generation</p>
+</li>
+<li>
+<p>Chatbots</p>
+</li>
+<li>
+<p>Story writing</p>
+</li>
+<li>
+<p>Code generation</p>
+</li>
+<li>
+<p>Summarization</p>
+</li>
+</ul>
+<p><strong>GPT</strong> → <em>Generate text → Decoder only → Uses causal masking → Maintains generation realism→ Autoregressive text generation</em></p>
+<figure class="cr-fig"><img alt="GPT-2 architecture,(Heilbron et al., 2019)." class="cr-zoom" height="500" loading="lazy" src="{{ '/images/book/ch12/image9.png' | relative_url }}" width="231"/></figure>
+<h4>Input representation</h4>
+<pre class="cr-code"><code>GPT input = Token Embedding + Positional Embedding</code></pre>
+<p>Example: I love <em>No segment embeddings, no [CLS].</em></p>
+<h4>Decoder layers (core of GPT)</h4>
+<p>GPT consists of stacked Transformer decoder layers. Each decoder layer has:</p>
+<ul>
+<li>
+<p>Masked self-attention</p>
+</li>
+<li>
+<p>Feed-Forward Network (FFN)</p>
+</li>
+<li>
+<p>Residual connections + LayerNorm</p>
+</li>
+</ul>
+<h4>Masked self-attention (causal attention)</h4>
+<p>A token can only attend to past tokens, never future tokens.</p>
+<pre class="cr-code"><code>Example: "I love transformers"</code></pre>
+<p>While predicting <strong>"transformers"</strong>, GPT sees: "I", "love" but not "transformers" itself.</p>
+<h4>Pre-training objective of GPT</h4>
+<p>Next-Token Prediction: Model learns:</p>
+<pre class="cr-code"><code>P(wordₜ | word₁, word₂, ..., wordₜ₋₁)</code></pre>
+<p>Example:</p>
+<pre class="cr-code"><code>I love → transformers</code></pre>
+<p>Enables fluent text generation</p>
+<h4>Output of GPT</h4>
+<ul>
+<li>
+<p>Probability distribution over vocabulary</p>
+</li>
+<li>
+<p>Used to generate text token by token</p>
+</li>
+</ul>
+<h4>Code to finetune GPT</h4>
+<pre class="cr-code"><code><span class="c1"># ============================================</span>
+<span class="c1"># GPT-2 FINE-TUNING</span>
+<span class="c1"># ============================================</span>
+<span class="c1"># Install if needed:</span>
+<span class="c1"># pip install transformers datasets torch accelerate</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_dataset</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">transformers</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+<span class="n">GPT2TokenizerFast</span><span class="p">,</span>
+<span class="n">GPT2LMHeadModel</span><span class="p">,</span>
+<span class="n">Trainer</span><span class="p">,</span>
+<span class="n">TrainingArguments</span><span class="p">,</span>
+<span class="n">DataCollatorForLanguageModeling</span><span class="p">,</span>
+<span class="n">pipeline</span>
+<span class="p">)</span>
+<span class="c1"># --------------------------------------------</span>
+<span class="c1"># 1. LOAD DATASET (CSV)</span>
+<span class="c1"># CSV format:</span>
+<span class="c1"># text</span>
+<span class="c1"># Hello world</span>
+<span class="c1"># GPT is powerful</span>
+<span class="c1"># --------------------------------------------</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span>
+<span class="s2">"csv"</span><span class="p">,</span>
+<span class="n">data_files</span><span class="o">=</span><span class="p">{</span><span class="s2">"train"</span><span class="p">:</span> <span class="s2">"train.csv"</span><span class="p">}</span>
+<span class="p">)</span>
+<span class="c1"># --------------------------------------------</span>
+<span class="c1"># 2. LOAD TOKENIZER</span>
+<span class="c1"># --------------------------------------------</span>
+<span class="n">tokenizer</span> <span class="o">=</span> <span class="n">GPT2TokenizerFast</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">"gpt2"</span><span class="p">)</span>
+<span class="n">tokenizer</span><span class="o">.</span><span class="n">pad_token</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">eos_token</span> <span class="c1"># GPT needs this</span>
+<span class="c1"># --------------------------------------------</span>
+<span class="c1"># 3. TOKENIZATION</span>
+<span class="c1"># --------------------------------------------</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">tokenize</span><span class="p">(</span><span class="n">batch</span><span class="p">):</span>
+<span class="k">return</span> <span class="n">tokenizer</span><span class="p">(</span>
+<span class="n">batch</span><span class="p">[</span><span class="s2">"text"</span><span class="p">],</span>
+<span class="n">truncation</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="n">padding</span><span class="o">=</span><span class="s2">"max_length"</span><span class="p">,</span>
+<span class="n">max_length</span><span class="o">=</span><span class="mi">128</span>
+<span class="p">)</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">tokenize</span><span class="p">,</span> <span class="n">batched</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">remove_columns</span><span class="o">=</span><span class="p">[</span><span class="s2">"text"</span><span class="p">])</span>
+<span class="n">dataset</span><span class="o">.</span><span class="n">set_format</span><span class="p">(</span><span class="s2">"torch"</span><span class="p">)</span>
+<span class="c1"># --------------------------------------------</span>
+<span class="c1"># 4. LOAD GPT MODEL</span>
+<span class="c1"># --------------------------------------------</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">GPT2LMHeadModel</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">"gpt2"</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">resize_token_embeddings</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">tokenizer</span><span class="p">))</span>
+<span class="c1"># --------------------------------------------</span>
+<span class="c1"># 5. DATA COLLATOR (for LM)</span>
+<span class="c1"># --------------------------------------------</span>
+<span class="n">data_collator</span> <span class="o">=</span> <span class="n">DataCollatorForLanguageModeling</span><span class="p">(</span>
+<span class="n">tokenizer</span><span class="o">=</span><span class="n">tokenizer</span><span class="p">,</span>
+<span class="n">mlm</span><span class="o">=</span><span class="kc">False</span> <span class="c1"># IMPORTANT: GPT is causal LM</span>
+<span class="p">)</span>
+<span class="c1"># --------------------------------------------</span>
+<span class="c1"># 6. TRAINING CONFIG</span>
+<span class="c1"># --------------------------------------------</span>
+<span class="n">training_args</span> <span class="o">=</span> <span class="n">TrainingArguments</span><span class="p">(</span>
+<span class="n">output_dir</span><span class="o">=</span><span class="s2">"./gpt_results"</span><span class="p">,</span>
+<span class="n">overwrite_output_dir</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="n">num_train_epochs</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+<span class="n">per_device_train_batch_size</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+<span class="n">learning_rate</span><span class="o">=</span><span class="mf">5e-5</span><span class="p">,</span>
+<span class="n">weight_decay</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span>
+<span class="n">save_strategy</span><span class="o">=</span><span class="s2">"epoch"</span><span class="p">,</span>
+<span class="n">logging_steps</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+<span class="n">fp16</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span>
+<span class="p">)</span>
+<span class="c1"># --------------------------------------------</span>
+<span class="c1"># 7. TRAINER</span>
+<span class="c1"># --------------------------------------------</span>
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span>
+<span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+<span class="n">args</span><span class="o">=</span><span class="n">training_args</span><span class="p">,</span>
+<span class="n">train_dataset</span><span class="o">=</span><span class="n">dataset</span><span class="p">[</span><span class="s2">"train"</span><span class="p">],</span>
+<span class="n">data_collator</span><span class="o">=</span><span class="n">data_collator</span><span class="p">,</span>
+<span class="n">tokenizer</span><span class="o">=</span><span class="n">tokenizer</span>
+<span class="p">)</span>
+<span class="c1"># --------------------------------------------</span>
+<span class="c1"># 8. TRAIN</span>
+<span class="c1"># --------------------------------------------</span>
+<span class="n">trainer</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+<span class="c1"># --------------------------------------------</span>
+<span class="c1"># 9. SAVE MODEL</span>
+<span class="c1"># --------------------------------------------</span>
+<span class="n">model</span><span class="o">.</span><span class="n">save_pretrained</span><span class="p">(</span><span class="s2">"gpt_finetuned"</span><span class="p">)</span>
+<span class="n">tokenizer</span><span class="o">.</span><span class="n">save_pretrained</span><span class="p">(</span><span class="s2">"gpt_finetuned"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"GPT model fine-tuned and saved!"</span><span class="p">)</span>
+<span class="c1"># --------------------------------------------</span>
+<span class="c1"># 10. LOAD &amp; GENERATE TEXT</span>
+<span class="c1"># --------------------------------------------</span>
+<span class="n">generator</span> <span class="o">=</span> <span class="n">pipeline</span><span class="p">(</span>
+<span class="s2">"text-generation"</span><span class="p">,</span>
+<span class="n">model</span><span class="o">=</span><span class="s2">"gpt_finetuned"</span><span class="p">,</span>
+<span class="n">tokenizer</span><span class="o">=</span><span class="s2">"gpt_finetuned"</span>
+<span class="p">)</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">generator</span><span class="p">(</span>
+<span class="s2">"Deep learning is"</span><span class="p">,</span>
+<span class="n">max_length</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+<span class="n">num_return_sequences</span><span class="o">=</span><span class="mi">1</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">"generated_text"</span><span class="p">])</span></code></pre>
+<div class="cr-table"><table>
+
+<thead>
+<tr>
+<th><strong>Feature</strong></th>
+<th><strong>BERT</strong></th>
+<th><strong>GPT</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Full form</td>
+<td>Bidirectional Encoder Representations from Transformers</td>
+<td>Generative Pre-trained Transformer</td>
+</tr>
+<tr>
+<td>Transformer type</td>
+<td>Encoder-only</td>
+<td>Decoder-only</td>
+</tr>
+<tr>
+<td>Attention</td>
+<td>Bidirectional</td>
+<td>Causal (masked)</td>
+</tr>
+<tr>
+<td>Pretraining task</td>
+<td>MLM + NSP</td>
+<td>Next-token prediction</td>
+</tr>
+<tr>
+<td>Can generate text</td>
+<td>❌ No</td>
+<td>✅ Yes</td>
+</tr>
+<tr>
+<td>Context direction</td>
+<td>Both left &amp; right</td>
+<td>Left only</td>
+</tr>
+<tr>
+<td>Best for</td>
+<td>Understanding tasks</td>
+<td>Generation tasks</td>
+</tr>
+<tr>
+<td>Example models</td>
+<td>BERT, RoBERTa</td>
+<td>GPT-2, GPT-3, GPT-4</td>
+</tr>
+<tr>
+<td>Output type</td>
+<td>Embeddings</td>
+<td>Token probabilities</td>
+</tr>
+</tbody>
+</table></div>
+<div class="cr-table"><table>
+
+<thead>
+<tr>
+<th><strong>Model</strong></th>
+<th><strong>Year</strong></th>
+<th><strong>Architecture</strong></th>
+<th><strong>Base</strong></th>
+<th><strong>Direction</strong></th>
+<th><strong>Pretraining Task</strong></th>
+<th><strong>Fine-Tuning Task</strong></th>
+<th><strong>Input Tokens</strong></th>
+<th><strong>Output Type</strong></th>
+<th><strong>Strength / Use</strong></th>
+<th><strong>Notes</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>BERT</strong></td>
+<td>2018</td>
+<td>Transformer Encoder-only</td>
+<td>Encoder</td>
+<td>Bidirectional</td>
+<td>Masked Language Modeling (MLM) + Next Sentence Prediction (NSP)</td>
+<td>Classification, QA, NER, sentence-pair tasks</td>
+<td><code>[CLS] + tokens + [SEP]</code></td>
+<td>Token embeddings / <code>[CLS]</code> embedding</td>
+<td>Understanding text; sentence classification</td>
+<td>Uses <code>[CLS]</code> for sentence representation; bidirectional context; not autoregressive</td>
+</tr>
+<tr>
+<td><strong>RoBERTa</strong></td>
+<td>2019</td>
+<td>Transformer Encoder-only</td>
+<td>Encoder</td>
+<td>Bidirectional</td>
+<td>MLM only (NSP removed)</td>
+<td>Same as BERT</td>
+<td><code>[CLS] + tokens + [SEP]</code></td>
+<td>Token embeddings / <code>[CLS]</code></td>
+<td>Better understanding than BERT; robust to larger data</td>
+<td>Trained on more data; no NSP; dynamic masking</td>
+</tr>
+<tr>
+<td><strong>GPT-2 / GPT-3 / GPT-4</strong></td>
+<td>2019–2023</td>
+<td>Transformer Decoder-only</td>
+<td>Decoder</td>
+<td>Left-to-right (causal)</td>
+<td>Next-token prediction</td>
+<td>Text generation, summarization, chat, code generation</td>
+<td>Tokens only (no [CLS], [SEP])</td>
+<td>Next-token probabilities</td>
+<td>Generative tasks; autoregressive language modeling</td>
+<td>Uses masked self-attention; autoregressive; cannot look at future tokens</td>
+</tr>
+<tr>
+<td><strong>T5</strong></td>
+<td>2020</td>
+<td>Transformer Encoder-Decoder</td>
+<td>Encoder + Decoder</td>
+<td>Encoder: bidirectional, Decoder: causal</td>
+<td>Text-to-text objective (span corruption / denoising)</td>
+<td>Any text-to-text task (translation, summarization, QA)</td>
+<td>Input: text; Output: text</td>
+<td>Generated text (autoregressive)</td>
+<td>Flexible text-to-text framework; can do any NLP task</td>
+<td>Treats every problem as text generation; uses span corruption pretraining</td>
+</tr>
+<tr>
+<td><strong>LLaMA</strong></td>
+<td>2023</td>
+<td>Transformer Decoder-only</td>
+<td>Decoder</td>
+<td>Left-to-right (causal)</td>
+<td>Next-token prediction</td>
+<td>Generative tasks (chatbots, LLM applications)</td>
+<td>Tokens only</td>
+<td>Next-token probabilities</td>
+<td>Large-scale language model; foundation model for LLMs</td>
+<td>Efficient training; open-weight released by Meta; smaller models can match larger GPTs</td>
+</tr>
+<tr>
+<td><strong>BART</strong></td>
+<td>2019</td>
+<td>Encoder-Decoder</td>
+<td>Encoder + Decoder</td>
+<td>Encoder: bidirectional, Decoder: causal</td>
+<td>Denoising autoencoder (corrupt input, reconstruct)</td>
+<td>Text generation, summarization, translation</td>
+<td>Input: corrupted text</td>
+<td>Generated text</td>
+<td>Excellent for seq2seq generation</td>
+<td>Encoder learns understanding; decoder learns generation</td>
+</tr>
+<tr>
+<td><strong>DistilBERT</strong></td>
+<td>2019</td>
+<td>Transformer Encoder-only</td>
+<td>Encoder</td>
+<td>Bidirectional</td>
+<td>MLM + distillation from BERT</td>
+<td>Same as BERT</td>
+<td><code>[CLS] + tokens + [SEP]</code></td>
+<td>Token embeddings / <code>[CLS]</code></td>
+<td>Lightweight; faster inference</td>
+<td>Compressed version of BERT; 40% fewer parameters</td>
+</tr>
+<tr>
+<td><strong>ALBERT</strong></td>
+<td>2019</td>
+<td>Transformer Encoder-only</td>
+<td>Encoder</td>
+<td>Bidirectional</td>
+<td>MLM + Sentence-order prediction</td>
+<td>Same as BERT</td>
+<td><code>[CLS] + tokens + [SEP]</code></td>
+<td>Token embeddings / <code>[CLS]</code></td>
+<td>Efficient training with parameter sharing</td>
+<td>Uses factorized embedding; cross-layer parameter sharing</td>
+</tr>
+</tbody>
+</table></div>
+<div class="cr-table"><table>
+
+<thead>
+<tr>
+<th><strong>Model</strong></th>
+<th><strong>Year</strong></th>
+<th><strong>Architecture</strong></th>
+<th><strong>Base</strong></th>
+<th><strong>Purpose / Strength</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>XLNet</strong></td>
+<td>2019</td>
+<td>Encoder-only</td>
+<td>Permutation-based</td>
+<td>Bidirectional context like BERT but uses autoregressive permutation; better for language understanding</td>
+</tr>
+<tr>
+<td><strong>ERNIE (Baidu / Tsinghua)</strong></td>
+<td>2019+</td>
+<td>Encoder-only</td>
+<td>Encoder</td>
+<td>Knowledge-enhanced pretraining; incorporates world knowledge into embeddings</td>
+</tr>
+<tr>
+<td><strong>ELECTRA</strong></td>
+<td>2020</td>
+<td>Encoder-only</td>
+<td>Encoder</td>
+<td>Replaces MLM with replaced-token detection; more sample-efficient than BERT</td>
+</tr>
+<tr>
+<td><strong>Pegasus</strong></td>
+<td>2020</td>
+<td>Encoder-decoder</td>
+<td>Encoder + Decoder</td>
+<td>Optimized for text summarization; uses gap-sentence generation pretraining</td>
+</tr>
+<tr>
+<td><strong>DeBERTa</strong></td>
+<td>2021</td>
+<td>Encoder-only</td>
+<td>Encoder</td>
+<td>Decoding-enhanced BERT; better modeling of word order and relative position</td>
+</tr>
+<tr>
+<td><strong>OPT</strong></td>
+<td>2022</td>
+<td>Decoder-only</td>
+<td>Decoder</td>
+<td>Open Pretrained Transformer (Meta) for generative LLM tasks, GPT-style</td>
+</tr>
+<tr>
+<td><strong>GLM (General Language Model)</strong></td>
+<td>2022</td>
+<td>Encoder-decoder</td>
+<td>Encoder + Decoder</td>
+<td>Supports both understanding and generation in one model</td>
+</tr>
+<tr>
+<td><strong>PaLM</strong></td>
+<td>2022</td>
+<td>Decoder-only</td>
+<td>Decoder</td>
+<td>Large-scale LLM; text generation and reasoning</td>
+</tr>
+<tr>
+<td><strong>Claude (Anthropic)</strong></td>
+<td>2023</td>
+<td>Decoder-only</td>
+<td>Decoder</td>
+<td>Instruction-following LLM, GPT-style</td>
+</tr>
+<tr>
+<td><strong>MPT (MosaicML)</strong></td>
+<td>2023</td>
+<td>Decoder-only</td>
+<td>Decoder</td>
+<td>Efficient LLM for long-context generation</td>
+</tr>
+<tr>
+<td><strong>Flan-T5 / FLAN series</strong></td>
+<td>2022–2023</td>
+<td>Encoder-decoder</td>
+<td>Encoder + Decoder</td>
+<td>Instruction-tuned T5 models for reasoning and generation</td>
+</tr>
+<tr>
+<td><strong>Chinchilla</strong></td>
+<td>2022</td>
+<td>Decoder-only</td>
+<td>Decoder</td>
+<td>Efficient LLM with compute-optimal scaling</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="s12-13"><span class="cr-num">12.13</span>Evaluation Metrics (NLP)</h2>
+<h4>Classification</h4>
+<div class="cr-table"><table>
+
+<thead>
+<tr>
+<th><strong>Metric</strong></th>
+<th><strong>Meaning</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Accuracy</td>
+<td>Overall correctness</td>
+</tr>
+<tr>
+<td>Precision</td>
+<td>Quality</td>
+</tr>
+<tr>
+<td>Recall</td>
+<td>Coverage</td>
+</tr>
+<tr>
+<td>F1-score</td>
+<td>Balance</td>
+</tr>
+</tbody>
+</table></div>
+<h4>Generation</h4>
+<div class="cr-table"><table>
+
+<thead>
+<tr>
+<th><strong>Metric</strong></th>
+<th><strong>Use</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BLEU</td>
+<td>Translation</td>
+</tr>
+<tr>
+<td>ROUGE</td>
+<td>Summarization</td>
+</tr>
+</tbody>
+</table></div>
+<figure class="cr-fig"><img alt="A group of text boxes AI-generated content may be incorrect." class="cr-zoom" height="694" loading="lazy" src="{{ '/images/book/ch12/image10.png' | relative_url }}" width="1600"/></figure>
+            </div>
+
+            <nav class="cr-pn" aria-label="Chapters">
+                <a class="cr-prev" href="{{ '/book/chapter-11/' | relative_url }}"><small>← Previous · Chapter 11</small><strong>Gated Recurrent Units (GRU)</strong></a>
+                <a class="cr-next" href="{{ '/book/chapter-13/' | relative_url }}"><small>Next · Chapter 13 →</small><strong>Large Language Models</strong></a>
+            </nav>
+            <div class="cr-fb">
+                <span>Spotted a mistake or have a suggestion for this chapter?</span>
+                <a href="mailto:owaiskhana635@gmail.com?subject=Feedback%20on%20Chapter%2012%3A%20The%20Transformer%20Architecture">Send feedback →</a>
+            </div>
+        </article>
+
+    </div>
+</div>
