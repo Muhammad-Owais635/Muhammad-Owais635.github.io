@@ -101,6 +101,8 @@
                href="{{ '/projects/' | relative_url }}">Projects</a></li>
             <li><a class="hover:text-gray-500 dark:hover:text-gray-300 transition {% if page.url == '/talks/' %}font-semibold{% endif %}"
                href="{{ '/talks/' | relative_url }}">Talks</a></li>
+            <li><a class="hover:text-gray-500 dark:hover:text-gray-300 transition {% if page.url contains '/book/' %}font-semibold{% endif %}"
+               href="{{ '/book/' | relative_url }}">Book</a></li>
             
             <!--  <li><a class="hover:text-gray-500 dark:hover:text-gray-300 transition" href="{{ '/#mentorship' | relative_url }}">Mentorship</a></li> -->
             <!-- <li><a class="hover:text-gray-500 dark:hover:text-gray-300 transition" href="{{ '/#awards' | relative_url }}">Awards</a></li> -->
@@ -138,6 +140,7 @@
             <li><a href="{{ '/experience/' | relative_url }}" onclick="closeMenu()">Teaching</a></li>
             <li><a href="{{ '/projects/' | relative_url }}" onclick="closeMenu()">Projects</a></li>
             <li><a href="{{ '/talks/' | relative_url }}" onclick="closeMenu()">Talks</a></li>
+            <li><a href="{{ '/book/' | relative_url }}" onclick="closeMenu()">Book</a></li>
             <!-- <li><a href="{{ '/#mentorship' | relative_url }}" onclick="closeMenu()">Mentorship</a></li>  -->
             <!-- <li><a href="{{ '/#awards' | relative_url }}" onclick="closeMenu()">Awards</a></li> -->
             <!-- <li><a href="{{ '/#certifications' | relative_url }}" onclick="closeMenu()">Certifications</a></li> -->
