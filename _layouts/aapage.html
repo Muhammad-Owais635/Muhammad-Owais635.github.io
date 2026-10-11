@@ -1,0 +1,159 @@
+<style>
+    /* More space between the navbar and the top edge of the screen */
+    #navbar {
+        padding-top: 22px;
+        padding-bottom: 22px;
+    }
+    @media (min-width: 768px) {
+        #navbar {
+            padding-top: 28px;
+            padding-bottom: 28px;
+        }
+    }
+
+    /* Same logo height in light and dark mode, so the navbar (and the menu
+       inside it) sits at exactly the same distance from the top in both themes.
+       The light logo is square and the dark logo is wide, so a fixed WIDTH
+       made them different heights. */
+    #navbar > a {
+        display: flex;
+        align-items: center;
+        height: 22px;
+    }
+    #navbar > a img {
+        height: 22px;
+        width: auto;
+        max-width: none;
+        object-fit: contain;
+    }
+    @media (min-width: 768px) {
+        #navbar > a,
+        #navbar > a img { height: 28px; }
+    }
+
+    /* Centre the desktop menu on the page: the logo side and the icon side
+       get equal width, so the menu sits exactly in the middle */
+    @media (min-width: 1200px) {
+        #navbar > a,
+        #navbar > div {
+            flex: 1 1 0;
+        }
+        #navbar > div {
+            justify-content: flex-end;
+        }
+    }
+
+    /* ---------- Compact bar after scrolling ----------
+       When the page is scrolled, the bar gets its background (added by the
+       layout script) and also becomes slimmer: less padding, smaller logo,
+       slimmer menu pill and smaller icons. */
+    #navbar,
+    #navbar > a,
+    #navbar > a img,
+    #navLink,
+    #navbar > div img {
+        transition: padding 0.3s ease, height 0.3s ease, width 0.3s ease,
+                    background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    #navbar.nav-compact {
+        padding-top: 8px;
+        padding-bottom: 8px;
+    }
+    #navbar.nav-compact > a,
+    #navbar.nav-compact > a img { height: 20px; }
+    #navbar.nav-compact #navLink { padding-top: 8px; padding-bottom: 8px; }
+    #navbar.nav-compact > div button:first-child img { width: 18px; }
+    #navbar.nav-compact > div button:last-child img { width: 22px; }
+    @media (min-width: 768px) {
+        #navbar.nav-compact {
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+        #navbar.nav-compact > a,
+        #navbar.nav-compact > a img { height: 24px; }
+    }
+</style>
+
+<nav id="navbar" class="w-full fixed px-5 lg:px-8 xl:px-[8%] py-4 flex items-center justify-between z-50">
+
+    <p class="bg-white bg-opacity-50 backdrop-blur-lg shadow-sm dark:bg-darkTheme dark:shadow-white/20 sr-only">
+        Hidden
+    </p>
+
+    <a href="{{ '/' | relative_url }}">
+        <img src="{{ '/assets/logobright.png' | relative_url }}"
+             alt="Logo"
+             class="w-28 cursor-pointer mr-14 dark:hidden" />
+
+        <img src="{{ '/assets/logodark.png' | relative_url }}"
+             alt="Logo"
+             class="w-28 cursor-pointer mr-14 hidden dark:block" />
+    </a>
+        <ul id="navLink"
+        class="hidden md:flex items-center gap-6 lg:gap-8 rounded-full px-12 py-3 bg-white shadow-sm bg-opacity-50 font-Ovo dark:border dark:border-white/30 dark:bg-transparent">
+
+            <li><a class="hover:text-gray-500 dark:hover:text-gray-300 transition" href="{{ '/#top' | relative_url }}">Home</a></li>
+            <li><a class="hover:text-gray-500 dark:hover:text-gray-300 transition {% if page.url == '/publications/' %}font-semibold{% endif %}"
+               href="{{ '/publications/' | relative_url }}">Research</a></li>
+            <li><a class="hover:text-gray-500 dark:hover:text-gray-300 transition {% if page.url == '/experience/' %}font-semibold{% endif %}"
+               href="{{ '/experience/' | relative_url }}">Teaching</a></li>
+            <li><a class="hover:text-gray-500 dark:hover:text-gray-300 transition {% if page.url == '/projects/' %}font-semibold{% endif %}"
+               href="{{ '/projects/' | relative_url }}">Projects</a></li>
+            <li><a class="hover:text-gray-500 dark:hover:text-gray-300 transition {% if page.url == '/talks/' %}font-semibold{% endif %}"
+               href="{{ '/talks/' | relative_url }}">Talks</a></li>
+            
+            <!--  <li><a class="hover:text-gray-500 dark:hover:text-gray-300 transition" href="{{ '/#mentorship' | relative_url }}">Mentorship</a></li> -->
+            <!-- <li><a class="hover:text-gray-500 dark:hover:text-gray-300 transition" href="{{ '/#awards' | relative_url }}">Awards</a></li> -->
+            <!-- <li><a class="hover:text-gray-500 dark:hover:text-gray-300 transition" href="{{ '/#certifications' | relative_url }}">Certifications</a></li> -->
+            <!-- <li><a class="hover:text-gray-500 dark:hover:text-gray-300 transition" href="{{ '/#gallary' | relative_url }}">Gallary</a></li> -->
+            <!-- <li><a class="hover:text-gray-500 dark:hover:text-gray-300 transition" href="{{ '/#contact' | relative_url }}">Contact</a></li> -->
+        </ul>
+
+     <div class="flex items-center gap-4">
+            <button onclick="toggleTheme()">
+                <img src="{{ '/assets/moon_icon.png' | relative_url }}"  alt="" class="w-5 dark:hidden" />
+                <img src="{{ '/assets/sun_icon.png' | relative_url }}" alt="" class="w-5 hidden dark:block" />
+                 
+            </button> 
+        <button class="block md:hidden ml-3" onclick="openMenu()">
+            
+            <img  src="{{ '/assets/menu-black.png' | relative_url }}" class="w-6 dark:hidden" />
+            <img src="{{ '/assets/menu-white.png' | relative_url }}" class="w-6 hidden dark:block" />
+            </button>
+
+        </div>
+             
+        <!-- ----- mobile menu ------ -->
+        <ul id="mobileMenu"
+            class="flex md:hidden flex-col gap-4 py-20 px-10 fixed -right-64 top-0 bottom-0 w-64 z-50 h-screen bg-rose-50 transition duration-500 font-Ovo dark:bg-darkHover dark:text-white">
+
+            <div class="absolute right-6 top-6" onclick="closeMenu()">
+                
+                <img src="{{ '/assets/close-black.png' | relative_url }}" alt="" class="w-5 cursor-pointer dark:hidden" />
+                <img src="{{ '/assets/close-white.png' | relative_url }}" alt="" class="w-5 cursor-pointer hidden dark:block" />
+            </div>
+
+            <li><a href="{{ '/' | relative_url }}" onclick="closeMenu()">Home</a></li>
+            <li><a href="{{ '/publications/' | relative_url }}" onclick="closeMenu()">Research</a></li>
+            <li><a href="{{ '/experience/' | relative_url }}" onclick="closeMenu()">Teaching</a></li>
+            <li><a href="{{ '/projects/' | relative_url }}" onclick="closeMenu()">Projects</a></li>
+            <li><a href="{{ '/talks/' | relative_url }}" onclick="closeMenu()">Talks</a></li>
+            <!-- <li><a href="{{ '/#mentorship' | relative_url }}" onclick="closeMenu()">Mentorship</a></li>  -->
+            <!-- <li><a href="{{ '/#awards' | relative_url }}" onclick="closeMenu()">Awards</a></li> -->
+            <!-- <li><a href="{{ '/#certifications' | relative_url }}" onclick="closeMenu()">Certifications</a></li> -->
+            <!-- <li><a href="{{ '/#gallary' | relative_url }}" onclick="closeMenu()">Gallary</a></li> -->
+            <!-- <li><a href="{{ '/#contact' | relative_url }}" onclick="closeMenu()">Contact</a></li> -->
+        </ul>
+                
+
+    </nav>
+
+<script>
+    /* Slim the navbar once the page is scrolled */
+    (function () {
+        var nav = document.getElementById('navbar');
+        function update() { nav.classList.toggle('nav-compact', window.scrollY > 50); }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+</script>
