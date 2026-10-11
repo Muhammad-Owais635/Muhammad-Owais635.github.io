@@ -1,165 +1,426 @@
-    <div id="talks" class="transparent-theme mt-20 w-full px-[12%] py-10 scroll-mt-20">
+<!-- =====================================================================
+     TALKS & PRESENTATIONS PAGE
+     Same design as the Publications page (self-contained styles, prefix "tk-"),
+     so it does not depend on the pre-built Tailwind file.
+====================================================================== -->
+<style>
+    .tk-page {
+        --tk-text: #111827;
+        --tk-muted: #6b7280;
+        --tk-soft: #4b5563;
+        --tk-line: #e5e7eb;
+        --tk-hover: #fafafa;
+        --tk-accent: #b820e6;
+        --tk-accent-2: #da7d20;
+        --tk-chip-bg: #ffffff;
 
-        <!-- <h2 class="text-center text-5xl font-Ovo mb-20"></h2> -->
-        <div class="section-container border border-gray-300 dark:border-white/30 rounded-xl p-6 hover: hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:bg-darkHover dark:hover:shadow-white">
-           
+        background: #ffffff;
+        color: var(--tk-text);
+        font-family: Outfit, sans-serif;
+        min-height: 100vh;
+        /* space below the fixed navbar */
+        padding: 140px 24px 96px;
+    }
+    .dark .tk-page {
+        --tk-text: #ffffff;
+        --tk-muted: rgba(255, 255, 255, 0.55);
+        --tk-soft: rgba(255, 255, 255, 0.78);
+        --tk-line: rgba(255, 255, 255, 0.15);
+        --tk-hover: #2a004a;
+        --tk-chip-bg: transparent;
+        background: #11001f;
+    }
 
-                        <h4 class="text-center mb-2 text-lg font-Ovo">Academic Engagement</h4>
-                        <h2 class="text-center text-5xl font-Ovo">Talks & Presentations</h2>
-                    
-                        <p class="text-center max-w-2xl mx-auto mt-5 mb-12 font-Ovo">
-                            Invited talks, conference presentations, and academic engagements
-                        </p>
-                    
-                        <div class="grid grid-cols-auto my-10 gap-5 dark:text-black flex flex-col  mt-12 gap-6 w-full px-[12%] py-10 scroll-mt-20 font-Ovo">
-                    
-                            <!-- Talk 1 -->
-                         <a href="{{ '/talks/complex-networks/' | relative_url }}">
-                            <div class="aspect-square bg-no-repeat bg-cover bg-center rounded-lg relative cursor-pointer group border border-white/40 dark:border-white/60"
-                                style="background-image: url('/images/Complex4.jpg');">
-                               
-                                <div class="bg-white w-10/12 rounded-md absolute bottom-5 left-1/2 -translate-x-1/2 py-3 px-5 flex items-center justify-between duration-500 group-hover:bottom-7">
-                                 
-                                        <div>
-                                        <h2 class="font-semibold">Complex Net.</h2>
-                                        <p class="text-sm text-gray-700">Dec 11, 2025</p>
-                                    </div>
-                        
-                    
-                                    <div class="border rounded-full border-black w-9 aspect-square flex items-center justify-center shadow-[2px_2px_0_#000] group-hover:bg-lime-300 transition">
-                                        <img src="./assets/send-icon.png" alt="" class="w-5">
-                                    </div>
-                                </div>
-                              
-                            </div>
-                           </a>
+    .tk-wrap {
+        max-width: 880px;
+        margin: 0 auto;
+    }
 
-                            <!-- Talk 2 -->
-                         <a href="{{ '/talks/itecuet/' | relative_url }}">
-                            <div class="aspect-square bg-no-repeat bg-cover bg-center rounded-lg relative cursor-pointer group border border-white/40 dark:border-white/60"
-                                style="background-image: url('/images/itecuet2.jpeg');">
-                               
-                                <div class="bg-white w-10/12 rounded-md absolute bottom-5 left-1/2 -translate-x-1/2 py-3 px-5 flex items-center justify-between duration-500 group-hover:bottom-7">
-                                 
-                                        <div>
-                                        <h2 class="font-semibold">ITEC, UET</h2>
-                                        <p class="text-sm text-gray-700">Feb 12, 2025</p>
-                                    </div>
-                        
-                    
-                                    <div class="border rounded-full border-black w-9 aspect-square flex items-center justify-center shadow-[2px_2px_0_#000] group-hover:bg-lime-300 transition">
-                                        <img src="./assets/send-icon.png" alt="" class="w-5">
-                                    </div>
-                                </div>
-                              
-                            </div>
-                           </a>
+    /* ---------- Header ---------- */
+    .tk-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-family: Ovo, serif;
+        font-size: 15px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--tk-muted);
+    }
+    .tk-eyebrow::before {
+        content: "";
+        width: 32px;
+        height: 2px;
+        border-radius: 2px;
+        background: linear-gradient(to right, var(--tk-accent), var(--tk-accent-2));
+    }
+    .tk-title {
+        font-family: Ovo, serif;
+        font-size: 52px;
+        line-height: 1.1;
+        margin: 14px 0 0;
+        color: var(--tk-text);
+    }
+    .tk-intro {
+        margin-top: 22px;
+        font-size: 18px;
+        line-height: 1.8;
+        color: var(--tk-soft);
+        max-width: 720px;
+    }
 
-                          <!-- Talk 3 -->
-                         <a href="{{ '/talks/icost/' | relative_url }}">
-                            <div class="aspect-square bg-no-repeat bg-cover bg-center rounded-lg relative cursor-pointer group border border-white/40 dark:border-white/60"
-                                style="background-image: url('/images/icost-conference2.jpeg');">
-                         
-                                <div class="bg-white w-10/12 rounded-md absolute bottom-5 left-1/2 -translate-x-1/2 py-3 px-5 flex items-center justify-between duration-500 group-hover:bottom-7">
-                                    <div>
-                                        <h2 class="font-semibold">ICOSST (IEEE)</h2>
-                                        <p class="text-sm text-gray-700">Dec 26, 2024</p>
-                                    </div>
-                    
-                                    <div class="border rounded-full border-black w-9 aspect-square flex items-center justify-center shadow-[2px_2px_0_#000] group-hover:bg-lime-300 transition">
-                                        <img src="./assets/send-icon.png" alt="" class="w-5">
-                                    </div>
-                                </div>
-                                
-                                
-                            </div>
-                      </a>
+    /* ---------- Jump chips ---------- */
+    .tk-chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 32px;
+    }
+    .tk-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 18px;
+        border: 1px solid #d1d5db;
+        border-radius: 9999px;
+        background: var(--tk-chip-bg);
+        font-family: Ovo, serif;
+        font-size: 15px;
+        line-height: 1.4;
+        color: var(--tk-text) !important;
+        text-decoration: none !important;
+        transition: background 0.2s, border-color 0.2s;
+    }
+    .dark .tk-chip { border-color: rgba(255, 255, 255, 0.3); }
+    .tk-chip:hover { background: var(--tk-hover); border-color: #9ca3af; }
+    .dark .tk-chip:hover { border-color: var(--tk-accent); }
+    .tk-chip span {
+        font-family: Outfit, sans-serif;
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 18px;
+        color: #ffffff;
+        background: linear-gradient(to right, var(--tk-accent), var(--tk-accent-2));
+        border-radius: 9999px;
+        padding: 1px 8px;
+    }
 
-                          <!-- Talk 4 -->
-                     <a href="{{ '/talks/tevmlai/' | relative_url }}">
-                            <div class="aspect-square bg-no-repeat bg-cover bg-center rounded-lg relative cursor-pointer group extra-talk hidden border border-white/40 dark:border-white/60"
-                                style="background-image: url('/images/ml-itec-talk-3.jpeg');">
-                    
-                                <div class="bg-white w-10/12 rounded-md absolute bottom-5 left-1/2 -translate-x-1/2 py-3 px-5 flex items-center justify-between duration-500 group-hover:bottom-7">
-                                    <div>
-                                        <h2 class="font-semibold">TEVTA (ML&AI)</h2>
-                                        <p class="text-sm text-gray-700">Nov 19, 2024</p>
-                                    </div>
-                    
-                                    <div class="border rounded-full border-black w-9 aspect-square flex items-center justify-center shadow-[2px_2px_0_#000] group-hover:bg-lime-300 transition">
-                                        <img src="./assets/send-icon.png" alt="" class="w-5">
-                                    </div>
-                                </div>
-                            </div>
-                       </a>
-                    
-                           
+    /* ---------- Section ---------- */
+    .tk-section { margin-top: 72px; scroll-margin-top: 120px; }
+    .tk-section-title {
+        font-family: Ovo, serif;
+        font-size: 28px;
+        line-height: 1.3;
+        color: var(--tk-text);
+        padding-bottom: 14px;
+        border-bottom: 1px solid var(--tk-line);
+    }
 
-                          <!-- Talk 5 -->
-                      <a href="{{ '/talks/trvpython/' | relative_url }}">
-                            <div class="aspect-square bg-no-repeat bg-cover bg-center rounded-lg relative cursor-pointer group extra-talk hidden border border-white/40 dark:border-white/60"
-                                style="background-image: url('/images/tevta-python-2.jpeg');">
-                    
-                                <div class="bg-white w-10/12 rounded-md absolute bottom-5 left-1/2 -translate-x-1/2 py-3 px-5 flex items-center justify-between duration-500 group-hover:bottom-7">
-                                    <div>
-                                        <h2 class="font-semibold">TEVTA (Python)</h2>
-                                        <p class="text-sm text-gray-700">Sep 20, 2024</p>
-                                    </div>
-                    
-                                    <div class="border rounded-full border-black w-9 aspect-square flex items-center justify-center shadow-[2px_2px_0_#000] group-hover:bg-lime-300 transition">
-                                        <img src="./assets/send-icon.png" alt="" class="w-5">
-                                    </div>
-                                </div>
-                            </div>
-                       </a>
+    /* ---------- Talk row ---------- */
+    .tk-item {
+        display: grid;
+        grid-template-columns: 72px 1fr 176px;
+        gap: 24px;
+        align-items: start;
+        padding: 24px 16px;
+        margin: 0 -16px;
+        border-bottom: 1px solid var(--tk-line);
+        transition: background 0.2s;
+    }
+    .tk-item:hover { background: var(--tk-hover); }
 
-                    
-                           
-                    
-                           
-                         <!-- Talk 6 -->
-                         
-                      <a href="{{ '/talks/codex/' | relative_url }}">
-                            <div class="aspect-square bg-no-repeat bg-cover bg-center rounded-lg relative cursor-pointer group extra-talk hidden border border-white/40 dark:border-white/60"
-                                style="background-image: url('/images/codeex-2024-1.jpeg');">
-                    
-                                <div class="bg-white w-10/12 rounded-md absolute bottom-5 left-1/2 -translate-x-1/2 py-3 px-5 flex items-center justify-between duration-500 group-hover:bottom-7">
-                                    <div>
-                                        <h2 class="font-semibold">Codex 2025</h2>
-                                        <p class="text-sm text-gray-700">April 14, 2024</p>
-                                    </div>
-                    
-                                    <div class="border rounded-full border-black w-9 aspect-square flex items-center justify-center shadow-[2px_2px_0_#000] group-hover:bg-lime-300 transition">
-                                        <img src="./assets/send-icon.png" alt="" class="w-5">
-                                    </div>
-                                </div>
-                            </div>
-                    
-                        </div>
-                        </a>
-                        <a href="#"
-                        id="showMoreBtn"
-                        class="w-max flex items-center justify-center gap-2 text-gray-700 border border-gray-300 dark:border-white/25 hover:bg-slate-100/70 dark:hover:bg-darkHover rounded-full py-2 px-8 mx-auto duration-300 dark:text-white">
-                            Show more
-                        </a>
-                        </div>
-  
+    .tk-year {
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--tk-muted);
+        padding-top: 3px;
+    }
+    .tk-talk-title {
+        display: block;
+        font-size: 19px;
+        font-weight: 600;
+        line-height: 1.45;
+        color: var(--tk-text) !important;
+        text-decoration: none !important;
+    }
+    a.tk-talk-title:hover { color: #2563eb !important; }
+    .dark a.tk-talk-title:hover { color: #60a5fa !important; }
 
-    
+    .tk-venue {
+        margin-top: 6px;
+        font-size: 15px;
+        line-height: 1.6;
+        color: var(--tk-muted);
+    }
+    .tk-meta {
+        margin-top: 2px;
+        font-size: 14px;
+        line-height: 1.6;
+        color: var(--tk-muted);
+    }
+    .tk-tag {
+        display: inline-block;
+        margin-left: 6px;
+        padding: 0 10px;
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 20px;
+        border-radius: 9999px;
+        color: #4b5563;
+        background: #e5e7eb;
+        vertical-align: 1px;
+    }
+    .dark .tk-tag { color: #e9a6ff; background: rgba(184, 32, 230, 0.25); }
+
+    .tk-desc {
+        margin-top: 10px;
+        font-size: 16px;
+        line-height: 1.75;
+        color: var(--tk-soft);
+    }
+
+    .tk-actions { margin-top: 14px; }
+    .tk-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 16px;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 1.6;
+        border: 1px solid #d1d5db;
+        border-radius: 9999px;
+        color: var(--tk-text) !important;
+        background: var(--tk-chip-bg);
+        text-decoration: none !important;
+        transition: background 0.2s, border-color 0.2s;
+    }
+    .dark .tk-btn { border-color: rgba(255, 255, 255, 0.3); }
+    .tk-btn:hover { border-color: #9ca3af; background: #f3f4f6; }
+    .dark .tk-btn:hover { border-color: var(--tk-accent); background: #11001f; }
+
+    /* ---------- Photo ---------- */
+    .tk-photo {
+        display: block;
+        width: 176px;
+        aspect-ratio: 4 / 3;
+        border-radius: 12px;
+        overflow: hidden;
+        background: #f3f4f6;
+        border: 1px solid var(--tk-line);
+    }
+    .tk-photo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.4s ease;
+    }
+    .tk-item:hover .tk-photo img { transform: scale(1.04); }
+
+    /* ---------- Mobile ---------- */
+    @media (max-width: 720px) {
+        .tk-page { padding: 120px 18px 72px; }
+        .tk-title { font-size: 38px; }
+        .tk-intro { font-size: 16px; }
+        .tk-section { margin-top: 56px; }
+        .tk-section-title { font-size: 23px; }
+        .tk-item {
+            grid-template-columns: 1fr;
+            gap: 6px;
+            padding: 20px 12px;
+            margin: 0 -12px;
+        }
+        .tk-photo {
+            order: -1;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            margin-bottom: 10px;
+        }
+        .tk-talk-title { font-size: 17px; }
+    }
+</style>
+
+<section id="talks-page" class="tk-page">
+    <div class="tk-wrap">
+
+        <!-- ---------- Header ---------- -->
+        <p class="tk-eyebrow">Academic Engagement</p>
+        <h1 class="tk-title">Talks &amp; Presentations</h1>
+        <p class="tk-intro">
+            Conference presentations of my research, invited talks on machine learning and programming,
+            and academic events where I have served as a judge or mentor.
+        </p>
+
+        <nav class="tk-chips">
+            <a class="tk-chip" href="#conference-talks">Conference Presentations <span>2</span></a>
+            <a class="tk-chip" href="#invited-talks">Invited Talks <span>2</span></a>
+            <a class="tk-chip" href="#events">Judging &amp; Events <span>2</span></a>
+        </nav>
+
+        <!-- ================================================================ -->
+        <!-- Conference Presentations                                          -->
+        <!-- ================================================================ -->
+        <div id="conference-talks" class="tk-section">
+            <h2 class="tk-section-title">Conference Presentations</h2>
+
+            <!-- Talk -->
+            <article class="tk-item">
+                <div class="tk-year">2025</div>
+                <div>
+                    <a class="tk-talk-title" href="{{ '/talks/complex-networks/' | relative_url }}">
+                        Text-Based Social Bot Detection Leveraging Linguistic Structures and Sentiment Features
+                    </a>
+                    <p class="tk-venue">
+                        14th International Conference on Complex Networks and their Applications
+                        <span class="tk-tag">Conference</span>
+                    </p>
+                    <p class="tk-meta">Binghamton, New York, USA · Dec 11, 2025</p>
+                    <p class="tk-desc">
+                        Presented a text-based approach to social bot detection that combines linguistic
+                        structure with sentiment dynamics to separate automated accounts from humans.
+                    </p>
+                    <div class="tk-actions">
+                        <a class="tk-btn" href="{{ '/talks/complex-networks/' | relative_url }}">Details →</a>
+                    </div>
+                </div>
+                <a class="tk-photo" href="{{ '/talks/complex-networks/' | relative_url }}">
+                    <img src="{{ '/images/Complex4.jpg' | relative_url }}" alt="Complex Networks 2025" loading="lazy">
+                </a>
+            </article>
+
+            <!-- Talk -->
+            <article class="tk-item">
+                <div class="tk-year">2024</div>
+                <div>
+                    <a class="tk-talk-title" href="{{ '/talks/icost/' | relative_url }}">
+                        FOID: A Feature-Optimized Intrusion Detection System for Securing IoMT Healthcare Networks
+                    </a>
+                    <p class="tk-venue">
+                        18th International Conference on Open Source Systems and Technologies (ICOSST), IEEE
+                        <span class="tk-tag">Conference</span>
+                    </p>
+                    <p class="tk-meta">Lahore, Pakistan · Dec 26, 2024</p>
+                    <p class="tk-desc">
+                        Presented FOID, an intrusion detection scheme for IoMT healthcare networks built on
+                        recursive feature elimination and explainable machine learning.
+                    </p>
+                    <div class="tk-actions">
+                        <a class="tk-btn" href="{{ '/talks/icost/' | relative_url }}">Details →</a>
+                    </div>
+                </div>
+                <a class="tk-photo" href="{{ '/talks/icost/' | relative_url }}">
+                    <img src="{{ '/images/icost-conference2.jpeg' | relative_url }}" alt="ICOSST 2024" loading="lazy">
+                </a>
+            </article>
+        </div>
+
+        <!-- ================================================================ -->
+        <!-- Invited Talks                                                     -->
+        <!-- ================================================================ -->
+        <div id="invited-talks" class="tk-section">
+            <h2 class="tk-section-title">Invited Talks</h2>
+
+            <!-- Talk -->
+            <article class="tk-item">
+                <div class="tk-year">2024</div>
+                <div>
+                    <a class="tk-talk-title" href="{{ '/talks/tevmlai/' | relative_url }}">
+                        Machine Learning &amp; Artificial Intelligence: Concepts and Applications
+                    </a>
+                    <p class="tk-venue">
+                        Technical Education &amp; Vocational Training Authority (TEVTA) Punjab
+                        <span class="tk-tag">Guest speaker</span>
+                    </p>
+                    <p class="tk-meta">Lahore, Pakistan · Nov 19, 2024</p>
+                    <div class="tk-actions">
+                        <a class="tk-btn" href="{{ '/talks/tevmlai/' | relative_url }}">Details →</a>
+                    </div>
+                </div>
+                <a class="tk-photo" href="{{ '/talks/tevmlai/' | relative_url }}">
+                    <img src="{{ '/images/ml-itec-talk-3.jpeg' | relative_url }}" alt="Machine Learning & AI guest talk" loading="lazy">
+                </a>
+            </article>
+
+            <!-- Talk -->
+            <article class="tk-item">
+                <div class="tk-year">2024</div>
+                <div>
+                    <a class="tk-talk-title" href="{{ '/talks/trvpython/' | relative_url }}">
+                        Python Programming Guest Talk
+                    </a>
+                    <p class="tk-venue">
+                        Technical Education &amp; Vocational Training Authority (TEVTA)
+                        <span class="tk-tag">Guest speaker</span>
+                    </p>
+                    <p class="tk-meta">Lahore, Pakistan · Sep 20, 2024</p>
+                    <p class="tk-desc">
+                        Talk for students enrolled in the Python programming course.
+                    </p>
+                    <div class="tk-actions">
+                        <a class="tk-btn" href="{{ '/talks/trvpython/' | relative_url }}">Details →</a>
+                    </div>
+                </div>
+                <a class="tk-photo" href="{{ '/talks/trvpython/' | relative_url }}">
+                    <img src="{{ '/images/tevta-python-2.jpeg' | relative_url }}" alt="Python guest talk" loading="lazy">
+                </a>
+            </article>
+        </div>
+
+        <!-- ================================================================ -->
+        <!-- Judging & Events                                                  -->
+        <!-- ================================================================ -->
+        <div id="events" class="tk-section">
+            <h2 class="tk-section-title">Judging &amp; Events</h2>
+
+            <!-- Event -->
+            <article class="tk-item">
+                <div class="tk-year">2025</div>
+                <div>
+                    <a class="tk-talk-title" href="{{ '/talks/itecuet/' | relative_url }}">
+                        Judge – Project Exhibition, UET ITEC 2025
+                    </a>
+                    <p class="tk-venue">
+                        University of Engineering and Technology (UET)
+                        <span class="tk-tag">Judge</span>
+                    </p>
+                    <p class="tk-meta">Lahore, Pakistan · Feb 12, 2025</p>
+                    <p class="tk-desc">
+                        Judged the project exhibition at UET's talent hunt and technical event, organised
+                        with industry partners.
+                    </p>
+                    <div class="tk-actions">
+                        <a class="tk-btn" href="{{ '/talks/itecuet/' | relative_url }}">Details →</a>
+                    </div>
+                </div>
+                <a class="tk-photo" href="{{ '/talks/itecuet/' | relative_url }}">
+                    <img src="{{ '/images/itecuet2.jpeg' | relative_url }}" alt="UET ITEC 2025" loading="lazy">
+                </a>
+            </article>
+
+            <!-- Event -->
+            <article class="tk-item">
+                <div class="tk-year">2024</div>
+                <div>
+                    <a class="tk-talk-title" href="{{ '/talks/codex/' | relative_url }}">
+                        CodeEx 2024 – Student Team Mentor
+                    </a>
+                    <p class="tk-venue">
+                        Namal University
+                        <span class="tk-tag">Mentor</span>
+                    </p>
+                    <p class="tk-meta">Mianwali, Pakistan · Apr 14, 2024</p>
+                    <p class="tk-desc">
+                        Accompanied and mentored students from Superior University Lahore at the CodeEx 2024 competition.
+                    </p>
+                    <div class="tk-actions">
+                        <a class="tk-btn" href="{{ '/talks/codex/' | relative_url }}">Details →</a>
+                    </div>
+                </div>
+                <a class="tk-photo" href="{{ '/talks/codex/' | relative_url }}">
+                    <img src="{{ '/images/codeex-2024-1.jpeg' | relative_url }}" alt="CodeEx 2024" loading="lazy">
+                </a>
+            </article>
+        </div>
+
     </div>
-<script>
-    const btn = document.getElementById("showMoreBtn");
-    const extraTalks = document.querySelectorAll(".extra-talk");
-
-    btn.addEventListener("click", function (e) {
-        e.preventDefault();
-
-        extraTalks.forEach(card => {
-            card.classList.toggle("hidden");
-        });
-
-        btn.innerText = btn.innerText.includes("more")
-            ? "Show less"
-            : "Show more";
-    });
-</script>
+</section>
