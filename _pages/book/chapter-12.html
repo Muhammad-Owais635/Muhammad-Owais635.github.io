@@ -72,7 +72,7 @@ author_profile: false
 
             <div class="cr-body">
 <p>The Transformer is an attention-based neural network architecture composed of stacked encoder and decoder layers that model global dependencies in sequences through self-attention and feed-forward networks, eliminating the need for recurrent or convolutional structures.</p>
-<figure class="cr-fig"><img alt="Encoders and Decoders in Transformer Models" class="cr-zoom" height="1064" loading="lazy" src="{{ '/images/book/ch12/image1.png' | relative_url }}" width="732"/></figure>
+<figure class="cr-fig"><img alt="Encoders and Decoders in Transformer Models" class="cr-zoom" height="1064" loading="lazy" src="{{ '/images/book/ch012/image1.png' | relative_url }}" width="732"/></figure>
 <h2 id="s12-1"><span class="cr-num">12.1</span>Why Attention Was Needed</h2>
 <p>Limitations of RNN/LSTM/GRU are that they process tokens sequentially, Forget long-range dependencies and Slow training. <strong>Attention</strong> allows the model to focus on relevant parts of the input directly.</p>
 <h2 id="s12-2"><span class="cr-num">12.2</span>Intuition: Human Attention</h2>
@@ -88,7 +88,7 @@ author_profile: false
 <p>Self-attention is a mechanism that lets each word look at all other words in the same sentence and decide which ones matter most to its meaning.</p>
 <p>Each word asks: <em>“Which other words should I pay attention to?”</em></p>
 <p>Traditional models read words one by one. Transformers read all words at once, and self-attention tells them how words relate to each other.</p>
-<figure class="cr-fig"><img alt="A diagram of a process AI-generated content may be incorrect." class="cr-zoom" height="519" loading="lazy" src="{{ '/images/book/ch12/image2.png' | relative_url }}" width="1600"/></figure>
+<figure class="cr-fig"><img alt="A diagram of a process AI-generated content may be incorrect." class="cr-zoom" height="519" loading="lazy" src="{{ '/images/book/ch012/image2.png' | relative_url }}" width="1600"/></figure>
 <h2 id="s12-4"><span class="cr-num">12.4</span>Example: “Money Bank Grows, River Bank Flows”</h2>
 <p>We are taking Money, Flow, and Bank words only for understanding.</p>
 <div class="cr-table"><table>
@@ -170,7 +170,7 @@ y_flow = w31* V_money + w32*V_bank + w33*V_bank = [0.19, 0.14]</code></pre>
 When the word <em>bank</em> appears with <em>money</em>, its output vector becomes more aware of financial meaning.<br/>
 When the same word <em>bank</em> appears with <em>river</em> or <em>flow</em>, its output vector becomes more aware of the geographical meaning.</p>
 <p>Thus, the same word <strong>bank</strong> produces different context-aware output vectors in different sentences because self-attention incorporates information from related words.</p>
-<figure class="cr-fig"><img alt="Attention is all you need: Self Attention Clearly explained!" class="cr-zoom" height="556" loading="lazy" src="{{ '/images/book/ch12/image3.png' | relative_url }}" width="1001"/></figure>
+<figure class="cr-fig"><img alt="Attention is all you need: Self Attention Clearly explained!" class="cr-zoom" height="556" loading="lazy" src="{{ '/images/book/ch012/image3.png' | relative_url }}" width="1001"/></figure>
 <h2 id="s12-5"><span class="cr-num">12.5</span>What is Multi-Head Attention?</h2>
 <p>Multi-Head Attention means running self-attention multiple times in parallel, each time with different learned projections, and then combining the results.</p>
 <p>Instead of using one way to look at relationships between words, the model uses <strong>multiple perspectives (heads).</strong></p>
@@ -191,7 +191,7 @@ When the same word <em>bank</em> appears with <em>river</em> or <em>flow</em>, i
 <p>long-range dependencies at the same time</p>
 </li>
 </ul>
-<figure class="cr-fig"><img alt="A diagram of a diagram AI-generated content may be incorrect." class="cr-zoom" height="673" loading="lazy" src="{{ '/images/book/ch12/image4.png' | relative_url }}" width="1600"/></figure>
+<figure class="cr-fig"><img alt="A diagram of a diagram AI-generated content may be incorrect." class="cr-zoom" height="673" loading="lazy" src="{{ '/images/book/ch012/image4.png' | relative_url }}" width="1600"/></figure>
 <ul>
 <li>
 <p>Each word is represented as an embedding vector:<br/>
@@ -333,7 +333,7 @@ Layer Normalization</code></pre>
 <p>Normalization helps self-attention by keeping Q·K values stable, prevents very large attention scores, improves gradient flow and makes deep Transformers trainable</p>
 <h2 id="s12-8"><span class="cr-num">12.8</span>Transformer Encoder</h2>
 <p>The Transformer encoder transforms input tokens into deep, context-aware representations using self-attention, positional encoding, feed-forward layers, and normalization.</p>
-<figure class="cr-fig"><img alt="The Transformer encoder structure." class="cr-zoom" height="595" loading="lazy" src="{{ '/images/book/ch12/image5.png' | relative_url }}" width="327"/></figure>
+<figure class="cr-fig"><img alt="The Transformer encoder structure." class="cr-zoom" height="595" loading="lazy" src="{{ '/images/book/ch012/image5.png' | relative_url }}" width="327"/></figure>
 <p><em>Example sentence “Money bank grows”</em></p>
 <p>Inputs (Tokens)</p>
 <pre class="cr-code"><code>[Money, Bank, Grows]</code></pre>
@@ -407,7 +407,7 @@ M834 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">�
 <h3 id="s12-8-10"><span class="cr-num">12.8.10</span>Stacking Encoder Layers</h3>
 <p>Repeats the encoder block multiple times to build deep contextual understanding.</p>
 <p><div class="cr-math"><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord text"><span class="mord">EncoderOutput</span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.2425em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord text"><span class="mord">Encoder</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.10903em;">N</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="minner">…</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord text"><span class="mord">Encoder</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.9925em;"><span style="top:-2.9925em;margin-right:0.05em;"><span class="pstrut" style="height:2.5795em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8278em;"><span style="top:-2.931em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><span class="mclose">))</span></span></span></span></span></div></p>
-<figure class="cr-fig"><img alt="The Illustrated Transformer – Jay Alammar – Visualizing machine learning one concept at a time." class="cr-zoom" height="398" loading="lazy" src="{{ '/images/book/ch12/image6.png' | relative_url }}" width="612"/></figure>
+<figure class="cr-fig"><img alt="The Illustrated Transformer – Jay Alammar – Visualizing machine learning one concept at a time." class="cr-zoom" height="398" loading="lazy" src="{{ '/images/book/ch012/image6.png' | relative_url }}" width="612"/></figure>
 <h2 id="s12-9"><span class="cr-num">12.9</span>Masked attention</h2>
 <p>In decoding, the model generates tokens one by one.</p>
 <p>Example target sentence: "I love transformers"</p>
@@ -441,7 +441,7 @@ M834 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">�
 <p>This makes the decoder <strong>autoregressive</strong> (outputs are generated one after another).</p>
 </li>
 </ul>
-<figure class="cr-fig"><img alt="Intro to Transformers: The Decoder Block" class="cr-zoom" height="708" loading="lazy" src="{{ '/images/book/ch12/image7.png' | relative_url }}" width="248"/></figure>
+<figure class="cr-fig"><img alt="Intro to Transformers: The Decoder Block" class="cr-zoom" height="708" loading="lazy" src="{{ '/images/book/ch012/image7.png' | relative_url }}" width="248"/></figure>
 <p>Each decoder layer consists of three operations, applied in order:</p>
 <ol type="1">
 <li><p><strong>Masked self-attention</strong><br/>
@@ -791,7 +791,7 @@ P("it") = 0.05
 <p>MLM is a training objective where some words in a sentence are masked, and the model learns to predict the missing words using surrounding context.</p>
 <h4>NSP (Next Sentence Prediction)</h4>
 <p>NSP is a training task where the model learns to predict whether one sentence logically follows another sentence in the original text.</p>
-<figure class="cr-fig"><img alt="A diagram of a software coding process AI-generated content may be incorrect." class="cr-zoom" height="1662" loading="lazy" src="{{ '/images/book/ch12/image8.png' | relative_url }}" width="1342"/></figure>
+<figure class="cr-fig"><img alt="A diagram of a software coding process AI-generated content may be incorrect." class="cr-zoom" height="1662" loading="lazy" src="{{ '/images/book/ch012/image8.png' | relative_url }}" width="1342"/></figure>
 <p>Model.</p>
 <ul>
 <li>
@@ -1016,7 +1016,7 @@ P("it") = 0.05
 </li>
 </ul>
 <p><strong>GPT</strong> → <em>Generate text → Decoder only → Uses causal masking → Maintains generation realism→ Autoregressive text generation</em></p>
-<figure class="cr-fig"><img alt="GPT-2 architecture,(Heilbron et al., 2019)." class="cr-zoom" height="500" loading="lazy" src="{{ '/images/book/ch12/image9.png' | relative_url }}" width="231"/></figure>
+<figure class="cr-fig"><img alt="GPT-2 architecture,(Heilbron et al., 2019)." class="cr-zoom" height="500" loading="lazy" src="{{ '/images/book/ch012/image9.png' | relative_url }}" width="231"/></figure>
 <h4>Input representation</h4>
 <pre class="cr-code"><code>GPT input = Token Embedding + Positional Embedding</code></pre>
 <p>Example: I love <em>No segment embeddings, no [CLS].</em></p>
@@ -1484,7 +1484,7 @@ P("it") = 0.05
 </tr>
 </tbody>
 </table></div>
-<figure class="cr-fig"><img alt="A group of text boxes AI-generated content may be incorrect." class="cr-zoom" height="694" loading="lazy" src="{{ '/images/book/ch12/image10.png' | relative_url }}" width="1600"/></figure>
+<figure class="cr-fig"><img alt="A group of text boxes AI-generated content may be incorrect." class="cr-zoom" height="694" loading="lazy" src="{{ '/images/book/ch012/image10.png' | relative_url }}" width="1600"/></figure>
             </div>
 
             <nav class="cr-pn" aria-label="Chapters">
