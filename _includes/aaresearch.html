@@ -1,77 +1,250 @@
-  <div id="research-projects" class="transparent-theme  py-16  mt-20 scroll-mt-20">
+<!-- =====================================================================
+     RESEARCH PROJECTS PAGE
+     Same design family as Publications / Talks / Teaching (prefix "pj-").
+     Project facts are from the CLE project list: https://www.cle.org.pk/research/projects/
+====================================================================== -->
+<style>
+    .pj-page {
+        --pj-text: #111827; --pj-muted: #6b7280; --pj-soft: #4b5563; --pj-line: #e5e7eb;
+        --pj-card: #ffffff; --pj-panel: #fafafa; --pj-accent: #b820e6; --pj-accent-2: #da7d20;
+        background: #ffffff; color: var(--pj-text); font-family: Outfit, sans-serif;
+        min-height: 100vh; padding: 140px 24px 96px;
+    }
+    .dark .pj-page {
+        --pj-text: #ffffff; --pj-muted: rgba(255,255,255,.55); --pj-soft: rgba(255,255,255,.8); --pj-line: rgba(255,255,255,.15);
+        --pj-card: rgba(255,255,255,.03); --pj-panel: rgba(255,255,255,.04); background: #11001f;
+    }
+    .pj-wrap { max-width: 960px; margin: 0 auto; }
 
-    <!-- <h2 class="text-center text-5xl font-Ovo mb-20"></h2> -->
-    <div class="section-container border border-gray-300 dark:border-white/30 rounded-xl p-6 hover: hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:bg-darkHover dark:hover:shadow-white">
-        
-     
-                    <h2 class="text-center text-5xl  font-Ovo">Research Projects</h2>
-                    
-                
-                
-                        <ul class="flex flex-col  mt-12 gap-6 w-full px-[12%] py-10 scroll-mt-20 font-Ovo">
-                
-                            <li class="border border-gray-300 dark:border-white/30 rounded-xl p-6 hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:bg-darkHover dark:hover:shadow-white">
-                              
-            
-                              <p class="text-sm text-gray-500 dark:text-white/60 mb-1">Oct 2022 – Oct 2024</p>  
-                              <h2 class="text-xl font-semibold text-gray-800 dark:text-white">
-                                    Automatic Meeting Minutes and Analytics Generation for Urdu
-                                </h2>
-                
-                                <p class="text-base text-gray-600 mt-1 dark:text-white/80">
-                                    Center for Language Engineering (CLE), KICS, UET, Lahore
-                                </p>
-                
-                                <p class="mt-3 text-base text-gray-500 dark:text-white/60">
-                                    Designed and developed an intelligent automatic meeting minutes generation system for Punjabi, Urdu and English speakers, including speech separation models
-                                  to handle overlapping audio. Built and curated a 15-hour multi-speaker meeting
-                                  speech corpus to support speech processing and downstream applications.
-                                </p>
-                
-                            </li>
-                
-                            <li class="border border-gray-300 dark:border-white/30 rounded-xl p-6 hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:bg-darkHover dark:hover:shadow-white">
-                
-                                
-                              <p class="text-sm text-gray-500 dark:text-white/60 mb-1">Jul 2021 – Aug 2023</p> 
-                              <h2 class="text-xl font-semibold text-gray-800 dark:text-white">
-                                    Automated Urdu Broadcast Media Content Extraction and Analytics
-                                </h2>
-                
-                                <p class="text-base text-gray-600 mt-1 dark:text-white/80">
-                                    Center for Language Engineering (CLE), KICS, UET, Lahore
-                                </p>
-                
-                                <p class="mt-3 text-base text-gray-500 dark:text-white/60">
-                                    Developed a system to enable efficient extraction and management of spoken and
-                                  written Urdu content from online digital videos. Implemented advanced content
-                                  processing and intelligent analytics techniques for Urdu language data. Enhanced
-                                  accessibility by enabling users to search and retrieve Urdu video content through
-                                  an online search platform.
-                                </p>
-                
-                            </li>
-                
-                            <li class="border border-gray-300 dark:border-white/30 rounded-xl p-6 hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black dark:hover:bg-darkHover dark:hover:shadow-white">
-                
-                                <p class="text-sm text-gray-500 dark:text-white/60 mb-1">Jan 2022 – Mar 2023</p> 
-                              <h2 class="text-xl font-semibold text-gray-800 dark:text-white">
-                                    Expanding E-Khidmat Center’s Services and Delivery to Broader Citizen Base Using Intelligent Urdu Language Technology
-                                </h3>
-                
-                                <p class="text-base text-gray-600 mt-1 dark:text-white/80">
-                                    Center for Language Engineering (CLE), KICS, UET, Lahore
-                                </p>
-                
-                                <p class="mt-3 text-base text-gray-500 dark:text-white/60">
-                                    Developed an intelligent, speech-enabled service delivery platform in local languages to improve accessibility and streamline access to public services. Evaluated user interactions and feedback to continuously enhance system usability, relevance, and overall service effectiveness.
-                                </p>
-                
-                            </li>
-                
-                           
-                
-                        </ul>
-                    
+    .pj-eyebrow { display: inline-flex; align-items: center; gap: 10px; font-family: Ovo, serif; font-size: 15px; line-height: 1.5; letter-spacing: .08em; text-transform: uppercase; color: var(--pj-muted); }
+    .pj-eyebrow::before { content: ""; width: 32px; height: 2px; border-radius: 2px; background: linear-gradient(to right, var(--pj-accent), var(--pj-accent-2)); }
+    .pj-h1 { margin-top: 14px; font-family: Ovo, serif; font-size: 52px; line-height: 1.1; color: var(--pj-text); }
+    .pj-intro { margin-top: 22px; max-width: 760px; font-size: 18px; line-height: 1.8; color: var(--pj-soft); }
+
+    .pj-stats { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); margin-top: 40px; border: 1px solid var(--pj-line); border-radius: 16px; overflow: hidden; }
+    .pj-stat { padding: 20px 22px; background: var(--pj-card); }
+    .pj-stat + .pj-stat { border-left: 1px solid var(--pj-line); }
+    .pj-stat strong { display: block; font-family: Ovo, serif; font-size: 34px; line-height: 1.1; background: linear-gradient(to right, var(--pj-accent), var(--pj-accent-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .pj-stat span { display: block; margin-top: 6px; font-size: 14px; line-height: 1.4; color: var(--pj-muted); }
+
+    .pj-list { display: grid; gap: 40px; margin-top: 64px; }
+    .pj-card { border: 1px solid var(--pj-line); border-radius: 20px; overflow: hidden; background: var(--pj-card); scroll-margin-top: 120px; transition: box-shadow .25s, transform .25s; }
+    .pj-card:hover { box-shadow: 0 18px 40px rgba(17,24,39,.08); transform: translateY(-2px); }
+    .dark .pj-card:hover { box-shadow: 0 18px 40px rgba(0,0,0,.4); }
+
+    .pj-media { position: relative; aspect-ratio: 16 / 9; max-height: 420px; width: 100%; overflow: hidden;
+        background: radial-gradient(circle at 85% 15%, rgba(255,255,255,.2), transparent 40%), linear-gradient(135deg, #5b0f8f, #b820e6 45%, #da7d20); }
+    .pj-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .pj-num { position: absolute; right: 18px; top: 16px; padding: 2px 12px; border-radius: 9999px; font-size: 13px; font-weight: 600; line-height: 24px; color: #fff; background: rgba(0,0,0,.28); backdrop-filter: blur(6px); }
+    .pj-media.pj-noimg { aspect-ratio: auto; height: 14px; }
+    .pj-media.pj-noimg .pj-num { display: none; }
+
+    .pj-body { padding: 30px 34px 32px; }
+    .pj-top { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+    .pj-date { font-size: 14px; font-weight: 600; line-height: 1.5; color: var(--pj-muted); }
+    .pj-status { display: inline-flex; align-items: center; gap: 6px; padding: 0 10px; font-size: 12px; font-weight: 600; line-height: 22px; border-radius: 9999px; color: #047857; background: #d1fae5; }
+    .pj-status::before { content: ""; width: 6px; height: 6px; border-radius: 9999px; background: currentColor; }
+    .dark .pj-status { color: #6ee7b7; background: rgba(16,185,129,.18); }
+    .pj-title { margin-top: 10px; font-family: Ovo, serif; font-size: 28px; line-height: 1.3; color: var(--pj-text); }
+    .pj-org { margin-top: 6px; font-size: 15px; line-height: 1.5; color: var(--pj-muted); }
+
+    .pj-hls { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; margin-top: 22px; }
+    .pj-hl { padding: 14px 16px; border-radius: 14px; background: var(--pj-panel); border: 1px solid var(--pj-line); }
+    .pj-hl strong { display: block; font-size: 22px; font-weight: 700; line-height: 1.2; color: var(--pj-text); }
+    .pj-hl span { display: block; margin-top: 4px; font-size: 13px; line-height: 1.45; color: var(--pj-muted); }
+
+    .pj-about { margin-top: 22px; font-size: 17px; line-height: 1.8; color: var(--pj-soft); }
+    .pj-mine { margin-top: 20px; padding: 18px 22px; border-left: 3px solid var(--pj-accent); border-radius: 0 12px 12px 0; background: var(--pj-panel); }
+    .pj-mine h3 { font-size: 13px; font-weight: 700; line-height: 1.4; letter-spacing: .06em; text-transform: uppercase; color: var(--pj-accent); }
+    .dark .pj-mine h3 { color: #e9a6ff; }
+    .pj-mine p { margin-top: 6px; font-size: 16px; line-height: 1.75; color: var(--pj-soft); }
+
+    .pj-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+    .pj-chip { padding: 4px 12px; border-radius: 9999px; font-size: 13px; line-height: 1.5; color: var(--pj-text); border: 1px solid var(--pj-line); background: var(--pj-card); }
+
+    .pj-more { margin-top: 22px; border-top: 1px solid var(--pj-line); padding-top: 16px; }
+    .pj-more summary { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; list-style: none; font-size: 15px; font-weight: 600; line-height: 1.5; color: #2563eb; }
+    .dark .pj-more summary { color: #60a5fa; }
+    .pj-more summary::-webkit-details-marker { display: none; }
+    .pj-more summary::marker { content: ""; }
+    .pj-more summary svg { width: 16px; height: 16px; transition: transform .2s; }
+    .pj-more[open] summary svg { transform: rotate(180deg); }
+    .pj-more .pj-hide { display: none; }
+    .pj-more[open] .pj-show { display: none; }
+    .pj-more[open] .pj-hide { display: inline; }
+    .pj-more-body { margin-top: 18px; }
+    .pj-facts { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px 24px; margin: 0; }
+    .pj-facts dt { font-size: 12px; font-weight: 600; line-height: 1.4; letter-spacing: .06em; text-transform: uppercase; color: var(--pj-muted); }
+    .pj-facts dd { margin: 2px 0 0; font-size: 15px; line-height: 1.5; color: var(--pj-text); }
+    .pj-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 22px; }
+    .pj-cols h4 { font-family: Ovo, serif; font-size: 18px; line-height: 1.3; color: var(--pj-text); }
+    .pj-cols ul { margin-top: 10px; }
+    .pj-cols li { position: relative; padding-left: 18px; font-size: 15px; line-height: 1.6; color: var(--pj-soft); }
+    .pj-cols li + li { margin-top: 8px; }
+    .pj-cols li::before { content: ""; position: absolute; left: 0; top: 10px; width: 7px; height: 7px; border-radius: 9999px; background: linear-gradient(135deg, var(--pj-accent), var(--pj-accent-2)); }
+
+    .pj-source { margin-top: 40px; font-size: 14px; line-height: 1.6; color: var(--pj-muted); }
+    .pj-source a { color: #2563eb; }
+    .dark .pj-source a { color: #60a5fa; }
+
+    @media (max-width: 760px) {
+        .pj-page { padding: 120px 18px 72px; }
+        .pj-h1 { font-size: 38px; }
+        .pj-intro { font-size: 16px; }
+        .pj-stats { grid-template-columns: repeat(2, minmax(0,1fr)); }
+        .pj-stat:nth-child(3) { border-left: 0; }
+        .pj-stat:nth-child(n+3) { border-top: 1px solid var(--pj-line); }
+        .pj-body { padding: 22px 20px 24px; }
+        .pj-title { font-size: 22px; }
+        .pj-hls { grid-template-columns: repeat(3, minmax(0,1fr)); gap: 8px; }
+        .pj-hl { padding: 10px 10px; }
+        .pj-hl strong { font-size: 17px; }
+        .pj-hl span { font-size: 12px; }
+        .pj-facts, .pj-cols { grid-template-columns: 1fr; }
+    }
+</style>
+
+<section id="research-projects" class="pj-page">
+    <div class="pj-wrap">
+        <p class="pj-eyebrow">Research</p>
+        <h1 class="pj-h1">Research Projects</h1>
+        <p class="pj-intro">
+            Funded research and development projects I worked on at the Center for Language Engineering (CLE),
+            Al-Khawarizmi Institute of Computer Science, UET Lahore, building Urdu speech and language technology
+            for meetings, public services and broadcast media.
+        </p>
+
+        <div class="pj-stats">
+            <div class="pj-stat"><strong>3</strong><span>Funded R&amp;D projects</span></div>
+            <div class="pj-stat"><strong>2</strong><span>Funding bodies: HEC &amp; FCDO (UK)</span></div>
+            <div class="pj-stat"><strong>15 h</strong><span>Meeting speech corpus built</span></div>
+            <div class="pj-stat"><strong>12</strong><span>Public services voice-enabled</span></div>
+        </div>
+
+        <div class="pj-list">
+            <!-- ======== Project 1 ======== -->
+            <article class="pj-card" id="meeting-minutes">
+                <!-- Cover image: upload to /images/projects/meeting-minutes.jpg (1600x900). If it is missing, a gradient placeholder shows instead. -->
+                <div class="pj-media">
+                    <img src="{{ '/images/projects/meeting-minutes.jpg' | relative_url }}" alt="Automatic Meeting Minutes and Analytics Generation for Urdu" loading="lazy"
+                         onerror="this.parentNode.classList.add('pj-noimg'); this.remove();">
+                    <span class="pj-num">01</span>
+                </div>
+                <div class="pj-body">
+                    <div class="pj-top">
+                        <span class="pj-date">Oct 2022 – Oct 2024</span>
+                        <span class="pj-status">Completed</span>
+                    </div>
+                    <h2 class="pj-title">Automatic Meeting Minutes and Analytics Generation for Urdu</h2>
+                    <p class="pj-org">Center for Language Engineering (CLE), KICS, UET Lahore</p>
+
+                    <div class="pj-hls"><div class="pj-hl"><strong>15 h</strong><span>multi-speaker meeting corpus</span></div><div class="pj-hl"><strong>2</strong><span>languages: Urdu &amp; English</span></div><div class="pj-hl"><strong>4</strong><span>platforms: Zoom, Teams, Meet, Slack</span></div></div>
+
+                    <p class="pj-about">An intelligent meeting assistant that automatically transcribes meetings and turns them into insights: action items, topics, summaries and minutes. It runs as a browser extension for popular video-conferencing platforms, so businesses and government bodies can get meeting insights while keeping their data private.</p>
+
+                    <div class="pj-mine">
+                        <h3>My contribution</h3>
+                        <p>Designed and developed an intelligent automatic meeting-minutes system for Punjabi-accented Urdu and English speakers, including speech-separation models to handle overlapping audio. Built and curated a 15-hour multi-speaker meeting speech corpus to support speech processing and downstream applications.</p>
+                    </div>
+
+                    <div class="pj-chips"><span class="pj-chip">Automatic transcription</span><span class="pj-chip">Overlapped-speech detection &amp; separation</span><span class="pj-chip">Action-item extraction</span><span class="pj-chip">Topic identification</span><span class="pj-chip">Meeting summarization</span><span class="pj-chip">Minutes generation</span><span class="pj-chip">Targeted browsing</span></div>
+
+                    <details class="pj-more">
+                        <summary><span class="pj-show">Show full project details</span><span class="pj-hide">Hide project details</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></summary>
+                        <div class="pj-more-body">
+                            <dl class="pj-facts"><div><dt>Funded by</dt><dd>Technology Transfer Support Fund (TTSF), HEC</dd></div><div><dt>Duration</dt><dd>24 months</dd></div><div><dt>Principal investigator</dt><dd>Dr. Farah Adeeba</dd></div><div><dt>Co-PI</dt><dd>Ms. Sana Shams</dd></div><div><dt>Industry partner</dt><dd>Virtual Force</dd></div></dl>
+                            <div class="pj-cols">
+                                <div><h4>Objectives</h4><ul><li>Build an intelligent note-taker for Urdu and English speakers with a Punjabi accent.</li><li>Develop systems that detect and separate overlapping speech for speech-based applications.</li><li>Create a 15-hour meeting speech corpus with multiple speakers.</li></ul></div>
+                                <div><h4>Deliverables</h4><ul><li>System functional specification and design</li><li>Meeting data design, collection and annotation</li><li>Overlapped-speech detection and separation</li><li>Topic identification</li><li>Meeting summarization using acoustic and lexical features</li><li>Meeting minutes generation</li><li>Prototype system and user acceptance testing</li></ul></div>
+                            </div>
+                        </div>
+                    </details>
+                </div>
+            </article>
+            <!-- ======== Project 2 ======== -->
+            <article class="pj-card" id="e-khidmat">
+                <!-- Cover image: upload to /images/projects/e-khidmat.jpg (1600x900). If it is missing, a gradient placeholder shows instead. -->
+                <div class="pj-media">
+                    <img src="{{ '/images/projects/e-khidmat.jpg' | relative_url }}" alt="Expanding E-Khidmat Center’s Services to a Broader Citizen Base Using Intelligent Urdu Language Technology" loading="lazy"
+                         onerror="this.parentNode.classList.add('pj-noimg'); this.remove();">
+                    <span class="pj-num">02</span>
+                </div>
+                <div class="pj-body">
+                    <div class="pj-top">
+                        <span class="pj-date">Jan 2022 – Mar 2023</span>
+                        <span class="pj-status">Completed</span>
+                    </div>
+                    <h2 class="pj-title">Expanding E-Khidmat Center’s Services to a Broader Citizen Base Using Intelligent Urdu Language Technology</h2>
+                    <p class="pj-org">Center for Language Engineering (CLE), KICS, UET Lahore</p>
+
+                    <div class="pj-hls"><div class="pj-hl"><strong>12</strong><span>government services voice-enabled</span></div><div class="pj-hl"><strong>700</strong><span>citizens surveyed in 3 districts</span></div><div class="pj-hl"><strong>2</strong><span>Punjabi dialects: Majhi &amp; Shahpuri</span></div></div>
+
+                    <p class="pj-about">A mobile, speech-enabled platform that lets citizens in Punjab ask, in Urdu, about government services offered at E-Khidmat Centers. For each service it tells them the fee, location, timings, required documents and procedure, spoken back in Urdu. Services were chosen from a needs survey of citizens, and the platform was evaluated with real users.</p>
+
+                    <div class="pj-mine">
+                        <h3>My contribution</h3>
+                        <p>Developed an intelligent, speech-enabled service delivery platform in local languages to improve accessibility and streamline access to public services. Evaluated user interactions and feedback to continuously enhance system usability, relevance and overall service effectiveness.</p>
+                    </div>
+
+                    <div class="pj-chips"><span class="pj-chip">Urdu speech recognition</span><span class="pj-chip">Spoken service information</span><span class="pj-chip">Needs-assessment survey</span><span class="pj-chip">User-experience evaluation</span><span class="pj-chip">Single-window access to services</span></div>
+
+                    <details class="pj-more">
+                        <summary><span class="pj-show">Show full project details</span><span class="pj-hide">Hide project details</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></summary>
+                        <div class="pj-more-body">
+                            <dl class="pj-facts"><div><dt>Funded by</dt><dd>Foreign, Commonwealth &amp; Development Office (FCDO), UK</dd></div><div><dt>Duration</dt><dd>15 months</dd></div><div><dt>Principal investigator</dt><dd>Dr. Sarmad Hussain</dd></div><div><dt>Partner</dt><dd>Punjab Information Technology Board (PITB)</dd></div></dl>
+                            <div class="pj-cols">
+                                <div><h4>Objectives</h4><ul><li>Identify the information services that poor and marginalised communities in Punjab need most.</li><li>Build a local-language, speech-enabled platform giving single-window access to those services.</li><li>Assess users’ perception of the platform and the quality of the information it provides.</li></ul></div>
+                                <div><h4>Deliverables</h4><ul><li>Literature review and needs-assessment survey tool</li><li>Design of the speech-enabled mobile e-government platform</li><li>Report on citizens’ information needs</li><li>Speech-enabled mobile platform for 12 services</li><li>User perception and experience report</li><li>Final project report</li></ul></div>
+                            </div>
+                        </div>
+                    </details>
+                </div>
+            </article>
+            <!-- ======== Project 3 ======== -->
+            <article class="pj-card" id="broadcast-media">
+                <!-- Cover image: upload to /images/projects/broadcast-media.jpg (1600x900). If it is missing, a gradient placeholder shows instead. -->
+                <div class="pj-media">
+                    <img src="{{ '/images/projects/broadcast-media.jpg' | relative_url }}" alt="Automated Urdu Broadcast Media Content Extraction and Analytics" loading="lazy"
+                         onerror="this.parentNode.classList.add('pj-noimg'); this.remove();">
+                    <span class="pj-num">03</span>
+                </div>
+                <div class="pj-body">
+                    <div class="pj-top">
+                        <span class="pj-date">Jul 2021 – Aug 2023</span>
+                        <span class="pj-status">Completed</span>
+                    </div>
+                    <h2 class="pj-title">Automated Urdu Broadcast Media Content Extraction and Analytics</h2>
+                    <p class="pj-org">Center for Language Engineering (CLE), KICS, UET Lahore</p>
+
+                    <div class="pj-hls"><div class="pj-hl"><strong>Speech</strong><span>Urdu ASR + speaker identification</span></div><div class="pj-hl"><strong>Text</strong><span>on-screen Urdu OCR</span></div><div class="pj-hl"><strong>Search</strong><span>time-stamped video search</span></div></div>
+
+                    <p class="pj-about">A content-based audio-visual analysis system that helps users find relevant videos in large collections of online Urdu media. It transcribes both what is said and what is written on screen, with timestamps, and then generates analytics and trend reports from the text.</p>
+
+                    <div class="pj-mine">
+                        <h3>My contribution</h3>
+                        <p>Developed a system to extract and manage spoken and written Urdu content from online digital videos. Implemented advanced content processing and intelligent analytics for Urdu language data, and made Urdu video content searchable and retrievable through an online search platform.</p>
+                    </div>
+
+                    <div class="pj-chips"><span class="pj-chip">Urdu speech recognition</span><span class="pj-chip">Speaker identification</span><span class="pj-chip">Video transcription</span><span class="pj-chip">Text detection &amp; segmentation</span><span class="pj-chip">Urdu OCR</span><span class="pj-chip">Trending-topic identification</span><span class="pj-chip">Online video search</span></div>
+
+                    <details class="pj-more">
+                        <summary><span class="pj-show">Show full project details</span><span class="pj-hide">Hide project details</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></summary>
+                        <div class="pj-more-body">
+                            <dl class="pj-facts"><div><dt>Funded by</dt><dd>Technology Transfer Support Fund (TTSF), HEC</dd></div><div><dt>Duration</dt><dd>2 years</dd></div><div><dt>Principal investigator</dt><dd>Dr. Sarmad Hussain</dd></div><div><dt>Partners</dt><dd>Desider (Pvt) Ltd · PEMRA</dd></div></dl>
+                            <div class="pj-cols">
+                                <div><h4>Objectives</h4><ul><li>Help news-media users extract and manage spoken and written Urdu content in online videos.</li><li>Develop advanced content processing and intelligent analytics for Urdu.</li><li>Give wider audiences access to Urdu video content through an online search engine.</li></ul></div>
+                                <div><h4>Deliverables</h4><ul><li>System design document</li><li>Enhanced Urdu speech recognition system</li><li>Speaker identification system</li><li>Video transcription from the audio stream</li><li>Text-area detection, segmentation and Urdu OCR</li><li>Trending-topic identification system</li><li>Integrated content extraction and analytics system with test reports</li></ul></div>
+                            </div>
+                        </div>
+                    </details>
+                </div>
+            </article>
+        </div>
+
+        <p class="pj-source">Project details from the
+            <a href="https://www.cle.org.pk/research/projects/" target="_blank" rel="noopener">CLE research projects list</a>.</p>
     </div>
-</div>
+</section>
