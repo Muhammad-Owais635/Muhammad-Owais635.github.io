@@ -1,0 +1,540 @@
+---
+layout: aapage
+title: "From Neurons to Agents (book in progress)"
+permalink: /book/
+author_profile: false
+---
+
+<!-- =====================================================================
+     BOOK PAGE: From Neurons to Agents (work in progress)
+     - Chapter list: edit the <details class="bk-ch"> blocks below.
+     - Status: change the "is-done" / "is-now" classes in the Progress list.
+     - If you later want to share a sample PDF, put it in /files/ and
+       uncomment the "Read a sample chapter" button in the hero.
+====================================================================== -->
+<style>
+    .bk-page {
+        --bk-text: #111827; --bk-muted: #6b7280; --bk-soft: #4b5563; --bk-line: #e5e7eb; --bk-card: #ffffff; --bk-hover: #fafafa;
+        --bk-a: #b820e6; --bk-b: #da7d20;
+        background: #ffffff; color: var(--bk-text); font-family: Outfit, sans-serif; padding: 140px 24px 96px;
+    }
+    .dark .bk-page {
+        --bk-text: #fff; --bk-muted: rgba(255,255,255,.55); --bk-soft: rgba(255,255,255,.8); --bk-line: rgba(255,255,255,.15);
+        --bk-card: rgba(255,255,255,.03); --bk-hover: rgba(255,255,255,.05); background: #11001f;
+    }
+    .bk-wrap { max-width: 1120px; margin: 0 auto; }
+    .bk-page h1, .bk-page h2, .bk-page h3 { margin: 0; }
+    .bk-page p { margin: 0; }
+
+    .bk-eyebrow { display: inline-flex; align-items: center; gap: 10px; font-family: Ovo, serif; font-size: 15px; line-height: 1.5; letter-spacing: .08em; text-transform: uppercase; color: var(--bk-muted); }
+    .bk-eyebrow::before { content: ""; width: 32px; height: 2px; border-radius: 2px; background: linear-gradient(to right, var(--bk-a), var(--bk-b)); }
+    .bk-badge { display: inline-flex; align-items: center; gap: 7px; margin-left: 4px; padding: 3px 11px; border-radius: 999px; font-family: Outfit, sans-serif; font-size: 12px; letter-spacing: .04em; text-transform: none; color: #b45309; background: #fff7ed; border: 1px solid #fed7aa; }
+    .dark .bk-badge { color: #fdba74; background: rgba(218,125,32,.12); border-color: rgba(218,125,32,.35); }
+    .bk-badge i { width: 7px; height: 7px; border-radius: 50%; background: #f59e0b; box-shadow: 0 0 0 0 rgba(245,158,11,.6); animation: bkPulse 2s infinite; }
+    @keyframes bkPulse { 0% { box-shadow: 0 0 0 0 rgba(245,158,11,.55); } 70% { box-shadow: 0 0 0 7px rgba(245,158,11,0); } 100% { box-shadow: 0 0 0 0 rgba(245,158,11,0); } }
+
+    /* ---------- hero ---------- */
+    .bk-hero { display: grid; grid-template-columns: 340px minmax(0,1fr); gap: 64px; align-items: center; }
+    .bk-hero-cover { display: flex; justify-content: center; perspective: 1400px; }
+    .bk-cover {
+        position: relative; width: 300px; aspect-ratio: 2 / 3; padding: 30px 28px; border-radius: 4px 12px 12px 4px; overflow: hidden;
+        background: radial-gradient(120% 80% at 100% 0%, rgba(218,125,32,.55), transparent 55%), radial-gradient(120% 90% at 0% 100%, rgba(184,32,230,.65), transparent 60%), linear-gradient(160deg, #2a004a, #11001f);
+        color: #fff; display: flex; flex-direction: column;
+        box-shadow: inset 6px 0 0 rgba(255,255,255,.08), inset 8px 0 14px rgba(0,0,0,.35), 0 30px 60px -20px rgba(42,0,74,.55), 0 10px 22px rgba(0,0,0,.18);
+        transform: rotateY(-14deg) rotateX(2deg); transition: transform .5s ease;
+    }
+    .bk-cover:hover { transform: rotateY(-4deg); }
+    .bk-cover::after { content: ""; position: absolute; inset: 0; background: linear-gradient(105deg, rgba(255,255,255,.14), transparent 30%); pointer-events: none; }
+    .bk-cover-net { margin: 0 -6px 18px; opacity: .95; }
+    .bk-cover-net svg { width: 100%; height: auto; display: block; }
+    .bk-cover-k { font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: rgba(255,255,255,.65); }
+    .bk-cover-t { margin-top: 10px !important; font-family: Ovo, serif; font-size: 36px; line-height: 1.05; }
+    .bk-cover-s { margin-top: 12px !important; font-size: 13px; line-height: 1.45; color: rgba(255,255,255,.78); }
+    .bk-cover-a { margin-top: auto !important; padding-top: 12px; border-top: 1px solid rgba(255,255,255,.18); font-size: 13px; letter-spacing: .18em; text-transform: uppercase; }
+
+    .bk-title { margin-top: 16px !important; font-family: Ovo, serif; font-size: 54px; line-height: 1.08; font-weight: 400; color: var(--bk-text); }
+    .bk-sub { margin-top: 12px !important; font-family: Ovo, serif; font-size: 22px; line-height: 1.4; background: linear-gradient(to right, var(--bk-a), var(--bk-b)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .bk-lead { margin-top: 20px !important; font-size: 17px; line-height: 1.8; color: var(--bk-soft); max-width: 640px; }
+    .bk-stats { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); margin-top: 28px; border: 1px solid var(--bk-line); border-radius: 14px; overflow: hidden; max-width: 560px; }
+    .bk-stats div { padding: 14px 16px; background: var(--bk-card); }
+    .bk-stats div + div { border-left: 1px solid var(--bk-line); }
+    .bk-stats strong { display: block; font-family: Ovo, serif; font-size: 26px; font-weight: 400; line-height: 1.1; color: var(--bk-text); }
+    .bk-stats span { font-size: 13px; color: var(--bk-muted); }
+    .bk-cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+    .bk-btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 22px; border-radius: 999px; font-size: 15px; font-weight: 500; text-decoration: none !important; transition: transform .2s, background .2s, border-color .2s; }
+    .bk-btn svg { width: 16px; height: 16px; }
+    .bk-btn:hover { transform: translateY(-2px); }
+    .bk-btn-p { color: #fff !important; background: linear-gradient(to right, var(--bk-a), var(--bk-b)); }
+    .bk-btn-o { color: var(--bk-text) !important; border: 1px solid var(--bk-line); background: var(--bk-card); }
+    .bk-btn-o:hover { border-color: var(--bk-a); }
+    .bk-note { margin-top: 16px !important; font-size: 13px; line-height: 1.6; color: var(--bk-muted); }
+
+    /* ---------- sections ---------- */
+    .bk-sec { margin-top: 96px; }
+    .bk-h2 { margin-top: 12px !important; font-family: Ovo, serif; font-size: 36px; line-height: 1.2; font-weight: 400; color: var(--bk-text); }
+    .bk-about { display: grid; grid-template-columns: 340px minmax(0,1fr); gap: 64px; }
+    .bk-about-text p { font-size: 17px; line-height: 1.85; color: var(--bk-soft); }
+    .bk-about-text p + p { margin-top: 16px !important; }
+    .bk-about-text strong { color: var(--bk-text); font-weight: 600; }
+
+    .bk-feats { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 16px; }
+    .bk-feat { padding: 24px 22px; border: 1px solid var(--bk-line); border-radius: 18px; background: var(--bk-card); }
+    .bk-feat-ic { display: inline-flex; width: 42px; height: 42px; align-items: center; justify-content: center; border-radius: 12px; color: #fff; background: linear-gradient(135deg, var(--bk-a), var(--bk-b)); }
+    .bk-feat-ic svg { width: 22px; height: 22px; }
+    .bk-feat h3 { margin-top: 16px !important; font-size: 17px; font-weight: 600; color: var(--bk-text); }
+    .bk-feat p { margin-top: 6px !important; font-size: 14.5px; line-height: 1.6; color: var(--bk-muted); }
+
+    .bk-who { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; margin-top: 28px; }
+    .bk-who div { padding: 22px; border-left: 3px solid; border-image: linear-gradient(to bottom, var(--bk-a), var(--bk-b)) 1; background: var(--bk-hover); }
+    .bk-who strong { font-family: Ovo, serif; font-size: 21px; font-weight: 400; color: var(--bk-text); }
+    .bk-who p { margin-top: 6px !important; font-size: 15px; line-height: 1.65; color: var(--bk-soft); }
+    .bk-pre { margin-top: 18px !important; font-size: 15px; color: var(--bk-muted); }
+    .bk-pre strong { color: var(--bk-text); font-weight: 600; }
+
+    /* ---------- contents ---------- */
+    .bk-toc-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; }
+    .bk-toggle { padding: 9px 18px; border-radius: 999px; border: 1px solid var(--bk-line); background: var(--bk-card); color: var(--bk-text); font: 500 14px Outfit, sans-serif; cursor: pointer; white-space: nowrap; }
+    .bk-toggle:hover { border-color: var(--bk-a); }
+    .bk-part { margin-top: 40px; }
+    .bk-part-head { padding-bottom: 16px; border-bottom: 1px solid var(--bk-line); }
+    .bk-part-n { font-size: 13px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; background: linear-gradient(to right, var(--bk-a), var(--bk-b)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .bk-part-head h3 { margin-top: 6px !important; font-family: Ovo, serif; font-size: 26px; font-weight: 400; color: var(--bk-text); }
+    .bk-part-head p { margin-top: 4px !important; font-size: 15px; color: var(--bk-muted); }
+    .bk-part-head p span { margin-left: 6px; padding: 2px 10px; border-radius: 999px; font-size: 12.5px; border: 1px solid var(--bk-line); white-space: nowrap; }
+
+    .bk-ch { border-bottom: 1px solid var(--bk-line); }
+    .bk-ch summary { list-style: none; display: grid; grid-template-columns: 48px minmax(0,1fr) auto 22px; gap: 16px; align-items: center; padding: 18px 12px; cursor: pointer; border-radius: 10px; transition: background .2s; }
+    .bk-ch summary::-webkit-details-marker { display: none; }
+    .bk-ch summary:hover { background: var(--bk-hover); }
+    .bk-ch-n { font-family: Ovo, serif; font-size: 24px; color: var(--bk-muted); }
+    .bk-ch[open] .bk-ch-n { background: linear-gradient(to right, var(--bk-a), var(--bk-b)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .bk-ch-t strong { display: block; font-size: 17px; font-weight: 600; color: var(--bk-text); transition: color .2s; }
+    .bk-ch summary:hover .bk-ch-t strong { color: #2563eb; }
+    .dark .bk-ch summary:hover .bk-ch-t strong { color: #60a5fa; }
+    .bk-ch-t em { display: block; margin-top: 3px; font-style: normal; font-size: 14.5px; line-height: 1.55; color: var(--bk-muted); }
+    .bk-ch-c { font-size: 13px; color: var(--bk-muted); white-space: nowrap; }
+    .bk-ch-ic { width: 20px; height: 20px; color: var(--bk-muted); transition: transform .25s; }
+    .bk-ch[open] .bk-ch-ic { transform: rotate(45deg); }
+    .bk-secs { list-style: none; margin: 0; padding: 4px 12px 22px 76px; display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 8px 32px; }
+    .bk-secs li { display: flex; gap: 12px; font-size: 14.5px; line-height: 1.5; color: var(--bk-soft); }
+    .bk-secs li span { flex: none; min-width: 38px; font-variant-numeric: tabular-nums; color: var(--bk-muted); }
+
+    /* ---------- progress ---------- */
+    .bk-steps { list-style: none; margin: 32px 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); }
+    .bk-steps li { position: relative; padding: 0 16px 0 0; }
+    .bk-steps li::before { content: ""; position: absolute; top: 8px; left: 18px; right: 0; height: 2px; background: var(--bk-line); }
+    .bk-steps li:last-child::before { display: none; }
+    .bk-steps li.is-done::before { background: linear-gradient(to right, var(--bk-a), var(--bk-b)); }
+    .bk-steps li > span { position: relative; z-index: 1; display: block; width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--bk-line); background: var(--bk-card); }
+    .dark .bk-steps li > span { background: #11001f; }
+    .bk-steps li.is-done > span { border: 0; background: linear-gradient(135deg, var(--bk-a), var(--bk-b)); }
+    .bk-steps li.is-now > span { border-color: #f59e0b; box-shadow: 0 0 0 5px rgba(245,158,11,.18); }
+    .bk-steps strong { display: block; margin-top: 14px; line-height: 1.4; font-size: 16px; font-weight: 600; color: var(--bk-text); }
+    .bk-steps li.is-now strong::after { content: "Now"; margin-left: 8px; padding: 1px 8px; border-radius: 999px; font-size: 11px; font-weight: 600; color: #b45309; background: #fff7ed; vertical-align: 1px; line-height: 1.6; }
+    .dark .bk-steps li.is-now strong::after { color: #fdba74; background: rgba(218,125,32,.15); }
+    .bk-steps p { margin-top: 4px !important; font-size: 14px; line-height: 1.5; color: var(--bk-muted); }
+
+    /* ---------- band ---------- */
+    .bk-band { margin-top: 96px; display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 32px; align-items: center; padding: 44px 48px; border-radius: 24px; color: #fff;
+        background: radial-gradient(80% 140% at 100% 0%, rgba(218,125,32,.45), transparent 60%), radial-gradient(70% 140% at 0% 100%, rgba(184,32,230,.55), transparent 60%), #2a004a; }
+    .bk-band h2 { font-family: Ovo, serif; font-size: 32px; font-weight: 400; color: #fff; }
+    .bk-band p { margin-top: 10px !important; max-width: 560px; font-size: 16px; line-height: 1.7; color: rgba(255,255,255,.8); }
+    .bk-band-btns { display: flex; flex-direction: column; gap: 10px; }
+    .bk-band-btns .bk-btn { justify-content: center; }
+    .bk-btn-w { color: #2a004a !important; background: #fff; }
+    .bk-btn-g { color: #fff !important; border: 1px solid rgba(255,255,255,.35); }
+    .bk-btn-g:hover { background: rgba(255,255,255,.1); }
+
+    /* ---------- responsive ---------- */
+    @media (max-width: 960px) {
+        .bk-hero, .bk-about { grid-template-columns: 1fr; gap: 40px; }
+        .bk-hero-text { text-align: left; }
+        .bk-feats { grid-template-columns: repeat(2, minmax(0,1fr)); }
+        .bk-band { grid-template-columns: 1fr; }
+        .bk-band-btns { flex-direction: row; flex-wrap: wrap; }
+    }
+    @media (max-width: 640px) {
+        .bk-page { padding: 112px 16px 72px; }
+        .bk-cover { width: 240px; padding: 24px 22px; }
+        .bk-cover-net { margin: 0 12% 10px; }
+        .bk-cover-t { font-size: 28px; }
+        .bk-cover-s { font-size: 12px; }
+        .bk-title { font-size: 38px; }
+        .bk-sub { font-size: 18px; }
+        .bk-h2 { font-size: 28px; }
+        .bk-stats { grid-template-columns: repeat(2, minmax(0,1fr)); }
+        .bk-stats div:nth-child(3) { border-left: 0; }
+        .bk-stats div:nth-child(n+3) { border-top: 1px solid var(--bk-line); }
+        .bk-sec, .bk-band { margin-top: 72px; }
+        .bk-feats, .bk-who { grid-template-columns: 1fr; }
+        .bk-toc-head { flex-direction: column; align-items: flex-start; }
+        .bk-ch summary { grid-template-columns: 36px minmax(0,1fr) 20px; gap: 12px; padding: 16px 4px; }
+        .bk-ch-n { font-size: 20px; }
+        .bk-ch-c { display: none; }
+        .bk-secs { grid-template-columns: 1fr; padding: 0 4px 20px 48px; }
+        .bk-steps { grid-template-columns: 1fr; gap: 0; }
+        .bk-steps li { padding: 0 0 22px 32px; }
+        .bk-steps li::before { top: 18px; bottom: 0; left: 8px; right: auto; width: 2px; height: auto; }
+        .bk-steps li.is-done::before { background: linear-gradient(to bottom, var(--bk-a), var(--bk-b)); }
+        .bk-steps li > span { position: absolute; left: 0; top: 0; }
+        .bk-steps strong { margin-top: 0; }
+        .bk-band { padding: 32px 24px; }
+        .bk-band h2 { font-size: 26px; }
+        .bk-band-btns { flex-direction: column; }
+    }
+
+</style>
+
+<section class="bk-page">
+    <div class="bk-wrap">
+
+        <!-- ================= HERO ================= -->
+        <div class="bk-hero">
+            <div class="bk-hero-cover">
+                <div class="bk-cover" aria-hidden="true">
+                    <div class="bk-cover-net">
+                        <svg viewBox="0 0 200 150" fill="none">
+                            <g stroke="rgba(255,255,255,.22)" stroke-width=".8">
+                                <path d="M20 30L80 20M20 30L80 60M20 30L80 100M20 75L80 20M20 75L80 60M20 75L80 100M20 75L80 135M20 120L80 60M20 120L80 100M20 120L80 135"/>
+                                <path d="M80 20L140 45M80 60L140 45M80 100L140 45M80 60L140 105M80 100L140 105M80 135L140 105M80 20L140 105"/>
+                                <path d="M140 45L185 75M140 105L185 75"/>
+                            </g>
+                            <g fill="#fff"><circle cx="20" cy="30" r="3.2"/><circle cx="20" cy="75" r="3.2"/><circle cx="20" cy="120" r="3.2"/>
+                            <circle cx="80" cy="20" r="3.2"/><circle cx="80" cy="60" r="3.2"/><circle cx="80" cy="100" r="3.2"/><circle cx="80" cy="135" r="3.2"/>
+                            <circle cx="140" cy="45" r="3.2"/><circle cx="140" cy="105" r="3.2"/></g>
+                            <circle cx="185" cy="75" r="6" fill="url(#bkg)"/>
+                            <defs><linearGradient id="bkg" x1="0" x2="1"><stop stop-color="#e05cff"/><stop offset="1" stop-color="#ffa646"/></linearGradient></defs>
+                        </svg>
+                    </div>
+                    <p class="bk-cover-k">A practical guide</p>
+                    <p class="bk-cover-t">From Neurons<br>to Agents</p>
+                    <p class="bk-cover-s">Deep Learning, Transformers and Large Language Models</p>
+                    <p class="bk-cover-a">Muhammad Owais</p>
+                </div>
+            </div>
+
+            <div class="bk-hero-text">
+                <p class="bk-eyebrow">Book <span class="bk-badge"><i></i>In progress</span></p>
+                <h1 class="bk-title">From Neurons to Agents</h1>
+                <p class="bk-sub">A Practical Guide to Deep Learning, Transformers and Large Language Models</p>
+                <p class="bk-lead">
+                    A step-by-step guide that starts with a single artificial neuron and ends with today&apos;s
+                    reasoning models and AI agents. Each idea is explained with intuition first, then the maths,
+                    then working Python code, with diagrams and worked examples along the way.
+                </p>
+
+                <div class="bk-stats">
+                    <div><strong>19</strong><span>Chapters</span></div>
+                    <div><strong>2</strong><span>Parts</span></div>
+                    <div><strong>150+</strong><span>Sections</span></div>
+                    <div><strong>~170</strong><span>Pages</span></div>
+                </div>
+
+                <div class="bk-cta">
+                    <a class="bk-btn bk-btn-p" href="mailto:owaiskhana635@gmail.com?subject=Sample%20chapter%20request%3A%20From%20Neurons%20to%20Agents&amp;body=Hi%20Owais%2C%0A%0AI%20would%20like%20to%20read%20a%20sample%20chapter%20of%20your%20book.%0A%0AName%3A%0AUniversity%20/%20organisation%3A%0AWhich%20chapter%20interests%20me%20most%3A%0A%0AThank%20you%21">Request a sample chapter <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+                    <a class="bk-btn bk-btn-o" href="#contents">See the contents</a>
+                    <!-- <a class="bk-btn bk-btn-o" href="{{ '/files/book-sample-chapter-1.pdf' | relative_url }}" target="_blank">Read a sample chapter (PDF)</a> -->
+                </div>
+                <p class="bk-note">The book is not yet published. The full manuscript is not shared publicly; sample chapters are available on request.</p>
+            </div>
+        </div>
+
+        <!-- ================= ABOUT ================= -->
+        <div class="bk-sec bk-about">
+            <div>
+                <p class="bk-eyebrow">About the book</p>
+                <h2 class="bk-h2">One path from the basics to the frontier</h2>
+            </div>
+            <div class="bk-about-text">
+                <p>
+                    Most resources either stop at classic neural networks or jump straight into large language
+                    models without the foundations. This book connects the two. <strong>Part I</strong> builds deep
+                    learning from the ground up: neurons, activation and loss functions, gradient descent,
+                    regularization, CNNs, RNNs, LSTMs and GRUs. <strong>Part II</strong> picks up at attention and
+                    the Transformer, then covers how large language models are trained, scaled, fine-tuned and aligned,
+                    how they reason, how they act as agents, and how to evaluate them and keep them safe.
+                </p>
+                <p>
+                    It grew out of my teaching and research in natural language processing, and is written for readers
+                    who want to understand how these models actually work, not only how to call them.
+                </p>
+            </div>
+        </div>
+
+        <!-- ================= FEATURES ================= -->
+        <div class="bk-sec">
+            <div class="bk-feats">
+                <div class="bk-feat">
+                    <span class="bk-feat-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.4 1 1.1 1 1.8V16h5v-.3c0-.7.4-1.4 1-1.8A6 6 0 0 0 12 3z"/></svg></span>
+                    <h3>Intuition first</h3>
+                    <p>Every concept opens with a plain-language picture, such as a hill descent for gradient descent or a library search for attention.</p>
+                </div>
+                <div class="bk-feat">
+                    <span class="bk-feat-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h10M4 18h7M17 15l3 3-3 3"/></svg></span>
+                    <h3>Maths made readable</h3>
+                    <p>Equations are introduced step by step and worked through with small numerical examples.</p>
+                </div>
+                <div class="bk-feat">
+                    <span class="bk-feat-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/></svg></span>
+                    <h3>Runnable code</h3>
+                    <p>Keras and Python examples for perceptrons, CNNs, RNNs, LSTMs and GRUs that you can run and modify.</p>
+                </div>
+                <div class="bk-feat">
+                    <span class="bk-feat-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.4 6.8 19.1l1-5.8L3.5 9.2l5.9-.9z"/></svg></span>
+                    <h3>Up to date</h3>
+                    <p>Covers recent topics: Mixture of Experts, LoRA, RLHF and DPO, reasoning models, RAG, MCP and AI agents.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= WHO IT'S FOR ================= -->
+        <div class="bk-sec">
+            <p class="bk-eyebrow">Who it&apos;s for</p>
+            <h2 class="bk-h2">Written for learners and builders</h2>
+            <div class="bk-who">
+                <div><strong>Students</strong><p>Undergraduate and graduate students taking a first course in deep learning or NLP.</p></div>
+                <div><strong>Instructors</strong><p>Teachers looking for a structured course text, chapter by chapter, from foundations to LLMs.</p></div>
+                <div><strong>Practitioners</strong><p>Engineers and researchers who use LLMs and want to understand what happens inside them.</p></div>
+            </div>
+            <p class="bk-pre"><strong>Prerequisites:</strong> basic Python and high-school algebra. The book introduces everything else as it goes.</p>
+        </div>
+
+        <!-- ================= CONTENTS ================= -->
+        <div class="bk-sec" id="contents">
+            <div class="bk-toc-head">
+                <div>
+                    <p class="bk-eyebrow">Table of contents</p>
+                    <h2 class="bk-h2">19 chapters in two parts</h2>
+                </div>
+                <button type="button" class="bk-toggle" onclick="bkToggleAll(this)">Expand all</button>
+            </div>
+            
+            <div class="bk-part">
+                <div class="bk-part-head">
+                    <span class="bk-part-n">Part I</span>
+                    <h3>Deep Learning Foundations</h3>
+                    <p>Neurons, training and the classic architectures that came before Transformers. <span>Chapters 1–11</span></p>
+                </div>
+                <div class="bk-chs">
+                <details class="bk-ch">
+                    <summary>
+                        <span class="bk-ch-n">01</span>
+                        <span class="bk-ch-t"><strong>Introduction to Deep Learning</strong><em>What deep learning is, how it relates to AI and machine learning, and how a network turns data into predictions.</em></span>
+                        <span class="bk-ch-c">8 sections</span>
+                        <svg class="bk-ch-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                    </summary>
+                    <ol class="bk-secs"><li><span>1.1</span>What is Deep Learning</li><li><span>1.2</span>Relationship Between AI, Machine Learning, and Deep Learning</li><li><span>1.3</span>Why Deep Learning Is Needed</li><li><span>1.4</span>Key Characteristics of Deep Learning</li><li><span>1.5</span>Applications of Deep Learning</li><li><span>1.6</span>Basic Building Blocks of Deep Learning</li><li><span>1.7</span>Intuition: How Deep Learning Thinks</li><li><span>1.8</span>Training vs Inference</li></ol>
+                </details>
+                <details class="bk-ch">
+                    <summary>
+                        <span class="bk-ch-n">02</span>
+                        <span class="bk-ch-t"><strong>The Artificial Neuron and Neural Networks</strong><em>From the biological neuron to the perceptron, logistic and linear regression, and the multilayer perceptron.</em></span>
+                        <span class="bk-ch-c">7 sections</span>
+                        <svg class="bk-ch-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                    </summary>
+                    <ol class="bk-secs"><li><span>2.1</span>Biological Neuron (Human Brain Inspiration)</li><li><span>2.2</span>Artificial Neuron (Perceptron Unit)</li><li><span>2.3</span>Logistic Regression as a Single Neuron</li><li><span>2.4</span>Linear Regression</li><li><span>2.5</span>From Single Neuron to Neural Networks</li><li><span>2.6</span>Multilayer Perceptron (MLP) / Feedforward Neural Network</li><li><span>2.7</span>Perceptron vs MLP Comparison</li></ol>
+                </details>
+                <details class="bk-ch">
+                    <summary>
+                        <span class="bk-ch-n">03</span>
+                        <span class="bk-ch-t"><strong>Activation Functions</strong><em>Why networks need non-linearity, and how sigmoid, tanh, ReLU, softmax and friends compare.</em></span>
+                        <span class="bk-ch-c">3 sections</span>
+                        <svg class="bk-ch-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                    </summary>
+                    <ol class="bk-secs"><li><span>3.1</span>Why Activation Functions Are Needed</li><li><span>3.2</span>Types of Activation Functions</li><li><span>3.3</span>Comparison of Activation Functions</li></ol>
+                </details>
+                <details class="bk-ch">
+                    <summary>
+                        <span class="bk-ch-n">04</span>
+                        <span class="bk-ch-t"><strong>Loss Functions</strong><em>MSE, MAE, cross-entropy and hinge loss: what each one measures and when to use it.</em></span>
+                        <span class="bk-ch-c">8 sections</span>
+                        <svg class="bk-ch-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                    </summary>
+                    <ol class="bk-secs"><li><span>4.1</span>What Is a Loss Function?</li><li><span>4.2</span>Mean Squared Error (MSE)</li><li><span>4.3</span>Mean Absolute Error (MAE)</li><li><span>4.4</span>Binary Cross-Entropy Loss (Log Loss)</li><li><span>4.5</span>Categorical Cross-Entropy</li><li><span>4.6</span>Sparse Categorical Cross-Entropy</li><li><span>4.7</span>Hinge Loss</li><li><span>4.8</span>Comparison of Loss Functions</li></ol>
+                </details>
+                <details class="bk-ch">
+                    <summary>
+                        <span class="bk-ch-n">05</span>
+                        <span class="bk-ch-t"><strong>Gradient Descent and Optimization</strong><em>Gradient descent from the hill-descent intuition to backpropagation, momentum, RMSProp and Adam.</em></span>
+                        <span class="bk-ch-c">7 sections</span>
+                        <svg class="bk-ch-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                    </summary>
+                    <ol class="bk-secs"><li><span>5.1</span>What Is Gradient Descent?</li><li><span>5.2</span>Intuition: Hill Descent Analogy</li><li><span>5.3</span>Mathematical Idea Behind Gradient Descent</li><li><span>5.4</span>Types of Gradient Descent</li><li><span>5.5</span>Backpropagation</li><li><span>5.6</span>Optimization Algorithms</li><li><span>5.7</span>Optimizers in Keras</li></ol>
+                </details>
+                <details class="bk-ch">
+                    <summary>
+                        <span class="bk-ch-n">06</span>
+                        <span class="bk-ch-t"><strong>The Training Process: Epochs, Batches and Learning Rate</strong><em>Parameters vs hyperparameters, epochs, batch size, learning rate, bias–variance and overfitting.</em></span>
+                        <span class="bk-ch-c">8 sections</span>
+                        <svg class="bk-ch-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                    </summary>
+                    <ol class="bk-secs"><li><span>6.1</span>Parameters</li><li><span>6.2</span>Hyperparameters</li><li><span>6.3</span>Epoch</li><li><span>6.4</span>Batch Size</li><li><span>6.5</span>Iteration</li><li><span>6.6</span>Learning Rate</li><li><span>6.7</span>Bias and Variance</li><li><span>6.8</span>Overfitting and Underfitting</li></ol>
+                </details>
+                <details class="bk-ch">
+                    <summary>
+                        <span class="bk-ch-n">07</span>
+                        <span class="bk-ch-t"><strong>Regularization</strong><em>L1, L2, Elastic Net, dropout, early stopping and data augmentation, compared side by side.</em></span>
+                        <span class="bk-ch-c">8 sections</span>
+                        <svg class="bk-ch-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                    </summary>
+                    <ol class="bk-secs"><li><span>7.1</span>What Is Regularization?</li><li><span>7.2</span>Ridge Regularization (L2)</li><li><span>7.3</span>L1 Regularization (Lasso)</li><li><span>7.4</span>Elastic Net Regularization</li><li><span>7.5</span>Dropout</li><li><span>7.6</span>Early Stopping</li><li><span>7.7</span>Data-Based Regularization</li><li><span>7.8</span>Comparison of Regularization Techniques</li></ol>
+                </details>
+                <details class="bk-ch">
+                    <summary>
+                        <span class="bk-ch-n">08</span>
+                        <span class="bk-ch-t"><strong>Convolutional Neural Networks (CNNs)</strong><em>Convolution, pooling and classic CNN architectures, with a complete Keras example.</em></span>
+                        <span class="bk-ch-c">7 sections</span>
+                        <svg class="bk-ch-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                    </summary>
+                    <ol class="bk-secs"><li><span>8.1</span>Why CNNs Are Needed</li><li><span>8.2</span>Convolution Operation</li><li><span>8.3</span>Pooling</li><li><span>8.4</span>CNN Architecture Overview</li><li><span>8.5</span>CNN Example in Keras</li><li><span>8.6</span>Popular CNN Architectures</li><li><span>8.7</span>Coding Example of CNNs</li></ol>
+                </details>
+                <details class="bk-ch">
+                    <summary>
+                        <span class="bk-ch-n">09</span>
+                        <span class="bk-ch-t"><strong>Sequence Models and Recurrent Neural Networks</strong><em>Tokenization, Word2Vec and recurrent networks, plus why gradients vanish or explode.</em></span>
+                        <span class="bk-ch-c">12 sections</span>
+                        <svg class="bk-ch-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                    </summary>
+                    <ol class="bk-secs"><li><span>9.1</span>Why Sequence Models Are Needed</li><li><span>9.2</span>NLP in Traditional Machine Learning</li><li><span>9.3</span>Tokenization</li><li><span>9.4</span>Word2Vec</li><li><span>9.5</span>Sequence Models</li><li><span>9.6</span>Recurrent Neural Networks (RNNs)</li><li><span>9.7</span>Feedforward Neural Network vs RNN</li><li><span>9.8</span>Unfolded RNN Over Time</li><li><span>9.9</span>Vanishing Gradient Problem</li><li><span>9.10</span>Exploding Gradient Problem</li><li><span>9.11</span>Applications of RNNs</li><li><span>9.12</span>Simple RNN Implementation in Keras</li></ol>
+                </details>
+                <details class="bk-ch">
+                    <summary>
+                        <span class="bk-ch-n">10</span>
+                        <span class="bk-ch-t"><strong>Long Short-Term Memory (LSTM)</strong><em>How LSTM gates remember and forget, worked through a real sentence, plus BiLSTMs.</em></span>
+                        <span class="bk-ch-c">5 sections</span>
+                        <svg class="bk-ch-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                    </summary>
+                    <ol class="bk-secs"><li><span>10.1</span>Why LSTM Was Invented</li><li><span>10.2</span>LSTM Architecture</li><li><span>10.3</span>LSTM Working with Example</li><li><span>10.4</span>Bidirectional LSTM (BiLSTM)</li><li><span>10.5</span>LSTM Implementation in Keras</li></ol>
+                </details>
+                <details class="bk-ch">
+                    <summary>
+                        <span class="bk-ch-n">11</span>
+                        <span class="bk-ch-t"><strong>Gated Recurrent Units (GRU)</strong><em>A lighter recurrent unit: how GRU works, and when to choose it over LSTM.</em></span>
+                        <span class="bk-ch-c">5 sections</span>
+                        <svg class="bk-ch-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                    </summary>
+                    <ol class="bk-secs"><li><span>11.1</span>Introduction to GRU</li><li><span>11.2</span>GRU Architecture and Core Idea</li><li><span>11.3</span>GRU Working with Example</li><li><span>11.4</span>GRU vs LSTM</li><li><span>11.5</span>GRU Implementation in Keras</li></ol>
+                </details>
+                </div>
+            </div>
+            <div class="bk-part">
+                <div class="bk-part-head">
+                    <span class="bk-part-n">Part II</span>
+                    <h3>Transformers and Large Language Models</h3>
+                    <p>How modern LLMs are built, trained, aligned, evaluated and kept safe. <span>Chapters 12–19</span></p>
+                </div>
+                <div class="bk-chs">
+                <details class="bk-ch">
+                    <summary>
+                        <span class="bk-ch-n">12</span>
+                        <span class="bk-ch-t"><strong>The Transformer Architecture</strong><em>Attention, multi-head attention, positional encoding, encoders and decoders, BERT and GPT.</em></span>
+                        <span class="bk-ch-c">15 sections</span>
+                        <svg class="bk-ch-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                    </summary>
+                    <ol class="bk-secs"><li><span>12.1</span>Why Attention Was Needed</li><li><span>12.2</span>Intuition Behind Attention (Human Analogy)</li><li><span>12.3</span>What Is Attention? (Query, Key, Value)</li><li><span>12.4</span>Multi-Head Attention</li><li><span>12.5</span>Positional Encoding</li><li><span>12.6</span>Normalization in Transformers</li><li><span>12.7</span>Transformer Encoder</li><li><span>12.8</span>Masked Attention</li><li><span>12.9</span>Transformer Decoder</li><li><span>12.10</span>Pre-training</li><li><span>12.11</span>Fine-Tuning</li><li><span>12.12</span>BERT Architecture</li><li><span>12.13</span>GPT Architecture</li><li><span>12.14</span>Comparison of Transformer Models</li><li><span>12.15</span>Evaluation Metrics in NLP</li></ol>
+                </details>
+                <details class="bk-ch">
+                    <summary>
+                        <span class="bk-ch-n">13</span>
+                        <span class="bk-ch-t"><strong>Large Language Models</strong><em>Language models at scale: Mixture of Experts, decoding and temperature, prompting and fast inference.</em></span>
+                        <span class="bk-ch-c">10 sections</span>
+                        <svg class="bk-ch-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                    </summary>
+                    <ol class="bk-secs"><li><span>13.1</span>Language Models</li><li><span>13.2</span>Large Language Models (LLMs)</li><li><span>13.3</span>Mixture of Experts (MoE)</li><li><span>13.4</span>Next-Word Prediction</li><li><span>13.5</span>Temperature in Decoding</li><li><span>13.6</span>Guided Decoding</li><li><span>13.7</span>Prompting Strategies</li><li><span>13.8</span>In-Context Learning (ICL)</li><li><span>13.9</span>Inference Optimization</li><li><span>13.10</span>Two Classes of Inference Optimizations</li></ol>
+                </details>
+                <details class="bk-ch">
+                    <summary>
+                        <span class="bk-ch-n">14</span>
+                        <span class="bk-ch-t"><strong>Training, Scaling and Optimizing LLMs</strong><em>FLOPs, Chinchilla scaling laws, parallelism, FlashAttention, mixed precision, LoRA and quantization.</em></span>
+                        <span class="bk-ch-c">11 sections</span>
+                        <svg class="bk-ch-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                    </summary>
+                    <ol class="bk-secs"><li><span>14.1</span>LLM Objective Function</li><li><span>14.2</span>FLOPs VS FLOP/s</li><li><span>14.3</span>CHINCHILLA SCALING Laws for LLMs</li><li><span>14.4</span>Challenges of Learned Knowledge in LLMs</li><li><span>14.5</span>Parallelism Strategies for Training LLMs</li><li><span>14.6</span>Memory Optimization Techniques</li><li><span>14.7</span>Attention Computation Optimization</li><li><span>14.8</span>Numerical Precision in Training</li><li><span>14.9</span>Fine-Tuning Large Language Models</li><li><span>14.10</span>Parameter-Efficient Fine-Tuning (PEFT)</li><li><span>14.11</span>Quantization Techniques</li></ol>
+                </details>
+                <details class="bk-ch">
+                    <summary>
+                        <span class="bk-ch-n">15</span>
+                        <span class="bk-ch-t"><strong>Preference Tuning: RLHF and DPO</strong><em>Aligning models with human preferences: preference data, RLHF, Best-of-N and DPO.</em></span>
+                        <span class="bk-ch-c">5 sections</span>
+                        <svg class="bk-ch-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                    </summary>
+                    <ol class="bk-secs"><li><span>15.1</span>Preference Fine-Tuning</li><li><span>15.2</span>Preference Data</li><li><span>15.3</span>Reinforcement Learning from Human Feedback (RLHF)</li><li><span>15.4</span>Best-of-N (BoN) — An RL-Free Alternative</li><li><span>15.5</span>DPO: Direct Preference Optimization (Supervised Alternative)</li></ol>
+                </details>
+                <details class="bk-ch">
+                    <summary>
+                        <span class="bk-ch-n">16</span>
+                        <span class="bk-ch-t"><strong>Reasoning in LLMs</strong><em>Reasoning models, Pass@k and Cons@k, GRPO, and the DeepSeek R1 training recipe.</em></span>
+                        <span class="bk-ch-c">13 sections</span>
+                        <svg class="bk-ch-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                    </summary>
+                    <ol class="bk-secs"><li><span>16.1</span>Reasoning</li><li><span>16.2</span>Reasoning in LLMs</li><li><span>16.3</span>Reasoning Models</li><li><span>16.4</span>Reasoning-Based Benchmarks</li><li><span>16.5</span>Pass@k</li><li><span>16.6</span>How Temperature Affects Pass@k</li><li><span>16.7</span>Cons@k</li><li><span>16.8</span>Scaling with Reinforcement Learning</li><li><span>16.9</span>Increasing Length Problem</li><li><span>16.10</span>Additional Bias-Reduction and Diversity-Promoting Adjustments</li><li><span>16.11</span>DeepSeek R1-Zero Training</li><li><span>16.12</span>DeepSeek R1 – Training Recipe</li><li><span>16.13</span>Distillation</li></ol>
+                </details>
+                <details class="bk-ch">
+                    <summary>
+                        <span class="bk-ch-n">17</span>
+                        <span class="bk-ch-t"><strong>Agentic LLMs: RAG, Tools and Agents</strong><em>Retrieval-augmented generation, tool calling, MCP, AI agents and agent-to-agent communication.</em></span>
+                        <span class="bk-ch-c">7 sections</span>
+                        <svg class="bk-ch-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                    </summary>
+                    <ol class="bk-secs"><li><span>17.1</span>Retrieval-Augmented Generation (RAG)</li><li><span>17.2</span>Document Preparation for RAG</li><li><span>17.3</span>Retrieval and Ranking Overview</li><li><span>17.4</span>Tool Calling</li><li><span>17.5</span>Agents</li><li><span>17.6</span>Agent-to-Agent Communication (A2A)</li><li><span>17.7</span>Advanced RAG Variants</li></ol>
+                </details>
+                <details class="bk-ch">
+                    <summary>
+                        <span class="bk-ch-n">18</span>
+                        <span class="bk-ch-t"><strong>Evaluating LLMs</strong><em>Rule-based metrics, LLM-as-a-judge and its biases, factuality and hallucination analysis.</em></span>
+                        <span class="bk-ch-c">10 sections</span>
+                        <svg class="bk-ch-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                    </summary>
+                    <ol class="bk-secs"><li><span>18.1</span>Rule-Based Metrics</li><li><span>18.2</span>LLM-as-a-Judge (LaaJ)</li><li><span>18.3</span>Variations of LLM-as-a-Judge</li><li><span>18.4</span>Biases in Evaluation</li><li><span>18.5</span>Best Practices for Evaluation</li><li><span>18.6</span>Factuality</li><li><span>18.7</span>Hallucination Analysis</li><li><span>18.8</span>Pareto Frontier</li><li><span>18.9</span>Diffusion in LLMs</li><li><span>18.10</span>Staying Up-to-Date with NLP Advances</li></ol>
+                </details>
+                <details class="bk-ch">
+                    <summary>
+                        <span class="bk-ch-n">19</span>
+                        <span class="bk-ch-t"><strong>LLM Safety, Security and Vulnerabilities</strong><em>Alignment, jailbreaks and prompt injection, and how to red-team a language model.</em></span>
+                        <span class="bk-ch-c">3 sections</span>
+                        <svg class="bk-ch-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                    </summary>
+                    <ol class="bk-secs"><li><span>19.1</span>Safety and Alignment</li><li><span>19.2</span>LLM Vulnerabilities</li><li><span>19.3</span>Red-Teaming LLMs</li></ol>
+                </details>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= PROGRESS ================= -->
+        <div class="bk-sec">
+            <p class="bk-eyebrow">Where it stands</p>
+            <h2 class="bk-h2">Progress</h2>
+            <ol class="bk-steps">
+                <li class="is-done"><span></span><strong>First draft</strong><p>All 19 chapters written</p></li>
+                <li class="is-now"><span></span><strong>Revising</strong><p>Editing, figures and technical review</p></li>
+                <li><span></span><strong>Publisher</strong><p>Finding the right publisher</p></li>
+                <li><span></span><strong>Publication</strong><p>Release date to be announced</p></li>
+            </ol>
+        </div>
+
+        <!-- ================= CONTACT BAND ================= -->
+        <div class="bk-band">
+            <div>
+                <h2>Interested in the book?</h2>
+                <p>Request a sample chapter, ask to be told when it&apos;s released, or offer to review a draft chapter.
+                   I&apos;m also happy to hear from publishers and from instructors who would like to use it in a course.</p>
+            </div>
+            <div class="bk-band-btns">
+                <a class="bk-btn bk-btn-w" href="mailto:owaiskhana635@gmail.com?subject=Sample%20chapter%20request%3A%20From%20Neurons%20to%20Agents&amp;body=Hi%20Owais%2C%0A%0AI%20would%20like%20to%20read%20a%20sample%20chapter%20of%20your%20book.%0A%0AName%3A%0AUniversity%20/%20organisation%3A%0AWhich%20chapter%20interests%20me%20most%3A%0A%0AThank%20you%21">Request a sample chapter <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+                <a class="bk-btn bk-btn-g" href="mailto:owaiskhana635@gmail.com?subject=Notify%20me%3A%20From%20Neurons%20to%20Agents&amp;body=Hi%20Owais%2C%0A%0APlease%20let%20me%20know%20when%20your%20book%20is%20available.%0A%0AName%3A%0A">Notify me when it&apos;s out</a>
+                <a class="bk-btn bk-btn-g" href="mailto:owaiskhana635@gmail.com?subject=Feedback%20/%20review%20offer%3A%20From%20Neurons%20to%20Agents&amp;body=Hi%20Owais%2C%0A%0AI%20would%20like%20to%20review%20or%20give%20feedback%20on%20your%20book.%0A%0AName%3A%0AArea%20of%20expertise%3A%0A">Offer feedback</a>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<script>
+    function bkToggleAll(btn) {
+        var all = document.querySelectorAll('.bk-ch');
+        var open = btn.getAttribute('data-open') !== '1';
+        all.forEach(function (d) { d.open = open; });
+        btn.setAttribute('data-open', open ? '1' : '0');
+        btn.textContent = open ? 'Collapse all' : 'Expand all';
+    }
+</script>
