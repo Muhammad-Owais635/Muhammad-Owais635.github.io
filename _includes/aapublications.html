@@ -11,7 +11,7 @@
         --rp-muted: #6b7280;
         --rp-soft: #4b5563;
         --rp-line: #e5e7eb;
-        --rp-hover: #fcf4ff;
+        --rp-hover: #fafafa;
         --rp-accent: #b820e6;
         --rp-accent-2: #da7d20;
         --rp-chip-bg: #ffffff;
@@ -93,7 +93,8 @@
         transition: background 0.2s, border-color 0.2s;
     }
     .dark .rp-chip { border-color: rgba(255, 255, 255, 0.3); }
-    .rp-chip:hover { background: var(--rp-hover); border-color: var(--rp-accent); }
+    .rp-chip:hover { background: var(--rp-hover); border-color: #9ca3af; }
+    .dark .rp-chip:hover { border-color: var(--rp-accent); }
     .rp-chip span {
         font-family: Outfit, sans-serif;
         font-size: 12px;
@@ -123,7 +124,6 @@
         padding: 24px 16px;
         margin: 0 -16px;
         border-bottom: 1px solid var(--rp-line);
-        border-radius: 12px;
         transition: background 0.2s;
     }
     .rp-item:hover { background: var(--rp-hover); }
@@ -141,7 +141,7 @@
         color: var(--rp-text) !important;
         text-decoration: none !important;
     }
-    a.rp-paper-title:hover { color: var(--rp-accent) !important; }
+    a.rp-paper-title:hover { color: #4b5563 !important; }
     .dark a.rp-paper-title:hover { color: #e9a6ff !important; }
 
     .rp-venue {
@@ -157,8 +157,8 @@
         font-size: 12px;
         font-weight: 600;
         border-radius: 9999px;
-        color: var(--rp-accent);
-        background: rgba(184, 32, 230, 0.08);
+        color: #4b5563;
+        background: #e5e7eb;
         vertical-align: 1px;
     }
     .dark .rp-tag { color: #e9a6ff; background: rgba(184, 32, 230, 0.25); }
@@ -194,7 +194,9 @@
     .rp-actions summary::-webkit-details-marker { display: none; }
     .rp-actions summary::marker { content: ""; }
     .rp-btn:hover,
-    .rp-actions summary:hover { border-color: var(--rp-accent); background: #ffffff; }
+    .rp-actions summary:hover { border-color: #9ca3af; background: #f3f4f6; }
+    .dark .rp-btn:hover,
+    .dark .rp-actions summary:hover { border-color: var(--rp-accent); }
     .dark .rp-btn:hover,
     .dark .rp-actions summary:hover { background: #11001f; }
 
@@ -215,11 +217,11 @@
         font-size: 16px;
         line-height: 1.8;
         color: var(--rp-soft);
-        border-left: 3px solid var(--rp-accent);
-        background: rgba(184, 32, 230, 0.04);
+        border-left: 3px solid #d1d5db;
+        background: #f5f5f5;
         border-radius: 0 10px 10px 0;
     }
-    .dark .rp-abstract { background: rgba(255, 255, 255, 0.04); }
+    .dark .rp-abstract { background: rgba(255, 255, 255, 0.04); border-left-color: var(--rp-accent); }
 
     /* ---------- Footer link ---------- */
     .rp-more {
