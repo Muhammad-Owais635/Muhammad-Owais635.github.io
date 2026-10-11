@@ -1,3 +1,14 @@
+<style>
+    /* Centre the desktop menu on the page, independent of the logo / icon widths */
+    @media (min-width: 1200px) {
+        #navLink {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    }
+</style>
+
 <nav id="navbar" class="w-full fixed px-5 lg:px-8 xl:px-[8%] py-4 flex items-center justify-between z-50">
 
     <p class="bg-white bg-opacity-50 backdrop-blur-lg shadow-sm dark:bg-darkTheme dark:shadow-white/20 sr-only">
@@ -56,7 +67,7 @@
 
             <li><a href="{{ '/#top' | relative_url }}" onclick="closeMenu()">Home</a></li>
             <li><a href="{{ '/#education' | relative_url }}" onclick="closeMenu()">Education</a></li>
-            <li><a href="{{ '/#publications' | relative_url }}" onclick="closeMenu()">Publications</a></li>
+            <li><a href="{{ '/publications/' | relative_url }}" onclick="closeMenu()">Publications</a></li>
             <li><a href="{{ '/#talks' | relative_url }}" onclick="closeMenu()">Talks</a></li>
             <li><a href="{{ '/#professional' | relative_url }}" onclick="closeMenu()">Experience</a></li>
             <li><a href="{{ '/#research-projects' | relative_url }}" onclick="closeMenu()">Projects</a></li>
