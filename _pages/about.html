@@ -125,7 +125,8 @@ redirect_from:
     .hm-news a { color: var(--hm-text) !important; font-weight: 600; text-decoration: none !important; }
     .hm-news a:hover { color: #2563eb !important; } .dark .hm-news a:hover { color: #60a5fa !important; }
     .hm-new { display: inline-block; margin-left: 6px; padding: 0 8px; font-size: 11px; font-weight: 700; line-height: 18px; border-radius: 9999px; color: #fff; background: linear-gradient(to right, var(--hm-a), var(--hm-b)); vertical-align: 2px; }
-
+      .hm-soon { display: inline-block; margin-left: 6px; padding: 0 8px; font-size: 11px; font-weight: 700; line-height: 18px; border-radius: 9999px; color: #b45309; background: #fff7ed; border: 1px solid #fed7aa; vertical-align: 2px; }
+    .dark .hm-soon { color: #fdba74; background: rgba(218,125,32,.12); border-color: rgba(218,125,32,.35); }
     /* ---------- publications ---------- */
     .hm-pubs { display: grid; gap: 14px; }
     .hm-pub { display: grid; grid-template-columns: 70px 1fr auto; gap: 20px; align-items: center; padding: 20px 22px; border: 1px solid var(--hm-line); border-radius: 16px; background: var(--hm-card); text-decoration: none !important; color: inherit !important; transition: border-color .2s, transform .2s; }
@@ -266,12 +267,12 @@ redirect_from:
             <a class="hm-link" href="{{ '/talks/' | relative_url }}">All talks <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         </div>
         <ul class="hm-news">
-            <li><time>Dec 2025</time><span>Presented <a href="{{ '/talks/complex-networks/' | relative_url }}">Text-Based Social Bot Detection</a> at Complex Networks 2025, Binghamton, New York. <span class="hm-new">NEW</span></span></li>
-            <li><time>2025</time><span>Paper on deep reinforcement learning intrusion detection for IoMT published in <a href="{{ '/publications/' | relative_url }}">Frontiers in Medicine</a>.</span></li>
+            <li><time>Nov 2026</time><span>Will present my paper at the <a href="https://cyber-science.org/2026/cyberscitech/" target="_blank" rel="noopener">11th IEEE Cyber Science and Technology Congress (CyberSciTech 2026)</a>, Melbourne, Australia. <span class="hm-soon">UPCOMING</span></span></li>
+            <li><time>Jul 2026</time><span>Presented a poster titled <strong>Human vs Social Bot vs GPT Text</strong> at Tokyo Metropolitan University. <span class="hm-new">NEW</span></span></li>
+            <li><time>Dec 2025</time><span>Presented <a href="{{ '/talks/complex-networks/' | relative_url }}">Text-Based Social Bot Detection</a> at Complex Networks 2025, Binghamton, New York.</span></li>
+            <li><time>Apr 2025</time><span>Paper on deep reinforcement learning intrusion detection for IoMT published in <a href="{{ '/publications/' | relative_url }}">Frontiers in Medicine</a>.</span></li>
             <li><time>Apr 2025</time><span>Joined the Masaki Aida Laboratory at Tokyo Metropolitan University as a Research Assistant.</span></li>
             <li><time>Feb 2025</time><span>Served as a judge at the <a href="{{ '/talks/itecuet/' | relative_url }}">UET ITEC 2025 Project Exhibition</a>, evaluating 400+ students.</span></li>
-            <li><time>Dec 2024</time><span>Presented <a href="{{ '/talks/icost/' | relative_url }}">FOID</a> at the 18th IEEE ICOSST conference, Lahore.</span></li>
-            <li><time>Nov 2024</time><span>Invited guest talk on <a href="{{ '/talks/tevmlai/' | relative_url }}">Machine Learning &amp; AI</a> at TEVTA Punjab.</span></li>
         </ul>
     </div>
 </section>
