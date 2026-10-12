@@ -82,6 +82,12 @@ redirect_from:
     .hm-about p { font-size: 18px; line-height: 1.85; color: var(--hm-soft); }
     .hm-about p + p { margin-top: 16px; }
     .hm-about strong { color: var(--hm-text); font-weight: 600; }
+      .hm-about a { color: inherit !important; text-decoration: none !important;
+        background: linear-gradient(to right, #b820e6, #da7d20) left bottom / 100% 1.5px no-repeat;
+        padding-bottom: 1px; transition: color .2s, background-size .2s; }
+    .hm-about a:hover, .hm-about a:hover strong { color: #2563eb !important; }
+    .hm-about a:hover { background-size: 0 1.5px; }
+    .dark .hm-about a:hover, .dark .hm-about a:hover strong { color: #60a5fa !important; }
     .hm-now { padding: 24px; border: 1px solid var(--hm-line); border-radius: 18px; background: var(--hm-panel); }
     .hm-now h3 { font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--hm-a); }
     .dark .hm-now h3 { color: #e9a6ff; }
@@ -225,7 +231,7 @@ redirect_from:
         
         <div class="hm-about" style="margin-top:28px">
             <div>
-             <p>
+   <p>
     I am a doctoral researcher in Computer Science at
     <a href="https://www.tmu.ac.jp/english/" target="_blank" rel="noopener"><strong>Tokyo Metropolitan University</strong></a>,
     working in the <strong>Masaki Aida Laboratory</strong>. I specialise in <strong>online social network analysis
@@ -241,7 +247,7 @@ redirect_from:
     My research focuses on building intelligent and interpretable AI systems for analysing human interaction
     and information dynamics in online environments: detecting social bots and AI-generated text, studying
     echo chambers and misinformation. Before my PhD I built Urdu speech and language technology at the
-    <a href="https://www.cle.org.pk/" target="_blank" rel="noopener">Center for Language Engineering</a>, UET Lahore,
+    <a href="https://www.cle.org.pk/" target="_blank" rel="noopener"><strong>Center for Language Engineering</strong></a>, UET Lahore,
     and taught undergraduate computer science.
 </p>
                 
